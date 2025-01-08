@@ -1,0 +1,27 @@
+<form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+  <div>
+    <label>Username:</label>
+    <input formControlName="username" />
+    <div *ngIf="registerForm.get('username')?.invalid && registerForm.get('username')?.touched">
+      Username is required.
+    </div>
+  </div>
+
+  <div>
+    <label>Email:</label>
+    <input formControlName="email" />
+    <div *ngIf="registerForm.get('email')?.invalid && registerForm.get('email')?.touched">
+      Enter a valid email.
+    </div>
+  </div>
+
+  <div>
+    <label>Password:</label>
+    <input type="password" formControlName="password" />
+    <div *ngIf="registerForm.get('password')?.invalid && registerForm.get('password')?.touched">
+      Password must be at least 8 characters, include uppercase, lowercase, number.
+    </div>
+  </div>
+
+  <button type="submit" [disabled]="registerForm.invalid">Register</button>
+</form>
