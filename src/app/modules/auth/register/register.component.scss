@@ -28,7 +28,7 @@ label {
 }
 
 input {
-  width: 100%;
+  width: 95%;
   padding: 0.75rem;
   font-size: 1rem;
   border: 1px solid #ccc;
@@ -82,4 +82,9 @@ div *ngIf {
 div *ngIf {
   position: absolute;
   bottom: -1.1rem;
+}
+
+.error-message {
+  color: red;
+  margin-top: 10px;
 }

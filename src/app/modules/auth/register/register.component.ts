@@ -20,27 +20,29 @@ export class RegisterComponent implements OnInit {
     this.registerForm = this.fb.group({
       username: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
+      firstName: ['', [Validators.required]],
+      lastName: ['', [Validators.required]],
       password: ['', [
         Validators.required,
         Validators.minLength(8),
-        Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/)
+        Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/)
       ]]
     });
   }
 
   async onSubmit() {
     if (this.registerForm.valid) {
-      const { username, email, password } = this.registerForm.value;
+      const { username, email, firstName, lastName, password } = this.registerForm.value;
       try {
-        await this.authService.signUp(username, email, password);
-        // Redirect to post-sign-up form to collect hobbies
-        this.router.navigate(['/collect-hobbies']);
+        await this.authService.signUp(username, email, firstName, lastName, password);
+        await this.router.navigate(['/']);
       } catch (error) {
         if (error instanceof Error) {
           this.errorMessage = error.message;
         } else {
           this.errorMessage = 'An unexpected error occurred.';
         }
+        console.log(this.errorMessage)
       }
     }
   }

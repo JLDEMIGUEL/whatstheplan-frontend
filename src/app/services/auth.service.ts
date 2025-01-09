@@ -5,13 +5,15 @@ import { signUp, signIn, signOut } from 'aws-amplify/auth';
   providedIn: 'root'
 })
 export class AuthService {
-  async signUp(username: string, email: string, password: string) {
+  async signUp(username: string, email: string, firstName: string, lastName: string, password: string) {
     return await signUp({
       username,
       password,
       options: {
         userAttributes: {
-          email
+          email,
+          given_name: firstName,
+          family_name: lastName
         }
       }
     });

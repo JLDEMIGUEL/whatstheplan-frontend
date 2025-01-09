@@ -16,6 +16,22 @@
   </div>
 
   <div>
+    <label>First Name:</label>
+    <input formControlName="firstName" />
+    <div *ngIf="registerForm.get('firstName')?.invalid && registerForm.get('firstName')?.touched">
+      First Name is required.
+    </div>
+  </div>
+
+  <div>
+    <label>Last Name:</label>
+    <input formControlName="lastName" />
+    <div *ngIf="registerForm.get('lastName')?.invalid && registerForm.get('lastName')?.touched">
+      Last Name is required.
+    </div>
+  </div>
+
+  <div>
     <label>Password:</label>
     <input type="password" formControlName="password" />
     <div *ngIf="registerForm.get('password')?.invalid && registerForm.get('password')?.touched">
@@ -24,4 +40,8 @@
   </div>
 
   <button type="submit" [disabled]="registerForm.invalid">Register</button>
+  <div *ngIf="errorMessage" class="error-message">
+    {{ errorMessage }}
+  </div>
 </form>
+
