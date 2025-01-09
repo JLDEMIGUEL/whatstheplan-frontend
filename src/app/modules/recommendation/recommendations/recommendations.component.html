@@ -1,0 +1,9 @@
+<div *ngIf="recommendations.length > 0; else noRecommendations">
+  <div *ngFor="let event of recommendations">
+    <h3>{{ event.name }}</h3>
+    <p>{{ event.description }}</p>
+  </div>
+</div>
+<ng-template #noRecommendations>
+  <p>No personalized recommendations available.</p>
+</ng-template>
