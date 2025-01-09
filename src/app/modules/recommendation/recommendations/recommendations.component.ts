@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { ApiService } from '../../../services/api.service';
+import {Component, OnInit} from '@angular/core';
+import {ApiService} from '../../../services/api.service';
 import {NgForOf, NgIf} from '@angular/common';
 
 @Component({
@@ -14,7 +14,8 @@ export class RecommendationsComponent implements OnInit {
   recommendations: any[] = [];
   errorMessage!: string;
 
-  constructor(private apiService: ApiService) {}
+  constructor(private apiService: ApiService) {
+  }
 
   async ngOnInit() {
     try {

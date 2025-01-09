@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
-import { AuthService } from '../../../services/auth.service';
-import { Router } from '@angular/router';
+import {AuthService} from '../../../services/auth.service';
+import {Router} from '@angular/router';
 import {CommonModule} from '@angular/common';
 
 @Component({
@@ -14,7 +14,8 @@ export class RegisterComponent implements OnInit {
   registerForm!: FormGroup;
   errorMessage!: string;
 
-  constructor(private fb: FormBuilder, private authService: AuthService, private router: Router) {}
+  constructor(private fb: FormBuilder, private authService: AuthService, private router: Router) {
+  }
 
   ngOnInit() {
     this.registerForm = this.fb.group({
@@ -32,7 +33,7 @@ export class RegisterComponent implements OnInit {
 
   async onSubmit() {
     if (this.registerForm.valid) {
-      const { username, email, firstName, lastName, password } = this.registerForm.value;
+      const {username, email, firstName, lastName, password} = this.registerForm.value;
       try {
         await this.authService.signUp(username, email, firstName, lastName, password);
         await this.router.navigate(['/']);

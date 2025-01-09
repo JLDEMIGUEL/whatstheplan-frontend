@@ -73,13 +73,13 @@ div {
   position: relative;
 }
 
-div *ngIf {
+div * ngIf {
   color: #d32f2f;
   font-size: 0.9rem;
   margin-top: 0.5rem;
 }
 
-div *ngIf {
+div * ngIf {
   position: absolute;
   bottom: -1.1rem;
 }
