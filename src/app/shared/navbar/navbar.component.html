@@ -4,7 +4,20 @@
       <a routerLink="/" class="brand-logo">WhatsThePlan</a>
     </div>
     <div class="nav-links">
-      <a routerLink="/profile" class="nav-link">Profile</a>
+      <ul>
+        <li *ngIf="!(isLoggedIn$ | async)">
+          <a routerLink="/login" class="nav-link">Login</a>
+        </li>
+        <li *ngIf="!(isLoggedIn$ | async)">
+          <a routerLink="/register" class="nav-link">Sign Up</a>
+        </li>
+        <li *ngIf="isLoggedIn$ | async">
+          <a routerLink="/profile" class="nav-link">Profile</a>
+        </li>
+        <li *ngIf="isLoggedIn$ | async">
+          <button class="nav-link logout-button" (click)="onLogout()">Logout</button>
+        </li>
+      </ul>
     </div>
   </nav>
 </header>

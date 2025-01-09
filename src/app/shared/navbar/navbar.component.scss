@@ -31,10 +31,22 @@ header {
 
   .nav-links {
     display: flex;
-    gap: 1rem;
+    gap: 1.5rem;
+
+    ul {
+      display: flex;
+      gap: 1.5rem;
+      padding: 0;
+      margin: 0;
+      list-style: none;
+    }
 
     @media (max-width: 768px) {
       margin-top: 0.5rem;
+      ul {
+        flex-direction: column;
+        gap: 0.5rem;
+      }
     }
 
     .nav-link {

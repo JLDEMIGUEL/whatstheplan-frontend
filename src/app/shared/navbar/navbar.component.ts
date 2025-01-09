@@ -1,18 +1,30 @@
-import { Component } from '@angular/core';
-import {Router} from '@angular/router';
+import {Component, OnInit} from '@angular/core';
+import {AuthService} from '../../services/auth.service';
+import {Observable} from 'rxjs';
+import {AsyncPipe, NgIf} from '@angular/common';
+import {RouterLink} from '@angular/router';
 
 @Component({
   selector: 'app-navbar',
-  imports: [],
+  imports: [
+    AsyncPipe,
+    NgIf,
+    RouterLink
+  ],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.scss'
 })
-export class NavbarComponent {
-  constructor(private router: Router) {}
+export class NavbarComponent implements OnInit{
+  isLoggedIn$!: Observable<boolean>;
 
-  logout() {
-    // Logic for logging out the user (e.g., clearing tokens)
-    console.log('User logged out');
-    this.router.navigate(['/login']);
+  constructor(private authService: AuthService) {}
+
+  ngOnInit(): void {
+    this.isLoggedIn$ = this.authService.isLoggedIn$;
+  }
+
+  onLogout() {
+    console.log('Logged out');
+    this.authService.signOut();
   }
 }
