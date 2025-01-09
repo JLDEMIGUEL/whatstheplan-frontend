@@ -1,8 +1,10 @@
+import { environment } from './environments/environment';
+
 const awsConfig = {
   Auth: {
     Cognito: {
-      userPoolClientId: '', //TODO
-      userPoolId: '', //TODO
+      userPoolId: environment.cognito.userPoolId,
+      userPoolClientId: environment.cognito.userPoolAppClientId
     }
   }
 };
