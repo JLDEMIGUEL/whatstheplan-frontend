@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {fetchAuthSession, signIn, signOut, signUp} from 'aws-amplify/auth';
 import {BehaviorSubject, Observable} from 'rxjs';
+import {Router} from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -10,11 +11,11 @@ export class AuthService {
   private isLoggedInSubject = new BehaviorSubject<boolean>(false);
   public isLoggedIn$: Observable<boolean> = this.isLoggedInSubject.asObservable();
 
-  constructor() {
+  constructor(private router: Router) {
     this.checkCurrentUser();
   }
 
-  private async checkCurrentUser(): Promise<void> {
+  public async checkCurrentUser(): Promise<void> {
     try {
       const session = await fetchAuthSession();
       if (session.tokens?.accessToken) {
@@ -54,8 +55,13 @@ export class AuthService {
     try {
       await signOut();
       this.isLoggedInSubject.next(false);
+      this.router.navigate(['/welcome']);
     } catch (error) {
       console.log('error signing out: ', error);
     }
+  }
+
+  get isLoggedInValue(): boolean {
+    return this.isLoggedInSubject.value;
   }
 }
