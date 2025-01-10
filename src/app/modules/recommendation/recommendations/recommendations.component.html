@@ -7,3 +7,7 @@
 <ng-template #noRecommendations>
   <p>No personalized recommendations available.</p>
 </ng-template>
+
+<div *ngIf="errorMessage" class="error-message">
+  {{ errorMessage }}
+</div>

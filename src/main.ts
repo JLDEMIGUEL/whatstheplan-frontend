@@ -6,6 +6,7 @@ import awsConfig from './aws-exports';
 import {environment} from './environments/environment';
 import {enableProdMode} from '@angular/core';
 
+// @ts-ignore
 Amplify.configure(awsConfig);
 
 if (environment.production) {

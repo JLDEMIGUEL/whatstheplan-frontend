@@ -69,6 +69,28 @@ button {
   }
 }
 
+.google-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #ffffff;
+  color: #444;
+  border: 1px solid #ccc;
+  margin-top: 1rem;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+
+  &:hover {
+    background-color: #f5f5f5;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+
+  .google-icon {
+    width: 20px;
+    height: 20px;
+    margin-right: 8px;
+  }
+}
+
 div {
   position: relative;
 }

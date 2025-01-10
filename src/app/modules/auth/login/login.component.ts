@@ -2,11 +2,11 @@ import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {AuthService} from '../../../services/auth.service';
 import {Router} from '@angular/router';
-import {CommonModule} from '@angular/common';
+import {CommonModule, NgOptimizedImage} from '@angular/common';
 
 @Component({
   selector: 'app-login',
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, NgOptimizedImage],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
 })
@@ -36,8 +36,12 @@ export class LoginComponent implements OnInit {
         } else {
           this.errorMessage = 'An unexpected error occurred.';
         }
-        console.log(this.errorMessage)
+        console.error(this.errorMessage);
       }
     }
+  }
+
+  signInWithGoogle() {
+    this.authService.signInWithGoogle();
   }
 }

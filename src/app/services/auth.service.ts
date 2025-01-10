@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {fetchAuthSession, signIn, signOut, signUp} from 'aws-amplify/auth';
+import {fetchAuthSession, signIn, signInWithRedirect, signOut, signUp} from 'aws-amplify/auth';
 import {BehaviorSubject, Observable} from 'rxjs';
 import {Router} from '@angular/router';
 
@@ -24,7 +24,7 @@ export class AuthService {
         this.isLoggedInSubject.next(false);
       }
     } catch (e) {
-      console.log(e)
+      console.error(e);
       this.isLoggedInSubject.next(false);
     }
   }
@@ -51,17 +51,17 @@ export class AuthService {
     return user;
   }
 
+  signInWithGoogle() {
+    signInWithRedirect({provider: 'Google'});
+  }
+
   async signOut() {
     try {
       await signOut();
       this.isLoggedInSubject.next(false);
       this.router.navigate(['/welcome']);
     } catch (error) {
-      console.log('error signing out: ', error);
+      console.error('Error signing out:', error);
     }
-  }
-
-  get isLoggedInValue(): boolean {
-    return this.isLoggedInSubject.value;
   }
 }

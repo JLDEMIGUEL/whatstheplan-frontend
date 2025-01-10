@@ -16,6 +16,12 @@
   </div>
 
   <button type="submit" [disabled]="loginForm.invalid">Login</button>
+
+  <button type="button" class="google-button" (click)="signInWithGoogle()">
+    <img ngSrc="/assets/google-icon.svg" alt="Google Icon" class="google-icon" height="800" width="800"/>
+    Sign in with Google
+  </button>
+
   <div *ngIf="errorMessage" class="error-message">
     {{ errorMessage }}
   </div>
