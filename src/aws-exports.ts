@@ -8,7 +8,7 @@ const awsConfig = {
       loginWith: {
         oauth: {
           domain: environment.cognito.domain,
-          scopes: ['email', 'openid', 'profile'],
+          scopes: ['email', 'openid', 'profile', 'aws.cognito.signin.user.admin'],
           redirectSignIn: [environment.cognito.redirectSignIn],
           redirectSignOut: [environment.cognito.redirectSignOut],
           responseType: 'code'

@@ -7,6 +7,8 @@ import {NonAuthGuard} from './guards/non-auth.guard';
 import {AuthGuard} from './guards/auth.guard';
 import {ConfirmationCodeComponent} from './modules/auth/confirmation-code/confirmation-code.component';
 import {PendingConfirmationGuard} from './guards/pending-confirmation.guard';
+import {SetUsernameComponent} from './modules/auth/set-username/set-username.component';
+import {SetUsernameGuard} from './guards/set-username.guard';
 
 export const AppRoutes: Routes = [
   // Public routes
@@ -16,6 +18,9 @@ export const AppRoutes: Routes = [
 
   // Pending confirmation
   {path: 'confirmation-code', component: ConfirmationCodeComponent, canActivate: [PendingConfirmationGuard]},
+
+  // Set username
+  {path: 'set-username', component: SetUsernameComponent, canActivate: [SetUsernameGuard]},
 
   // Authenticated users only
   {path: '', component: RecommendationsComponent, canActivate: [AuthGuard]},

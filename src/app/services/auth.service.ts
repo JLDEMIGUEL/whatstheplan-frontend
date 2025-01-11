@@ -6,7 +6,8 @@ import {
   signIn,
   signInWithRedirect,
   signOut,
-  signUp
+  signUp,
+  updateUserAttribute
 } from 'aws-amplify/auth';
 import {BehaviorSubject, Observable} from 'rxjs';
 import {Router} from '@angular/router';
@@ -83,5 +84,15 @@ export class AuthService {
     } catch (error) {
       console.error('Error signing out:', error);
     }
+  }
+
+  async setUsername(username: string): Promise<void> {
+    await updateUserAttribute({
+      userAttribute: {
+        attributeKey: 'preferred_username',
+        value: username
+      }
+    });
+    await fetchAuthSession({forceRefresh: true});
   }
 }

@@ -5,6 +5,9 @@
     <div *ngIf="registerForm.get('username')?.invalid && registerForm.get('username')?.touched">
       Username is required.
     </div>
+    <div *ngIf="registerForm.get('username')?.errors?.['isEmail']">
+      Username must not be in email format.
+    </div>
   </div>
 
   <div>
