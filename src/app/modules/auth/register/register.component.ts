@@ -36,7 +36,9 @@ export class RegisterComponent implements OnInit {
       const {username, email, firstName, lastName, password} = this.registerForm.value;
       try {
         await this.authService.signUp(username, email, firstName, lastName, password);
-        await this.router.navigate(['/']);
+        localStorage.setItem('pendingUsername', username);
+        localStorage.setItem('pendingEmail', email);
+        await this.router.navigate(['/confirmation-code']);
       } catch (error) {
         if (error instanceof Error) {
           this.errorMessage = error.message;

@@ -1,0 +1,27 @@
+<form [formGroup]="confirmationCodeForm" (ngSubmit)="onSubmit()">
+  <div>
+    Confirmation code sent to email {{ email }}
+  </div>
+  <div>
+    <label>Confirmation Code:</label>
+    <input formControlName="confirmationCode"/>
+    <div
+      *ngIf="confirmationCodeForm.get('confirmationCode')?.invalid && confirmationCodeForm.get('confirmationCode')?.touched">
+      Confirmation Code is required.
+    </div>
+  </div>
+
+  <button type="submit" [disabled]="confirmationCodeForm.invalid">Confirm Code</button>
+
+  <button type="button" class="resend-button" (click)="onResendCode()" [disabled]="isResendDisabled">
+    Resend Code
+  </button>
+
+  <div *ngIf="errorMessage" class="error-message">
+    {{ errorMessage }}
+  </div>
+
+  <div *ngIf="successMessage" class="success-message">
+    {{ successMessage }}
+  </div>
+</form>

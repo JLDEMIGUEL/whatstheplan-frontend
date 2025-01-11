@@ -15,6 +15,10 @@ export class AuthGuard implements CanActivate {
   }
 
   canActivate(): Observable<boolean | UrlTree> {
+    if (localStorage.getItem('pendingUsername')) {
+      this.router.parseUrl('/confirmation-code');
+    }
+
     return this.authService.isLoggedIn$.pipe(
       take(1),
       map(isLoggedIn => {

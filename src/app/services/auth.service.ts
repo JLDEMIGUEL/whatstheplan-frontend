@@ -1,5 +1,13 @@
 import {Injectable} from '@angular/core';
-import {fetchAuthSession, signIn, signInWithRedirect, signOut, signUp} from 'aws-amplify/auth';
+import {
+  confirmSignUp,
+  fetchAuthSession,
+  resendSignUpCode,
+  signIn,
+  signInWithRedirect,
+  signOut,
+  signUp
+} from 'aws-amplify/auth';
 import {BehaviorSubject, Observable} from 'rxjs';
 import {Router} from '@angular/router';
 
@@ -41,7 +49,6 @@ export class AuthService {
         }
       }
     });
-    this.isLoggedInSubject.next(true);
     return signUpOutput;
   }
 
@@ -60,6 +67,18 @@ export class AuthService {
       await signOut();
       this.isLoggedInSubject.next(false);
       this.router.navigate(['/welcome']);
+    } catch (error) {
+      console.error('Error signing out:', error);
+    }
+  }
+
+  async confirmCode(username: string, confirmationCode: string): Promise<void> {
+    await confirmSignUp({username, confirmationCode});
+  }
+
+  async resendCode(username: string): Promise<void> {
+    try {
+      await resendSignUpCode({username});
     } catch (error) {
       console.error('Error signing out:', error);
     }
