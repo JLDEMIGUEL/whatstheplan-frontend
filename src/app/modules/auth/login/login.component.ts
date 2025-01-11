@@ -19,16 +19,16 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     this.loginForm = this.fb.group({
-      username: ['', Validators.required],
+      email: ['', Validators.required],
       password: ['', Validators.required]
     });
   }
 
   async onSubmit() {
     if (this.loginForm.valid) {
-      const {username, password} = this.loginForm.value;
+      const {email, password} = this.loginForm.value;
       try {
-        await this.authService.signIn(username, password);
+        await this.authService.signIn(email, password);
         await this.router.navigate(['/']);
       } catch (error) {
         if (error instanceof Error) {

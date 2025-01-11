@@ -39,13 +39,14 @@ export class AuthService {
 
   async signUp(username: string, email: string, firstName: string, lastName: string, password: string) {
     const signUpOutput = await signUp({
-      username,
+      username: email,
       password,
       options: {
         userAttributes: {
           email: email,
-          given_name: firstName,
-          family_name: lastName
+          preferred_username: username,
+          'custom:FirstName': firstName,
+          'custom:LastName': lastName,
         }
       }
     });
