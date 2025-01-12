@@ -42,7 +42,13 @@ export class RegisterComponent implements OnInit {
         await this.router.navigate(['/confirmation-code']);
       } catch (error) {
         if (error instanceof Error) {
-          this.errorMessage = error.message;
+          if (error.name === 'UserLambdaValidationException') {
+            this.errorMessage = 'An account with this email already exists. Please log in or use a different email.';
+          } else if (error.name === 'InvalidPasswordException') {
+            this.errorMessage = 'Your password does not meet the security requirements.';
+          } else {
+            this.errorMessage = 'An unexpected error occurred. Please try again later.';
+          }
         } else {
           this.errorMessage = 'An unexpected error occurred.';
         }
