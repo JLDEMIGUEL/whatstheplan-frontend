@@ -12,11 +12,10 @@ export class SetUsernameGuard implements CanActivate {
   }
 
   canActivate(): Observable<boolean> {
-    return from(fetchAuthSession()).pipe(
+    return from(fetchAuthSession({forceRefresh: true})).pipe(
       map((session) => {
-        const preferred_username = session.tokens?.idToken?.payload?.['preferred_username'] || '';
-        const email = session.tokens?.idToken?.payload?.['email'] || '';
-        if (!session || preferred_username !== email) {
+        const username_set = session.tokens?.idToken?.payload?.['custom:username_set'];
+        if (!session.tokens?.accessToken || username_set === "false") {
           this.router.navigate(['/']);
           return false
         }

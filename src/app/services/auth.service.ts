@@ -7,7 +7,7 @@ import {
   signInWithRedirect,
   signOut,
   signUp,
-  updateUserAttribute
+  updateUserAttributes
 } from 'aws-amplify/auth';
 import {BehaviorSubject, Observable} from 'rxjs';
 import {Router} from '@angular/router';
@@ -45,7 +45,8 @@ export class AuthService {
       options: {
         userAttributes: {
           email: email,
-          preferred_username: username,
+          'custom:username': username,
+          'custom:username_set': 'true',
           'custom:FirstName': firstName,
           'custom:LastName': lastName,
         }
@@ -87,10 +88,10 @@ export class AuthService {
   }
 
   async setUsername(username: string): Promise<void> {
-    await updateUserAttribute({
-      userAttribute: {
-        attributeKey: 'preferred_username',
-        value: username
+    await updateUserAttributes({
+      userAttributes: {
+        'custom:username': username,
+        'custom:username_set': "true"
       }
     });
     await fetchAuthSession({forceRefresh: true});

@@ -26,11 +26,10 @@ export class AuthGuard implements CanActivate {
         if (!isLoggedIn) {
           return [this.router.parseUrl('/welcome')];
         }
-        return from(fetchAuthSession()).pipe(
+        return from(fetchAuthSession({forceRefresh: true})).pipe(
           map(session => {
-            const preferred_username = session.tokens?.idToken?.payload?.['preferred_username'] || '';
-            const email = session.tokens?.idToken?.payload?.['email'] || '';
-            if (preferred_username === email) {
+            const username_set = session.tokens?.idToken?.payload?.['custom:username_set'];
+            if (username_set !== "true") {
               return this.router.parseUrl('/set-username');
             }
 
