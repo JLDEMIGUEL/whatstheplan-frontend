@@ -6,6 +6,7 @@ export const environment = {
     domain: 'eu-west-1byzrv2t2w.auth.eu-west-1.amazoncognito.com',
     redirectSignIn: 'https://d7dp1q4urbiq5.cloudfront.net/',
     redirectSignOut: 'https://d7dp1q4urbiq5.cloudfront.net/'
-  }
+  },
+  api: '<API_PLACEHOLDER>'
 };
 

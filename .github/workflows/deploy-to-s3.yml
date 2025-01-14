@@ -30,6 +30,22 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Retrieve API Parameter from AWS Parameter Store
+        id: get-parameter
+        run: |
+          parameter=$(aws ssm get-parameter --name "/whatstheplan/alb/dns" --with-decryption --query "Parameter.Value" --output text)
+          echo "api_value=$parameter" >> $GITHUB_ENV
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_REGION: ${{ secrets.AWS_REGION }}
+
+      - name: Substitute API placeholder
+        run: |
+          sed -i "s|<API_PLACEHOLDER>|$API_VALUE|g" src/environments/environment.prod.ts
+        env:
+          API_VALUE: ${{ env.api_value }}
+
       - name: Build Angular app
         run: npm run build --prod
 
