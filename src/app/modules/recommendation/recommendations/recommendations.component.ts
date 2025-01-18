@@ -1,5 +1,4 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {ApiService} from '../../../services/api.service';
 import {NgForOf, NgIf} from '@angular/common';
 import {AuthService} from '../../../services/auth.service';
 import {Router} from '@angular/router';
@@ -20,7 +19,7 @@ export class RecommendationsComponent implements OnInit, OnDestroy {
   errorMessage!: string;
   private subscription!: Subscription;
 
-  constructor(private apiService: ApiService, private authService: AuthService, private router: Router) {
+  constructor(private authService: AuthService, private router: Router) {
   }
 
   async ngOnInit() {
