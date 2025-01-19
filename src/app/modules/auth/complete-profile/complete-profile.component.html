@@ -1,0 +1,69 @@
+<form [formGroup]="completeProfileForm" (ngSubmit)="onSubmit()">
+  <div>
+    <label for="username">Username:</label>
+    <input id="username" formControlName="username"/>
+    <div *ngIf="completeProfileForm.get('username')?.invalid && completeProfileForm.get('username')?.touched">
+      <div *ngIf="completeProfileForm.get('username')?.errors?.['required']">
+        Username is required.
+      </div>
+      <div *ngIf="completeProfileForm.get('username')?.errors?.['isEmail']">
+        Username must not be in email format.
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <label for="firstName">First Name:</label>
+    <input id="firstName" formControlName="firstName"/>
+    <div *ngIf="completeProfileForm.get('firstName')?.invalid && completeProfileForm.get('firstName')?.touched">
+      <div *ngIf="completeProfileForm.get('firstName')?.errors?.['required']">
+        First Name is required.
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <label for="lastName">Last Name:</label>
+    <input id="lastName" formControlName="lastName"/>
+    <div *ngIf="completeProfileForm.get('lastName')?.invalid && completeProfileForm.get('lastName')?.touched">
+      <div *ngIf="completeProfileForm.get('lastName')?.errors?.['required']">
+        Last Name is required.
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <label for="city">City:</label>
+    <select id="city" formControlName="city">
+      <option [value]="" disabled>-- Select City --</option>
+      <option *ngFor="let city of cities" [value]="city">{{ city }}</option>
+    </select>
+    <div *ngIf="completeProfileForm.get('city')?.invalid && completeProfileForm.get('city')?.touched">
+      <div *ngIf="completeProfileForm.get('city')?.errors?.['required']">
+        City is required.
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <label>Preferences:</label>
+    <div class="chip-container">
+      <span
+        *ngFor="let pref of preferencesList"
+        class="chip"
+        [class.selected]="completeProfileForm.get('preferences')?.value.includes(pref)"
+        (click)="togglePreference(pref)"
+      >
+        {{ pref }}
+      </span>
+    </div>
+  </div>
+
+  <button type="submit" [disabled]="completeProfileForm.invalid">
+    Set Profile
+  </button>
+
+  <div *ngIf="errorMessage" class="error-message">
+    {{ errorMessage }}
+  </div>
+</form>
