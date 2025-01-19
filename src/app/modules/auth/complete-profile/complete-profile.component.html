@@ -47,20 +47,23 @@
 
   <div>
     <label>Preferences:</label>
-    <div class="chip-container">
-      <span
-        *ngFor="let pref of preferencesList"
-        class="chip"
-        [class.selected]="completeProfileForm.get('preferences')?.value.includes(pref)"
-        (click)="togglePreference(pref)"
-      >
-        {{ pref }}
-      </span>
+    <div *ngFor="let category of preferencesList" class="preference-category">
+      <h3>{{ category.category }}</h3>
+      <div class="chip-container">
+        <span
+          *ngFor="let pref of category.preferences"
+          class="chip"
+          [class.selected]="isPreferenceSelected(pref)"
+          (click)="togglePreference(pref)"
+        >
+          {{ pref }}
+        </span>
+      </div>
     </div>
   </div>
 
   <button type="submit" [disabled]="completeProfileForm.invalid">
-    Set Profile
+    Complete Profile
   </button>
 
   <div *ngIf="errorMessage" class="error-message">

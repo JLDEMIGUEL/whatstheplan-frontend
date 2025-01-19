@@ -24,9 +24,8 @@ export class UserService {
 
   createUser(userData: any): Observable<any> {
     return this.addAuthHeaders().pipe(
-      switchMap((headers) =>
-        this.http.post(`${this.baseUrl}/users`, userData,
-          {headers, observe: 'response', withCredentials: true})
+      switchMap((headers) => this.http.post(`${this.baseUrl}/users`, userData,
+        {headers, observe: 'response', withCredentials: true})
       )
     );
   }

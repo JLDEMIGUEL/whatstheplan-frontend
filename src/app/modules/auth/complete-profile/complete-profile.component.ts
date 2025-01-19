@@ -4,6 +4,12 @@ import {Router} from '@angular/router';
 import {CommonModule} from '@angular/common';
 import {notEmailValidator} from '../../../utils/validation-utils';
 import {UserService} from '../../../services/users.service';
+import {HttpErrorResponse} from '@angular/common/http';
+
+interface PreferenceCategory {
+  category: string;
+  preferences: string[];
+}
 
 @Component({
   selector: 'app-complete-profile',
@@ -13,6 +19,85 @@ import {UserService} from '../../../services/users.service';
   styleUrls: ['./complete-profile.component.scss']
 })
 export class CompleteProfileComponent implements OnInit {
+  cities: string[] = [
+    'Madrid',
+    'Barcelona',
+    'Sevilla',
+    'Valencia',
+    'Bilbao',
+    'London',
+    'Paris',
+    'Berlin'
+  ];
+
+  preferencesList: PreferenceCategory[] = [
+    {
+      category: 'Sports',
+      preferences: [
+        'Soccer',
+        'Basketball',
+        'Tennis',
+        'Swimming',
+        'Running',
+        'Cycling',
+        'Golf',
+        'Baseball',
+        'Martial Arts',
+        'Yoga',
+        'Snowboarding',
+        'Climbing',
+        'Fishing',
+        'Hiking',
+        'Board Games',
+        'Dancing'
+      ]
+    },
+    {
+      category: 'Arts & Culture',
+      preferences: [
+        'Music',
+        'Arts',
+        'Photography',
+        'Painting',
+        'Film & Movies'
+      ]
+    },
+    {
+      category: 'Technology & Education',
+      preferences: [
+        'Technology',
+        'Education',
+        'Language Learning',
+        'Reading',
+        'Writing'
+      ]
+    },
+    {
+      category: 'Health & Wellness',
+      preferences: [
+        'Wellness & Fitness',
+        'Fitness & Bodybuilding',
+        'Meditation & Mindfulness'
+      ]
+    },
+    {
+      category: 'Social & Outdoor Activities',
+      preferences: [
+        'Outdoors',
+        'Social Events',
+        'Networking',
+        'Gaming',
+        'Travel',
+        'Volunteering',
+        'Shopping',
+        'Gardening',
+        'Cooking',
+        'Baking',
+        'Fashion & Style'
+      ]
+    }
+  ];
+
   completeProfileForm!: FormGroup;
   errorMessage!: string;
 
@@ -46,75 +131,26 @@ export class CompleteProfileComponent implements OnInit {
     }
   }
 
-  async onSubmit() {
-    if (this.completeProfileForm.valid) {
-      try {
-        await this.userService.createUser(this.completeProfileForm.value);
-        this.router.navigate(['/']);
-      } catch (error) {
-        if (error instanceof Error) {
-          this.errorMessage = error.message;
-        } else {
-          this.errorMessage = 'An unexpected error occurred.';
-        }
-        console.error(this.errorMessage);
-      }
-    }
+  isPreferenceSelected(pref: string): boolean {
+    return this.completeProfileForm.get('preferences')?.value.includes(pref);
   }
 
-  cities: string[] = [
-    'Madrid',
-    'Barcelona',
-    'Sevilla',
-    'Valencia',
-    'Bilbao',
-    'London',
-    'Paris',
-    'Berlin'
-  ];
-
-  preferencesList: string[] = [
-    'Soccer',
-    'Basketball',
-    'Tennis',
-    'Swimming',
-    'Running',
-    'Cycling',
-    'Golf',
-    'Baseball',
-    'Martial Arts',
-    'Yoga',
-    'Snowboarding',
-    'Climbing',
-    'Music',
-    'Arts',
-    'Technology',
-    'Education',
-    'Outdoors',
-    'Food & Dining',
-    'Social Events',
-    'Wellness & Fitness',
-    'Networking',
-    'Gaming',
-    'Travel',
-    'Volunteering',
-    'Shopping',
-    'Reading',
-    'Writing',
-    'Photography',
-    'Gardening',
-    'Cooking',
-    'Baking',
-    'Fashion & Style',
-    'Film & Movies',
-    'Fitness & Bodybuilding',
-    'Meditation & Mindfulness',
-    'Fishing',
-    'Hiking',
-    'Board Games',
-    'Dancing',
-    'Language Learning',
-    'Painting'
-  ];
-
+  async onSubmit() {
+    if (this.completeProfileForm.valid) {
+      console.log(this.completeProfileForm.value)
+      this.userService.createUser(this.completeProfileForm.value).subscribe({
+        next: (response) => {
+          this.router.navigate(['/']);
+        },
+        error: (error) => {
+          if (error instanceof HttpErrorResponse) {
+            this.errorMessage = error.error.reason;
+          } else {
+            this.errorMessage = 'An unexpected error occurred.';
+          }
+          console.error(this.errorMessage);
+        }
+      });
+    }
+  }
 }
