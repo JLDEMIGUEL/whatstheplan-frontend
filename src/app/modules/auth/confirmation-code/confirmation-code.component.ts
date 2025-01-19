@@ -16,8 +16,7 @@ import {NgIf} from '@angular/common';
 export class ConfirmationCodeComponent implements OnInit {
   confirmationCodeForm!: FormGroup;
   errorMessage!: string;
-  username!: string;
-  email!: string;
+  userId!: string;
   isResendDisabled = false;
   successMessage = '';
 
@@ -26,9 +25,8 @@ export class ConfirmationCodeComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.username = localStorage.getItem('pendingUsername') || '';
-    this.email = localStorage.getItem('pendingEmail') || '';
-    if (!this.username) {
+    this.userId = localStorage.getItem('pendingUserId') || '';
+    if (!this.userId) {
       this.router.navigate(['/sign-up']);
     }
     this.confirmationCodeForm = this.fb.group({
@@ -40,11 +38,10 @@ export class ConfirmationCodeComponent implements OnInit {
     if (this.confirmationCodeForm.valid) {
       const {confirmationCode} = this.confirmationCodeForm.value;
       try {
-        await this.authService.confirmCode(this.username, confirmationCode);
+        await this.authService.confirmCode(this.userId, confirmationCode);
         this.successMessage = 'Confirmation successful! Redirecting to login...';
         this.errorMessage = '';
-        localStorage.removeItem('pendingUsername')
-        localStorage.removeItem('pendingEmail')
+        localStorage.removeItem('pendingUserId')
         setTimeout(() => this.router.navigate(['/login']), 2000);
       } catch (error) {
         if (error instanceof Error) {
@@ -66,7 +63,7 @@ export class ConfirmationCodeComponent implements OnInit {
   async onResendCode() {
     this.isResendDisabled = true;
 
-    await this.authService.resendCode(this.username)
+    await this.authService.resendCode(this.userId)
 
     setTimeout(() => {
       this.isResendDisabled = false;

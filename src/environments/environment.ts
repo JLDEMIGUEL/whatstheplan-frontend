@@ -7,5 +7,5 @@ export const environment = {
     redirectSignIn: 'http://localhost:4200/',
     redirectSignOut: 'http://localhost:4200/'
   },
-  api: '<API_PLACEHOLDER>'
+  api: 'http://localhost:8080'
 };

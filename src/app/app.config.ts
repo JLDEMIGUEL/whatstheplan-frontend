@@ -4,6 +4,7 @@ import {provideRouter} from '@angular/router';
 import {AppRoutes} from './app.routes';
 import {provideAnimationsAsync} from '@angular/platform-browser/animations/async';
 import {AuthService} from './services/auth.service';
+import {provideHttpClient, withInterceptorsFromDi} from '@angular/common/http';
 
 const initAuth = (): Promise<void> => {
   const authService = inject(AuthService);
@@ -11,7 +12,10 @@ const initAuth = (): Promise<void> => {
 };
 
 export const appConfig: ApplicationConfig = {
-  providers: [provideZoneChangeDetection({eventCoalescing: true}),
+  providers: [
+    provideZoneChangeDetection({eventCoalescing: true}),
     provideRouter(AppRoutes), provideAnimationsAsync(),
-    provideAppInitializer(initAuth)]
+    provideAppInitializer(initAuth),
+    provideHttpClient(withInterceptorsFromDi())
+  ]
 };

@@ -1,36 +1,9 @@
 <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
   <div>
-    <label>Username:</label>
-    <input formControlName="username"/>
-    <div *ngIf="registerForm.get('username')?.invalid && registerForm.get('username')?.touched">
-      Username is required.
-    </div>
-    <div *ngIf="registerForm.get('username')?.errors?.['isEmail']">
-      Username must not be in email format.
-    </div>
-  </div>
-
-  <div>
     <label>Email:</label>
     <input formControlName="email"/>
     <div *ngIf="registerForm.get('email')?.invalid && registerForm.get('email')?.touched">
       Enter a valid email.
-    </div>
-  </div>
-
-  <div>
-    <label>First Name:</label>
-    <input formControlName="firstName"/>
-    <div *ngIf="registerForm.get('firstName')?.invalid && registerForm.get('firstName')?.touched">
-      First Name is required.
-    </div>
-  </div>
-
-  <div>
-    <label>Last Name:</label>
-    <input formControlName="lastName"/>
-    <div *ngIf="registerForm.get('lastName')?.invalid && registerForm.get('lastName')?.touched">
-      Last Name is required.
     </div>
   </div>
 

@@ -3,7 +3,6 @@ import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/
 import {AuthService} from '../../../services/auth.service';
 import {Router} from '@angular/router';
 import {CommonModule, NgOptimizedImage} from '@angular/common';
-import {notEmailValidator} from '../../../utils/validation-utils';
 
 @Component({
   selector: 'app-register',
@@ -20,10 +19,7 @@ export class RegisterComponent implements OnInit {
 
   ngOnInit() {
     this.registerForm = this.fb.group({
-      username: ['', [Validators.required, notEmailValidator]],
       email: ['', [Validators.required, Validators.email]],
-      firstName: ['', [Validators.required]],
-      lastName: ['', [Validators.required]],
       password: ['', [
         Validators.required,
         Validators.minLength(8),
@@ -34,11 +30,10 @@ export class RegisterComponent implements OnInit {
 
   async onSubmit() {
     if (this.registerForm.valid) {
-      const {username, email, firstName, lastName, password} = this.registerForm.value;
+      const {email, password} = this.registerForm.value;
       try {
-        await this.authService.signUp(username, email, firstName, lastName, password);
-        localStorage.setItem('pendingUsername', username);
-        localStorage.setItem('pendingEmail', email);
+        const signUpOutput = await this.authService.signUp(email, password);
+        localStorage.setItem('pendingUserId', signUpOutput.userId?.toString() || '');
         await this.router.navigate(['/confirmation-code']);
       } catch (error) {
         if (error instanceof Error) {

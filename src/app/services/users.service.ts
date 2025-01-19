@@ -17,14 +17,16 @@ export class UserService {
 
   getUser(): Observable<any> {
     return this.addAuthHeaders().pipe(
-      switchMap((headers) => this.http.get(`${this.baseUrl}/users`, {headers}))
+      switchMap((headers) => this.http.get(`${this.baseUrl}/users`,
+        {headers, observe: 'response', withCredentials: true}))
     );
   }
 
   createUser(userData: any): Observable<any> {
     return this.addAuthHeaders().pipe(
       switchMap((headers) =>
-        this.http.post(`${this.baseUrl}/users`, userData, {headers})
+        this.http.post(`${this.baseUrl}/users`, userData,
+          {headers, observe: 'response', withCredentials: true})
       )
     );
   }
@@ -32,7 +34,8 @@ export class UserService {
   updateUser(userData: any): Observable<any> {
     return this.addAuthHeaders().pipe(
       switchMap((headers) =>
-        this.http.put(`${this.baseUrl}/users`, userData, {headers})
+        this.http.put(`${this.baseUrl}/users`, userData,
+          {headers, observe: 'response', withCredentials: true})
       )
     );
   }

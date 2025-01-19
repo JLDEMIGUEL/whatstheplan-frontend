@@ -6,8 +6,7 @@ import {
   signIn,
   signInWithRedirect,
   signOut,
-  signUp,
-  updateUserAttributes
+  signUp
 } from 'aws-amplify/auth';
 import {BehaviorSubject, Observable} from 'rxjs';
 import {Router} from '@angular/router';
@@ -38,17 +37,13 @@ export class AuthService {
     }
   }
 
-  async signUp(username: string, email: string, firstName: string, lastName: string, password: string) {
+  async signUp(email: string, password: string) {
     const signUpOutput = await signUp({
       username: email,
       password,
       options: {
         userAttributes: {
-          email: email,
-          'custom:username': username,
-          'custom:username_set': 'true',
-          'custom:FirstName': firstName,
-          'custom:LastName': lastName,
+          email
         }
       }
     });
@@ -75,25 +70,15 @@ export class AuthService {
     }
   }
 
-  async confirmCode(username: string, confirmationCode: string): Promise<void> {
-    await confirmSignUp({username, confirmationCode});
+  async confirmCode(email: string, confirmationCode: string): Promise<void> {
+    await confirmSignUp({username: email, confirmationCode});
   }
 
-  async resendCode(username: string): Promise<void> {
+  async resendCode(email: string): Promise<void> {
     try {
-      await resendSignUpCode({username});
+      await resendSignUpCode({username: email});
     } catch (error) {
       console.error('Error signing out:', error);
     }
-  }
-
-  async setUsername(username: string): Promise<void> {
-    await updateUserAttributes({
-      userAttributes: {
-        'custom:username': username,
-        'custom:username_set': "true"
-      }
-    });
-    await fetchAuthSession({forceRefresh: true});
   }
 }
