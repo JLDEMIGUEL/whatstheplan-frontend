@@ -9,8 +9,8 @@ export class PendingConfirmationGuard implements CanActivate {
   }
 
   canActivate(): boolean {
-    const pendingUsername = localStorage.getItem('pendingUsername');
-    if (!pendingUsername) {
+    const pendingUserId = localStorage.getItem('pendingUserId');
+    if (!pendingUserId) {
       this.router.navigate(['/register']);
       return false;
     }
