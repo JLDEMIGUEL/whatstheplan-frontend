@@ -10,6 +10,7 @@ import {
 } from 'aws-amplify/auth';
 import {BehaviorSubject, Observable} from 'rxjs';
 import {Router} from '@angular/router';
+import {localStorageKey} from './users.service';
 
 @Injectable({
   providedIn: 'root'
@@ -63,6 +64,7 @@ export class AuthService {
   async signOut() {
     try {
       await signOut();
+      localStorage.removeItem(localStorageKey)
       this.isLoggedInSubject.next(false);
       this.router.navigate(['/welcome']);
     } catch (error) {
