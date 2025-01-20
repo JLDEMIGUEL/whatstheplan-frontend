@@ -1,9 +1,5 @@
 <div class="profile-update-container" *ngIf="!isLoading; else loading">
   <form [formGroup]="profileUpdateForm" (ngSubmit)="onSubmit()">
-    <div *ngIf="errorMessage" class="error-message">
-      {{ errorMessage }}
-    </div>
-
     <div>
       <label for="username">Username:</label>
       <input id="username" formControlName="username"/>
@@ -70,6 +66,10 @@
     <button type="submit" [disabled]="profileUpdateForm.invalid">
       Update Profile
     </button>
+
+    <div *ngIf="errorMessage" class="error-message">
+      {{ errorMessage }}
+    </div>
   </form>
 </div>
 

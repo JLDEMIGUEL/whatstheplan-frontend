@@ -25,12 +25,18 @@
       <span>{{ userProfile.city }}</span>
     </div>
 
-    <div class="profile-section">
+    <div class="preferences-section">
       <label>Preferences:</label>
-      <div class="preferences-list">
-        <span class="preference-chip" *ngFor="let pref of userProfile.preferences">
+      <div *ngFor="let category of preferencesSelected" class="preference-category">
+        <h3>{{ category.category }}</h3>
+        <div class="chip-container">
+        <span
+          *ngFor="let pref of category.preferences"
+          class="chip"
+        >
           {{ pref }}
         </span>
+        </div>
       </div>
     </div>
 

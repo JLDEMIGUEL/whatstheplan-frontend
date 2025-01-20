@@ -70,3 +70,21 @@ export const PREFERENCES_LIST: PreferenceCategory[] = [
     ]
   }
 ];
+
+
+export function categorizePreferences(preferences: string[]): PreferenceCategory[] {
+  return PREFERENCES_LIST.reduce((result: PreferenceCategory[], category) => {
+    const matchedPreferences = category.preferences.filter((pref) =>
+      preferences.includes(pref)
+    );
+
+    if (matchedPreferences.length > 0) {
+      result.push({
+        category: category.category,
+        preferences: matchedPreferences
+      });
+    }
+
+    return result;
+  }, []);
+}
