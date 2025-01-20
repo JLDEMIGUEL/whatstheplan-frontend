@@ -3,7 +3,8 @@ import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTre
 import {Observable, of} from 'rxjs';
 import {catchError, map} from 'rxjs/operators';
 import {UserService} from '../services/users.service';
-import {HttpErrorResponse, HttpResponse} from '@angular/common/http';
+import {HttpErrorResponse} from '@angular/common/http';
+import {UserProfile} from '../shared/model/users-profile.model';
 
 @Injectable({
   providedIn: 'root'
@@ -17,12 +18,8 @@ export class CompleteProfileGuard implements CanActivate {
     state: RouterStateSnapshot
   ): Observable<boolean | UrlTree> {
     return this.usersService.getUser().pipe(
-      map((response: HttpResponse<any>) => {
-        if (response.status === 200) {
-          return this.router.createUrlTree(['/']);
-        } else {
-          return true;
-        }
+      map((response: UserProfile) => {
+        return this.router.createUrlTree(['/']);
       }),
       catchError((error: HttpErrorResponse) => {
         if (error.status === 400) {

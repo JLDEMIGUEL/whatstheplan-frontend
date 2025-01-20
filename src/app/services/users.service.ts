@@ -1,9 +1,10 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {HttpClient, HttpHeaders, HttpResponse} from '@angular/common/http';
 import {fetchAuthSession} from 'aws-amplify/auth';
 import {Observable} from 'rxjs';
-import {switchMap} from 'rxjs/operators';
+import {map, switchMap} from 'rxjs/operators';
 import {environment} from '../../environments/environment';
+import {UserProfile} from '../shared/model/users-profile.model'
 
 
 @Injectable({
@@ -15,27 +16,35 @@ export class UserService {
   constructor(private http: HttpClient) {
   }
 
-  getUser(): Observable<any> {
+  getUser(): Observable<UserProfile> {
     return this.addAuthHeaders().pipe(
-      switchMap((headers) => this.http.get(`${this.baseUrl}/users`,
-        {headers, observe: 'response', withCredentials: true}))
+      switchMap((headers) =>
+        this.http.get<UserProfile>(`${this.baseUrl}/users`, {
+          headers,
+          observe: 'response',
+          withCredentials: true
+        })
+      ),
+      map((response: HttpResponse<any>) => response.body)
     );
   }
 
-  createUser(userData: any): Observable<any> {
+  createUser(userData: any): Observable<UserProfile> {
     return this.addAuthHeaders().pipe(
-      switchMap((headers) => this.http.post(`${this.baseUrl}/users`, userData,
+      switchMap((headers) => this.http.post<UserProfile>(`${this.baseUrl}/users`, userData,
         {headers, observe: 'response', withCredentials: true})
-      )
+      ),
+      map((response: HttpResponse<any>) => response.body)
     );
   }
 
-  updateUser(userData: any): Observable<any> {
+  updateUser(userData: any): Observable<UserProfile> {
     return this.addAuthHeaders().pipe(
       switchMap((headers) =>
         this.http.put(`${this.baseUrl}/users`, userData,
           {headers, observe: 'response', withCredentials: true})
-      )
+      ),
+      map((response: HttpResponse<any>) => response.body)
     );
   }
 

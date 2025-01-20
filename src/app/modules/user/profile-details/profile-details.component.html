@@ -1,0 +1,45 @@
+<div class="profile-container" *ngIf="!isLoading; else loading">
+  <div *ngIf="errorMessage; else profileContent" class="error-message">
+    {{ errorMessage }}
+  </div>
+
+  <ng-template #profileContent>
+    <h2>User Profile</h2>
+    <div class="profile-section">
+      <label>Username:</label>
+      <span>{{ userProfile.username }}</span>
+    </div>
+
+    <div class="profile-section">
+      <label>First Name:</label>
+      <span>{{ userProfile.firstName }}</span>
+    </div>
+
+    <div class="profile-section">
+      <label>Last Name:</label>
+      <span>{{ userProfile.lastName }}</span>
+    </div>
+
+    <div class="profile-section">
+      <label>City:</label>
+      <span>{{ userProfile.city }}</span>
+    </div>
+
+    <div class="profile-section">
+      <label>Preferences:</label>
+      <div class="preferences-list">
+        <span class="preference-chip" *ngFor="let pref of userProfile.preferences">
+          {{ pref }}
+        </span>
+      </div>
+    </div>
+
+    <button (click)="editProfile()">Edit Profile</button>
+  </ng-template>
+</div>
+
+<ng-template #loading>
+  <div class="loading-spinner">
+    Loading profile...
+  </div>
+</ng-template>

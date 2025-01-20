@@ -5,6 +5,8 @@ import {CommonModule} from '@angular/common';
 import {notEmailValidator} from '../../../utils/validation-utils';
 import {UserService} from '../../../services/users.service';
 import {HttpErrorResponse} from '@angular/common/http';
+import {CITIES_LIST} from '../../../shared/constants/cities.constants';
+import {PREFERENCES_LIST} from '../../../shared/constants/preferences.constants';
 
 interface PreferenceCategory {
   category: string;
@@ -19,84 +21,8 @@ interface PreferenceCategory {
   styleUrls: ['./complete-profile.component.scss']
 })
 export class CompleteProfileComponent implements OnInit {
-  cities: string[] = [
-    'Madrid',
-    'Barcelona',
-    'Sevilla',
-    'Valencia',
-    'Bilbao',
-    'London',
-    'Paris',
-    'Berlin'
-  ];
-
-  preferencesList: PreferenceCategory[] = [
-    {
-      category: 'Sports',
-      preferences: [
-        'Soccer',
-        'Basketball',
-        'Tennis',
-        'Swimming',
-        'Running',
-        'Cycling',
-        'Golf',
-        'Baseball',
-        'Martial Arts',
-        'Yoga',
-        'Snowboarding',
-        'Climbing',
-        'Fishing',
-        'Hiking',
-        'Board Games',
-        'Dancing'
-      ]
-    },
-    {
-      category: 'Arts & Culture',
-      preferences: [
-        'Music',
-        'Arts',
-        'Photography',
-        'Painting',
-        'Film & Movies'
-      ]
-    },
-    {
-      category: 'Technology & Education',
-      preferences: [
-        'Technology',
-        'Education',
-        'Language Learning',
-        'Reading',
-        'Writing'
-      ]
-    },
-    {
-      category: 'Health & Wellness',
-      preferences: [
-        'Wellness & Fitness',
-        'Fitness & Bodybuilding',
-        'Meditation & Mindfulness'
-      ]
-    },
-    {
-      category: 'Social & Outdoor Activities',
-      preferences: [
-        'Outdoors',
-        'Social Events',
-        'Networking',
-        'Gaming',
-        'Travel',
-        'Volunteering',
-        'Shopping',
-        'Gardening',
-        'Cooking',
-        'Baking',
-        'Fashion & Style'
-      ]
-    }
-  ];
+  cities: string[] = CITIES_LIST;
+  preferencesList: PreferenceCategory[] = PREFERENCES_LIST;
 
   completeProfileForm!: FormGroup;
   errorMessage!: string;

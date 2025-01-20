@@ -1,0 +1,80 @@
+<div class="profile-update-container" *ngIf="!isLoading; else loading">
+  <form [formGroup]="profileUpdateForm" (ngSubmit)="onSubmit()">
+    <div *ngIf="errorMessage" class="error-message">
+      {{ errorMessage }}
+    </div>
+
+    <div>
+      <label for="username">Username:</label>
+      <input id="username" formControlName="username"/>
+      <div *ngIf="profileUpdateForm.get('username')?.invalid && profileUpdateForm.get('username')?.touched">
+        <div *ngIf="profileUpdateForm.get('username')?.errors?.['required']">
+          Username is required.
+        </div>
+        <div *ngIf="profileUpdateForm.get('username')?.errors?.['isEmail']">
+          Username must not be in email format.
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <label for="firstName">First Name:</label>
+      <input id="firstName" formControlName="firstName"/>
+      <div *ngIf="profileUpdateForm.get('firstName')?.invalid && profileUpdateForm.get('firstName')?.touched">
+        <div *ngIf="profileUpdateForm.get('firstName')?.errors?.['required']">
+          First Name is required.
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <label for="lastName">Last Name:</label>
+      <input id="lastName" formControlName="lastName"/>
+      <div *ngIf="profileUpdateForm.get('lastName')?.invalid && profileUpdateForm.get('lastName')?.touched">
+        <div *ngIf="profileUpdateForm.get('lastName')?.errors?.['required']">
+          Last Name is required.
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <label for="city">City:</label>
+      <select id="city" formControlName="city">
+        <option [value]="" disabled>-- Select City --</option>
+        <option *ngFor="let city of cities" [value]="city">{{ city }}</option>
+      </select>
+      <div *ngIf="profileUpdateForm.get('city')?.invalid && profileUpdateForm.get('city')?.touched">
+        <div *ngIf="profileUpdateForm.get('city')?.errors?.['required']">
+          City is required.
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <label>Preferences:</label>
+      <div *ngFor="let category of preferencesList" class="preference-category">
+        <h3>{{ category.category }}</h3>
+        <div class="chip-container">
+          <span
+            *ngFor="let pref of category.preferences"
+            class="chip"
+            [class.selected]="isPreferenceSelected(pref)"
+            (click)="togglePreference(pref)"
+          >
+            {{ pref }}
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <button type="submit" [disabled]="profileUpdateForm.invalid">
+      Update Profile
+    </button>
+  </form>
+</div>
+
+<ng-template #loading>
+  <div class="loading-spinner">
+    Loading profile...
+  </div>
+</ng-template>
