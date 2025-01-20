@@ -106,7 +106,19 @@ div * ngIf {
   bottom: -1.1rem;
 }
 
+
 .error-message {
-  color: red;
+  color: #e57373;
   margin-top: 10px;
+  font-size: 0.875rem;
+}
+
+input.ng-invalid.ng-touched,
+select.ng-invalid.ng-touched {
+  border-color: #e57373;
+}
+
+input.ng-valid.ng-touched,
+select.ng-valid.ng-touched {
+  border-color: #4caf50;
 }

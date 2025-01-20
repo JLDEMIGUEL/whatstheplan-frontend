@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
+import {AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {AuthService} from '../../../services/auth.service';
 import {Router} from '@angular/router';
 import {CommonModule, NgOptimizedImage} from '@angular/common';
@@ -28,7 +28,7 @@ export class LoginComponent implements OnInit {
     if (this.loginForm.valid) {
       const {email, password} = this.loginForm.value;
       try {
-        await this.authService.signIn(email, password);
+        await this.authService.login(email, password);
         await this.router.navigate(['/']);
       } catch (error) {
         if (error instanceof Error) {
@@ -42,6 +42,12 @@ export class LoginComponent implements OnInit {
   }
 
   signInWithGoogle() {
-    this.authService.signInWithGoogle();
+    this.authService.loginWithGoogle();
+  }
+
+
+  isFieldInvalid(field: string): boolean {
+    const control: AbstractControl | null = this.loginForm.get(field);
+    return !!(control && control.invalid && (control.dirty || control.touched));
   }
 }

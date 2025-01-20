@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
+import {AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
 import {CommonModule} from '@angular/common';
 import {UserService} from '../../../services/users.service';
@@ -64,7 +64,7 @@ export class CompleteProfileComponent implements OnInit {
     if (this.completeProfileForm.valid) {
       console.log(this.completeProfileForm.value)
       this.userService.createUser(this.completeProfileForm.value).subscribe({
-        next: (response) => {
+        next: () => {
           this.router.navigate(['/']);
         },
         error: (error) => {
@@ -77,5 +77,10 @@ export class CompleteProfileComponent implements OnInit {
         }
       });
     }
+  }
+
+  isFieldInvalid(field: string): boolean {
+    const control: AbstractControl | null = this.completeProfileForm.get(field);
+    return !!(control && control.invalid && (control.dirty || control.touched));
   }
 }

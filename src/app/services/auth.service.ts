@@ -38,8 +38,8 @@ export class AuthService {
     }
   }
 
-  async signUp(email: string, password: string) {
-    const signUpOutput = await signUp({
+  async register(email: string, password: string) {
+    return await signUp({
       username: email,
       password,
       options: {
@@ -48,20 +48,20 @@ export class AuthService {
         }
       }
     });
-    return signUpOutput;
   }
 
-  async signIn(username: string, password: string) {
+  async login(username: string, password: string) {
     const user = await signIn({username, password});
     this.isLoggedInSubject.next(true);
     return user;
   }
 
-  signInWithGoogle() {
+  loginWithGoogle() {
+    this.isLoggedInSubject.next(true);
     signInWithRedirect({provider: 'Google'});
   }
 
-  async signOut() {
+  async logout() {
     try {
       await signOut();
       localStorage.removeItem(localStorageKey)

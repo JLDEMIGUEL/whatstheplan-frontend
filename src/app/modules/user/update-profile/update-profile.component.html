@@ -3,9 +3,12 @@
     <div>
       <label for="username">Username:</label>
       <input id="username" formControlName="username"/>
-      <div *ngIf="profileUpdateForm.get('username')?.invalid && profileUpdateForm.get('username')?.touched">
+      <div *ngIf="isFieldInvalid('username')" class="error-message">
         <div *ngIf="profileUpdateForm.get('username')?.errors?.['required']">
           Username is required.
+        </div>
+        <div *ngIf="profileUpdateForm.get('username')?.errors?.['pattern']">
+          Username must be 3-30 characters and can include letters, numbers, dots, underscores, or hyphens.
         </div>
       </div>
     </div>
@@ -13,7 +16,7 @@
     <div>
       <label for="firstName">First Name:</label>
       <input id="firstName" formControlName="firstName"/>
-      <div *ngIf="profileUpdateForm.get('firstName')?.invalid && profileUpdateForm.get('firstName')?.touched">
+      <div *ngIf="isFieldInvalid('firstName')" class="error-message">
         <div *ngIf="profileUpdateForm.get('firstName')?.errors?.['required']">
           First Name is required.
         </div>
@@ -23,7 +26,7 @@
     <div>
       <label for="lastName">Last Name:</label>
       <input id="lastName" formControlName="lastName"/>
-      <div *ngIf="profileUpdateForm.get('lastName')?.invalid && profileUpdateForm.get('lastName')?.touched">
+      <div *ngIf="isFieldInvalid('lastName')" class="error-message">
         <div *ngIf="profileUpdateForm.get('lastName')?.errors?.['required']">
           Last Name is required.
         </div>
@@ -36,9 +39,9 @@
         <option [value]="" disabled>-- Select City --</option>
         <option *ngFor="let city of cities" [value]="city">{{ city }}</option>
       </select>
-      <div *ngIf="profileUpdateForm.get('city')?.invalid && profileUpdateForm.get('city')?.touched">
+      <div *ngIf="isFieldInvalid('city')" class="error-message">
         <div *ngIf="profileUpdateForm.get('city')?.errors?.['required']">
-          City is required.
+          Please select your city.
         </div>
       </div>
     </div>

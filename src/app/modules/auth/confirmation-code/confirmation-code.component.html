@@ -5,8 +5,7 @@
   <div>
     <label>Confirmation Code:</label>
     <input formControlName="confirmationCode"/>
-    <div
-      *ngIf="confirmationCodeForm.get('confirmationCode')?.invalid && confirmationCodeForm.get('confirmationCode')?.touched">
+    <div *ngIf="isFieldInvalid('confirmationCode')" class="error-message">
       Confirmation Code is required.
     </div>
   </div>

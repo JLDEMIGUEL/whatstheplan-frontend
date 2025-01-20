@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
+import {AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {AuthService} from '../../../services/auth.service';
 import {Router} from '@angular/router';
 import {CommonModule, NgOptimizedImage} from '@angular/common';
@@ -32,7 +32,7 @@ export class RegisterComponent implements OnInit {
     if (this.registerForm.valid) {
       const {email, password} = this.registerForm.value;
       try {
-        const signUpOutput = await this.authService.signUp(email, password);
+        const signUpOutput = await this.authService.register(email, password);
         localStorage.setItem('pendingUserId', signUpOutput.userId?.toString() || '');
         await this.router.navigate(['/confirmation-code']);
       } catch (error) {
@@ -53,6 +53,11 @@ export class RegisterComponent implements OnInit {
   }
 
   signInWithGoogle() {
-    this.authService.signInWithGoogle();
+    this.authService.loginWithGoogle();
+  }
+
+  isFieldInvalid(field: string): boolean {
+    const control: AbstractControl | null = this.registerForm.get(field);
+    return !!(control && control.invalid && (control.dirty || control.touched));
   }
 }

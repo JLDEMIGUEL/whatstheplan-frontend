@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
+import {AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {AuthService} from '../../../services/auth.service';
 import {Router} from '@angular/router';
 import {NgIf} from '@angular/common';
@@ -68,5 +68,10 @@ export class ConfirmationCodeComponent implements OnInit {
     setTimeout(() => {
       this.isResendDisabled = false;
     }, 10000);
+  }
+
+  isFieldInvalid(field: string): boolean {
+    const control: AbstractControl | null = this.confirmationCodeForm.get(field);
+    return !!(control && control.invalid && (control.dirty || control.touched));
   }
 }

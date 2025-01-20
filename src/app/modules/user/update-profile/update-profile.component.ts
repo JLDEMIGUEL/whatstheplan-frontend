@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
+import {AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {CommonModule} from '@angular/common';
 import {UserService} from '../../../services/users.service';
 import {Router} from '@angular/router';
@@ -101,5 +101,10 @@ export class UpdateProfileComponent implements OnInit {
         }
       });
     }
+  }
+
+  isFieldInvalid(field: string): boolean {
+    const control: AbstractControl | null = this.profileUpdateForm.get(field);
+    return !!(control && control.invalid && (control.dirty || control.touched));
   }
 }

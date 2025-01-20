@@ -2,7 +2,7 @@
   <div>
     <label>Email:</label>
     <input formControlName="email"/>
-    <div *ngIf="registerForm.get('email')?.invalid && registerForm.get('email')?.touched">
+    <div *ngIf="isFieldInvalid('email')" class="error-message">
       Enter a valid email.
     </div>
   </div>
@@ -10,7 +10,7 @@
   <div>
     <label>Password:</label>
     <input type="password" formControlName="password"/>
-    <div *ngIf="registerForm.get('password')?.invalid && registerForm.get('password')?.touched">
+    <div *ngIf="isFieldInvalid('password')" class="error-message">
       Password must be at least 8 characters, include uppercase, lowercase, number.
     </div>
   </div>
