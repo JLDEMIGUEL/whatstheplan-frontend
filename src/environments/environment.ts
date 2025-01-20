@@ -7,5 +7,6 @@ export const environment = {
     redirectSignIn: 'http://localhost:4200/',
     redirectSignOut: 'http://localhost:4200/'
   },
-  api: 'http://localhost:8080'
+  api: 'http://localhost:8080',
+  s3BaseUrl: 'https://whatstheplan-s3-images.s3.eu-west-1.amazonaws.com/'
 };

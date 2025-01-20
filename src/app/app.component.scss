@@ -10,4 +10,5 @@ router-outlet {
   justify-content: center;
   align-items: flex-start;
   overflow-y: auto;
+  max-height: 0;
 }

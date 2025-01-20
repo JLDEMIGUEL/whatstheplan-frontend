@@ -1,72 +1,56 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {NgForOf, NgIf} from '@angular/common';
-import {AuthService} from '../../../services/auth.service';
 import {Router} from '@angular/router';
-import {map, take} from 'rxjs/operators';
-import {Subscription} from 'rxjs';
+import {HttpErrorResponse} from '@angular/common/http';
+import {EventsService} from '../../../services/events.service';
+import {WTPEvent} from '../../../shared/model/events.model';
+import {environment} from '../../../../environments/environment';
 
 @Component({
   selector: 'app-recommendations',
-  templateUrl: './recommendations.component.html',
+  standalone: true,
   imports: [
     NgIf,
     NgForOf
   ],
-  standalone: true
+  templateUrl: './recommendations.component.html',
+  styleUrls: ['./recommendations.component.scss']
 })
-export class RecommendationsComponent implements OnInit, OnDestroy {
-  recommendations: any[] = [];
+export class RecommendationsComponent implements OnInit {
+  s3BaseUrl: string = environment.s3BaseUrl;
+  recommendations: WTPEvent[] = [];
   errorMessage!: string;
-  private subscription!: Subscription;
+  isLoading: boolean = true;
 
-  constructor(private authService: AuthService, private router: Router) {
+  constructor(private eventsService: EventsService, private router: Router) {
   }
 
-  async ngOnInit() {
-    await this.handleAuthCallback();
+  ngOnInit(): void {
+    this.fetchEvents();
+  }
 
-    this.subscription = this.authService.isLoggedIn$.pipe(
-      take(1),
-      map(isLoggedIn => {
-        if (isLoggedIn) {
-          try {
-            this.recommendations = [{
-              name: "EVENT",
-              description: "DESCRIPTION"
-            }];
-          } catch (error) {
-            if (error instanceof Error) {
-              this.errorMessage = error.message;
-            } else {
-              this.errorMessage = 'An unexpected error occurred.';
-            }
-            console.error(this.errorMessage);
-          }
-          return;
+  fetchEvents(): void {
+    this.eventsService.getEvents().subscribe({
+      next: (events: WTPEvent[]) => {
+        this.recommendations = events;
+        this.isLoading = false;
+      },
+      error: (error: any) => {
+        this.isLoading = false;
+        if (error instanceof HttpErrorResponse) {
+          this.errorMessage = error.error.reason || 'Failed to load events.';
         } else {
-          return this.router.parseUrl('/welcome');
+          this.errorMessage = 'An unexpected error occurred.';
         }
-      })
-    ).subscribe();
+        console.error(this.errorMessage);
+      }
+    });
   }
 
-  ngOnDestroy() {
-    if (this.subscription) {
-      this.subscription.unsubscribe();
-    }
+  getImageUrl(s3key: string): string {
+    return `${this.s3BaseUrl}${s3key}`;
   }
 
-  private async handleAuthCallback(): Promise<void> {
-    try {
-      await this.authService.checkCurrentUser();
-
-      this.router.navigate([], {
-        queryParams: {},
-        replaceUrl: true
-      });
-    } catch (error) {
-      console.error('Authentication error:', error);
-      this.router.navigate(['/login'], {queryParams: {error: 'Authentication failed'}});
-    }
+  viewEventDetails(event: WTPEvent): void {
   }
 }

@@ -43,7 +43,14 @@ export class UserService {
       }),
       catchError((error) => {
         console.error('Error fetching user profile:', error);
-        return throwError(error);
+        // TODO REPLACE BY        return throwError(error);
+        return of({
+          username: "string",
+          firstName: "string",
+          lastName: "string",
+          city: "string",
+          preferences: []
+        });
       })
     );
   }

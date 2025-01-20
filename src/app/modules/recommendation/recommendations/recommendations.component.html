@@ -1,8 +1,19 @@
 <div *ngIf="recommendations.length > 0; else noRecommendations">
-  <div *ngFor="let event of recommendations">
-    <h3>{{ event.name }}</h3>
-    <p>{{ event.description }}</p>
+  <div class="events-container">
+    <div *ngFor="let event of recommendations" class="event-card">
+      <img
+        [src]="getImageUrl(event.s3key)"
+        alt="{{ event.name }}"
+        class="event-image"
+      />
+      <div class="event-content">
+        <h3>{{ event.name }}</h3>
+        <p>{{ event.description }}</p>
+        <button (click)="viewEventDetails(event)">See Details</button>
+      </div>
+    </div>
   </div>
+
 </div>
 <ng-template #noRecommendations>
   <p>No personalized recommendations available.</p>
