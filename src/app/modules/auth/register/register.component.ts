@@ -1,5 +1,12 @@
 import {Component, OnInit} from '@angular/core';
-import {AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
+import {
+  AbstractControl,
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  ValidationErrors,
+  Validators
+} from '@angular/forms';
 import {AuthService} from '../../../services/auth.service';
 import {Router} from '@angular/router';
 import {CommonModule, NgOptimizedImage} from '@angular/common';
@@ -8,24 +15,41 @@ import {CommonModule, NgOptimizedImage} from '@angular/common';
   selector: 'app-register',
   imports: [CommonModule, ReactiveFormsModule, NgOptimizedImage],
   templateUrl: './register.component.html',
-  styleUrl: './register.component.scss'
+  styleUrls: ['./register.component.scss']
 })
 export class RegisterComponent implements OnInit {
   registerForm!: FormGroup;
   errorMessage!: string;
 
-  constructor(private fb: FormBuilder, private authService: AuthService, private router: Router) {
+  constructor(
+    private fb: FormBuilder,
+    private authService: AuthService,
+    private router: Router
+  ) {
   }
 
   ngOnInit() {
-    this.registerForm = this.fb.group({
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', [
-        Validators.required,
-        Validators.minLength(8),
-        Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/)
-      ]]
-    });
+    this.registerForm = this.fb.group(
+      {
+        email: ['', [Validators.required, Validators.email]],
+        password: [
+          '',
+          [
+            Validators.required,
+            Validators.minLength(8),
+            Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/)
+          ]
+        ],
+        confirmPassword: ['',
+          [
+            Validators.required,
+            Validators.minLength(8),
+            Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/)
+          ]
+        ]
+      },
+      {validators: this.passwordMatchValidator}
+    );
   }
 
   async onSubmit() {
@@ -47,8 +71,11 @@ export class RegisterComponent implements OnInit {
         } else {
           this.errorMessage = 'An unexpected error occurred.';
         }
-        console.error(this.errorMessage)
+        console.error(this.errorMessage);
       }
+    } else {
+      // Mark all fields as touched to trigger validation messages
+      this.registerForm.markAllAsTouched();
     }
   }
 
@@ -60,4 +87,15 @@ export class RegisterComponent implements OnInit {
     const control: AbstractControl | null = this.registerForm.get(field);
     return !!(control && control.invalid && (control.dirty || control.touched));
   }
+
+  passwordMatchValidator(formGroup: FormGroup): ValidationErrors | null {
+    const password = formGroup.get('password')?.value;
+    const confirmPassword = formGroup.get('confirmPassword')?.value;
+
+    if (confirmPassword != '' && password !== confirmPassword) {
+      return {passwordMismatch: true};
+    }
+    return null;
+  };
+
 }

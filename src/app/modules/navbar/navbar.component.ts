@@ -12,7 +12,7 @@ import {RouterLink} from '@angular/router';
     RouterLink
   ],
   templateUrl: './navbar.component.html',
-  styleUrl: './navbar.component.scss'
+  styleUrls: ['./navbar.component.scss']
 })
 export class NavbarComponent implements OnInit {
   isLoggedIn$!: Observable<boolean>;

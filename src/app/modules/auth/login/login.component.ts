@@ -8,7 +8,7 @@ import {CommonModule, NgOptimizedImage} from '@angular/common';
   selector: 'app-login',
   imports: [CommonModule, ReactiveFormsModule, NgOptimizedImage],
   templateUrl: './login.component.html',
-  styleUrl: './login.component.scss'
+  styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
   loginForm!: FormGroup;

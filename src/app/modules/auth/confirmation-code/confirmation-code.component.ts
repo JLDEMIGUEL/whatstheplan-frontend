@@ -11,7 +11,7 @@ import {NgIf} from '@angular/common';
     ReactiveFormsModule
   ],
   templateUrl: './confirmation-code.component.html',
-  styleUrl: './confirmation-code.component.scss'
+  styleUrls: ['./confirmation-code.component.scss']
 })
 export class ConfirmationCodeComponent implements OnInit {
   confirmationCodeForm!: FormGroup;
