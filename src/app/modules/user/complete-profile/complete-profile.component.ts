@@ -2,7 +2,6 @@ import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
 import {CommonModule} from '@angular/common';
-import {notEmailValidator} from '../../../utils/validation-utils';
 import {UserService} from '../../../services/users.service';
 import {HttpErrorResponse} from '@angular/common/http';
 import {CITIES_LIST} from '../../../shared/constants/cities.constants';
@@ -36,7 +35,7 @@ export class CompleteProfileComponent implements OnInit {
 
   ngOnInit() {
     this.completeProfileForm = this.fb.group({
-      username: ['', [Validators.required, notEmailValidator]],
+      username: ['', [Validators.required, Validators.pattern('^[a-zA-Z0-9._-]{3,30}$')]],
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
       city: ['', Validators.required],

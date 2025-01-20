@@ -7,9 +7,6 @@
         <div *ngIf="profileUpdateForm.get('username')?.errors?.['required']">
           Username is required.
         </div>
-        <div *ngIf="profileUpdateForm.get('username')?.errors?.['isEmail']">
-          Username must not be in email format.
-        </div>
       </div>
     </div>
 

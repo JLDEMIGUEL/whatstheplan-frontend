@@ -4,7 +4,6 @@ import {CommonModule} from '@angular/common';
 import {UserService} from '../../../services/users.service';
 import {Router} from '@angular/router';
 import {HttpErrorResponse} from '@angular/common/http';
-import {notEmailValidator} from '../../../utils/validation-utils';
 import {CITIES_LIST} from '../../../shared/constants/cities.constants';
 import {PreferenceCategory, PREFERENCES_LIST} from '../../../shared/constants/preferences.constants';
 import {UserProfile} from '../../../shared/model/users-profile.model';
@@ -37,7 +36,7 @@ export class UpdateProfileComponent implements OnInit {
 
   initializeForm(): void {
     this.profileUpdateForm = this.fb.group({
-      username: ['', [Validators.required, notEmailValidator]],
+      username: ['', [Validators.required, Validators.pattern('^[a-zA-Z0-9._-]{3,30}$')]],
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
       city: ['', Validators.required],
