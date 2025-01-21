@@ -36,7 +36,7 @@
 
   .event-image {
     width: 150px;
-    height: 150px;
+    min-height: 100%;
     object-fit: cover;
     border-right: 1px solid #ccc;
   }
