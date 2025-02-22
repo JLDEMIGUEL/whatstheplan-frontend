@@ -18,7 +18,7 @@ export class EventsService {
     {
       id: uuidv4(),
       title: 'Default Event 1',
-      description: 'This is a default event description.',
+      description: 'This is a default event description. This is a default event description. This is a default event description. This is a default event description. This is a default event description. This is a default event description. This is a default event description. This is a default event description. This is a default event description. This is a default event description. This is a default event description. This is a default event description. This is a default event description. This is a default event description.',
       imageKey: 'events-1.png',
       dateTime: new Date().toISOString(),
       duration: 'PT2H',

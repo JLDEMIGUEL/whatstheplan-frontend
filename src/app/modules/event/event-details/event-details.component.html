@@ -1,6 +1,9 @@
 <div class="event-details-container" *ngIf="event">
-  <div class="event-header">
+  <div class="event-card">
+    <!-- Event Image at the Top -->
     <img [src]="getImageUrl(event.imageKey)" alt="{{ event.title }}" class="event-image"/>
+
+    <!-- Event Information Below the Image -->
     <div class="event-info">
       <h1>{{ event.title }}</h1>
       <p class="event-description">{{ event.description }}</p>
