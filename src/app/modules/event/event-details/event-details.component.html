@@ -1,0 +1,33 @@
+<div class="event-details-container" *ngIf="event">
+  <div class="event-header">
+    <img [src]="getImageUrl(event.imageKey)" alt="{{ event.title }}" class="event-image"/>
+    <div class="event-info">
+      <h1>{{ event.title }}</h1>
+      <p class="event-description">{{ event.description }}</p>
+
+      <div class="event-meta">
+        <p><strong>Date & Time:</strong> {{ formatDateTime(event.dateTime) }}</p>
+        <p><strong>Duration:</strong> {{ event.duration }} hours</p>
+        <p><strong>Location:</strong> {{ event.location }}</p>
+        <p><strong>Capacity:</strong> {{ event.registrations }} / {{ event.capacity }}</p>
+        <p><strong>Activity Types:</strong> {{ event.activityTypes.join(', ') }}</p>
+      </div>
+
+      <div class="event-organizer">
+        <p><strong>Organized by:</strong> {{ event.organizerUsername }} ({{ event.organizerEmail }})</p>
+      </div>
+
+      <button class="register-button" (click)="onRegister()" [disabled]="isFull">
+        {{ isFull ? 'Event Full' : 'Register Now' }}
+      </button>
+    </div>
+  </div>
+
+  <div *ngIf="errorMessage" class="error-message">
+    {{ errorMessage }}
+  </div>
+</div>
+
+<div *ngIf="!event && !errorMessage" class="loading">
+  Loading event details...
+</div>

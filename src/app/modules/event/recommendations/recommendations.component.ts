@@ -51,6 +51,7 @@ export class RecommendationsComponent implements OnInit {
     return `${this.s3BaseUrl}${s3key}`;
   }
 
-  viewEventDetails(event: WTPEvent): void {
+  async viewEventDetails(event: WTPEvent): Promise<void> {
+    await this.router.navigate([`/events/${event.id}`]);
   }
 }
