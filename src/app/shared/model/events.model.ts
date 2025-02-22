@@ -1,6 +1,17 @@
 export interface WTPEvent {
-  id: string,
-  name: string;
+  id: string;
+  title: string;
   description: string;
-  s3key: string;
+  dateTime: string;
+  duration: string;
+  location: string;
+  capacity: number;
+  imageKey: string;
+  organizerId: string;
+  organizerUsername: string;
+  organizerEmail: string;
+  createdDate: string;
+  lastModifiedDate: string;
+  activityTypes: string[];
+  registrations: number;
 }

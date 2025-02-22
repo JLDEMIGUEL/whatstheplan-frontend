@@ -5,6 +5,8 @@ import {Observable, of} from 'rxjs';
 import {catchError, map, switchMap} from 'rxjs/operators';
 import {environment} from '../../environments/environment';
 import {WTPEvent} from '../shared/model/events.model';
+import {v4 as uuidv4} from 'uuid';
+
 
 @Injectable({
   providedIn: 'root'
@@ -14,23 +16,56 @@ export class EventsService {
 
   private defaultEvents: WTPEvent[] = [
     {
-      id: '1',
-      name: 'Default Event 1',
+      id: uuidv4(),
+      title: 'Default Event 1',
       description: 'This is a default event description.',
-      s3key: 'events-1.png'
+      imageKey: 'events-1.png',
+      dateTime: new Date().toISOString(),
+      duration: 'PT2H',
+      location: 'Madrid, Spain',
+      capacity: 100,
+      organizerId: uuidv4(),
+      organizerUsername: 'organizer1',
+      organizerEmail: 'organizer1@example.com',
+      createdDate: new Date().toISOString(),
+      lastModifiedDate: new Date().toISOString(),
+      activityTypes: ['Workshop', 'Networking'],
+      registrations: 50,
     },
     {
-      id: '1',
-      name: 'Default Event 2',
+      id: uuidv4(),
+      title: 'Default Event 2',
       description: 'Another default event for fallback.',
-      s3key: 'events-1.png'
+      imageKey: 'events-1.png',
+      dateTime: new Date().toISOString(),
+      duration: 'PT3H',
+      location: 'Barcelona, Spain',
+      capacity: 150,
+      organizerId: uuidv4(),
+      organizerUsername: 'organizer2',
+      organizerEmail: 'organizer2@example.com',
+      createdDate: new Date().toISOString(),
+      lastModifiedDate: new Date().toISOString(),
+      activityTypes: ['Seminar', 'Exhibition'],
+      registrations: 75,
     },
     {
-      id: '3',
-      name: 'Default Event 3',
+      id: uuidv4(),
+      title: 'Default Event 3',
       description: 'This is a default event description.',
-      s3key: 'events-1.png'
-    }
+      imageKey: 'events-1.png',
+      dateTime: new Date().toISOString(),
+      duration: 'PT1H30M',
+      location: 'Valencia, Spain',
+      capacity: 80,
+      organizerId: uuidv4(),
+      organizerUsername: 'organizer3',
+      organizerEmail: 'organizer3@example.com',
+      createdDate: new Date().toISOString(),
+      lastModifiedDate: new Date().toISOString(),
+      activityTypes: ['Conference', 'Meetup'],
+      registrations: 60,
+    },
   ];
 
   constructor(private http: HttpClient) {
