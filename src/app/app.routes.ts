@@ -12,6 +12,7 @@ import {CompleteProfileGuard} from './guards/complete-profile.guard';
 import {ProfileDetailsComponent} from './modules/user/profile-details/profile-details.component';
 import {UpdateProfileComponent} from './modules/user/update-profile/update-profile.component';
 import {EventDetailsComponent} from './modules/event/event-details/event-details.component';
+import {EventCreateComponent} from './modules/event/event-create/event-create.component';
 
 export const AppRoutes: Routes = [
   // Public routes
@@ -30,6 +31,7 @@ export const AppRoutes: Routes = [
   {path: 'profile', component: ProfileDetailsComponent, canActivate: [AuthGuard]},
   {path: 'edit-profile', component: UpdateProfileComponent, canActivate: [AuthGuard]},
   {path: 'events/:id', component: EventDetailsComponent, canActivate: [AuthGuard]},
+  {path: 'events-create', component: EventCreateComponent, canActivate: [AuthGuard]},
 
 
   // Redirections

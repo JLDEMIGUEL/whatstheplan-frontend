@@ -1,0 +1,85 @@
+<div class="event-create-container">
+  <h1>Create new event</h1>
+
+  <form [formGroup]="eventForm" (ngSubmit)="onSubmit()">
+    <!-- Title -->
+    <div class="form-group">
+      <label for="title">Event Title:</label>
+      <input id="title" formControlName="title" type="text" placeholder="Enter event title"/>
+      <div class="error" *ngIf="eventForm.get('title')?.invalid && eventForm.get('title')?.touched">
+        {{ getErrorMessage('title') }}
+      </div>
+    </div>
+
+    <!-- Description -->
+    <div class="form-group">
+      <label for="description">Description:</label>
+      <textarea id="description" formControlName="description" rows="4"
+                placeholder="Enter event description"></textarea>
+      <div class="error" *ngIf="eventForm.get('description')?.invalid && eventForm.get('description')?.touched">
+        {{ getErrorMessage('description') }}
+      </div>
+    </div>
+
+    <!-- Date and Time -->
+    <div class="form-group">
+      <label for="dateTime">Event Date & Time:</label>
+      <input id="dateTime" formControlName="dateTime" type="datetime-local"/>
+      <div class="error" *ngIf="eventForm.get('dateTime')?.invalid && eventForm.get('dateTime')?.touched">
+        {{ getErrorMessage('dateTime') }}
+      </div>
+    </div>
+
+    <!-- Duration -->
+    <div class="form-group">
+      <label for="duration">Duration (hours):</label>
+      <input id="duration" formControlName="duration" type="number" min="1" placeholder="Enter duration in hours"/>
+      <div class="error" *ngIf="eventForm.get('duration')?.invalid && eventForm.get('duration')?.touched">
+        {{ getErrorMessage('duration') }}
+      </div>
+    </div>
+
+    <!-- Location -->
+    <div class="form-group">
+      <label for="location">Location:</label>
+      <input id="location" formControlName="location" type="text" placeholder="Enter location"/>
+      <div class="error" *ngIf="eventForm.get('location')?.invalid && eventForm.get('location')?.touched">
+        {{ getErrorMessage('location') }}
+      </div>
+    </div>
+
+    <!-- Capacity -->
+    <div class="form-group">
+      <label for="capacity">Capacity:</label>
+      <input id="capacity" formControlName="capacity" type="number" min="1" placeholder="Enter event capacity"/>
+      <div class="error" *ngIf="eventForm.get('capacity')?.invalid && eventForm.get('capacity')?.touched">
+        {{ getErrorMessage('capacity') }}
+      </div>
+    </div>
+
+    <!-- Activity Types -->
+    <div class="form-group">
+      <label for="activityTypes">Activity Types:</label>
+      <div class="chip-container">
+        <span
+          *ngFor="let activity of activityOptions"
+          class="chip"
+          [class.selected]="eventForm.get('activityTypes')?.value.includes(activity)"
+          (click)="toggleActivityType(activity)"
+        >
+          {{ activity }}
+        </span>
+      </div>
+    </div>
+
+    <!-- Submit Button -->
+    <div class="form-group">
+      <button type="submit" [disabled]="eventForm.invalid">Create Event</button>
+    </div>
+
+    <!-- Error Message -->
+    <div *ngIf="errorMessage" class="error-message">
+      {{ errorMessage }}
+    </div>
+  </form>
+</div>

@@ -107,6 +107,18 @@ export class EventsService {
     );
   }
 
+  createEvent(eventData: any) {
+    return this.addAuthHeaders().pipe(
+      switchMap((headers) =>
+        this.http.post(`${this.baseUrl}/events`, eventData, {
+          headers,
+          withCredentials: true
+        })
+      )
+    );
+  }
+
+
   private addAuthHeaders(): Observable<HttpHeaders> {
     return new Observable((observer) => {
       fetchAuthSession()

@@ -1,5 +1,11 @@
 <div *ngIf="recommendations.length > 0; else noRecommendations">
   <div class="events-container">
+    <div class="create-event-container">
+      <button (click)="createNewEvent()">
+        <span class="plus-circle">+</span>
+        <span class="btn-text">Create new event</span>
+      </button>
+    </div>
     <div *ngFor="let event of recommendations" class="event-card">
       <img
         [src]="getImageUrl(event.imageKey)"
@@ -13,8 +19,8 @@
       </div>
     </div>
   </div>
-
 </div>
+
 <ng-template #noRecommendations>
   <p>No personalized recommendations available.</p>
 </ng-template>
