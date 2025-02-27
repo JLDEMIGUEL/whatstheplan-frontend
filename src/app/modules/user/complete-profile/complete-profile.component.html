@@ -51,7 +51,7 @@
       <h3>{{ category.category }}</h3>
       <div class="chip-container">
         <span
-          *ngFor="let pref of category.preferences"
+          *ngFor="let pref of category.names"
           class="chip"
           [class.selected]="isPreferenceSelected(pref)"
           (click)="togglePreference(pref)"

@@ -5,7 +5,7 @@ import {CommonModule} from '@angular/common';
 import {UserService} from '../../../services/users.service';
 import {HttpErrorResponse} from '@angular/common/http';
 import {CITIES_LIST} from '../../../shared/constants/cities.constants';
-import {ACTIVITY_TYPE, ActivityCategory} from '../../../shared/constants/preferences.constants';
+import {ACTIVITY_TYPE, ActivityCategory} from '../../../shared/constants/activities.constants';
 
 @Component({
   selector: 'app-complete-profile',

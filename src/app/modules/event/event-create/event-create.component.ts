@@ -4,6 +4,7 @@ import {EventsService} from '../../../services/events.service';
 import {NgForOf, NgIf} from '@angular/common';
 import {CITIES_LIST} from '../../../shared/constants/cities.constants';
 import {Duration} from "luxon";
+import {ACTIVITY_TYPE, ActivityCategory} from '../../../shared/constants/activities.constants';
 
 
 @Component({
@@ -18,7 +19,7 @@ import {Duration} from "luxon";
 })
 export class EventCreateComponent {
   eventForm: FormGroup;
-  activityOptions: string[] = ['Sports', 'Music', 'Art', 'Technology', 'Food', 'Networking'];
+  activityOptions: ActivityCategory[] = ACTIVITY_TYPE;
   errorMessage: string | null = null;
   locations: string[] = CITIES_LIST;
 
@@ -35,15 +36,6 @@ export class EventCreateComponent {
       capacity: [1, [Validators.required, Validators.min(1)]],
       activityTypes: [[]]
     });
-  }
-
-  toggleActivityType(activity: string): void {
-    const currentActivities = this.eventForm.get('activityTypes')?.value || [];
-    if (currentActivities.includes(activity)) {
-      this.eventForm.get('activityTypes')?.setValue(currentActivities.filter((a: string) => a !== activity));
-    } else {
-      this.eventForm.get('activityTypes')?.setValue([...currentActivities, activity]);
-    }
   }
 
   getErrorMessage(controlName: string): string {
@@ -89,5 +81,22 @@ export class EventCreateComponent {
   isFieldInvalid(field: string): boolean {
     const control: AbstractControl | null = this.eventForm.get(field);
     return !!(control && control.invalid && (control.dirty || control.touched));
+  }
+
+  togglePreference(activity: string): void {
+    const selectedActivities = this.eventForm.get('activityTypes')?.value as string[];
+    if (selectedActivities.includes(activity)) {
+      this.eventForm.patchValue({
+        activityTypes: selectedActivities.filter(p => p !== activity)
+      });
+    } else {
+      this.eventForm.patchValue({
+        activityTypes: [...selectedActivities, activity]
+      });
+    }
+  }
+
+  isPreferenceSelected(pref: string): boolean {
+    return this.eventForm.get('activityTypes')?.value.includes(pref);
   }
 }

@@ -49,7 +49,7 @@ export class UserService {
           firstName: "string",
           lastName: "string",
           city: "string",
-          preferences: []
+          preferences: ["Swimming", "Soccer"]
         });
       })
     );

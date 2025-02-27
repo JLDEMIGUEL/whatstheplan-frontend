@@ -5,7 +5,7 @@ import {UserService} from '../../../services/users.service';
 import {Router} from '@angular/router';
 import {HttpErrorResponse} from '@angular/common/http';
 import {CITIES_LIST} from '../../../shared/constants/cities.constants';
-import {ACTIVITY_TYPE, ActivityCategory} from '../../../shared/constants/preferences.constants';
+import {ACTIVITY_TYPE, ActivityCategory} from '../../../shared/constants/activities.constants';
 import {UserProfile} from '../../../shared/model/users-profile.model';
 
 @Component({

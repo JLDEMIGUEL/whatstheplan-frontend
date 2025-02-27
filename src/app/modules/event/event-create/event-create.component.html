@@ -92,15 +92,18 @@
     <!-- Activity Types -->
     <div class="form-group">
       <label for="activityTypes">Activity Types:</label>
-      <div class="chip-container">
+      <div *ngFor="let category of activityOptions" class="activity-category">
+        <h3>{{ category.category }}</h3>
+        <div class="chip-container">
         <span
-          *ngFor="let activity of activityOptions"
+          *ngFor="let pref of category.names"
           class="chip"
-          [class.selected]="eventForm.get('activityTypes')?.value.includes(activity)"
-          (click)="toggleActivityType(activity)"
+          [class.selected]="isPreferenceSelected(pref)"
+          (click)="togglePreference(pref)"
         >
-          {{ activity }}
+          {{ pref }}
         </span>
+        </div>
       </div>
     </div>
 
