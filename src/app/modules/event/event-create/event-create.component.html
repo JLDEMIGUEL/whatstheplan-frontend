@@ -32,19 +32,51 @@
 
     <!-- Duration -->
     <div class="form-group">
-      <label for="duration">Duration (hours):</label>
-      <input id="duration" formControlName="duration" type="number" min="1" placeholder="Enter duration in hours"/>
-      <div class="error" *ngIf="eventForm.get('duration')?.invalid && eventForm.get('duration')?.touched">
-        {{ getErrorMessage('duration') }}
+      <label>Duration:</label>
+      <div formGroupName="duration" class="duration-group">
+        <!-- Hours -->
+        <input
+          id="duration-hours"
+          formControlName="hours"
+          type="number"
+          min="0"
+          placeholder="Hours"
+        />
+
+        <span class="separator">:</span>
+
+        <!-- Minutes -->
+        <input
+          id="duration-minutes"
+          formControlName="minutes"
+          type="number"
+          min="0"
+          max="59"
+          placeholder="Minutes"
+        />
+      </div>
+
+      <!-- Error handling -->
+      <div class="error" *ngIf="eventForm.get('duration.hours')?.invalid && eventForm.get('duration.hours')?.touched">
+        {{ getErrorMessage('duration.hours') }}
+      </div>
+      <div class="error"
+           *ngIf="eventForm.get('duration.minutes')?.invalid && eventForm.get('duration.minutes')?.touched">
+        {{ getErrorMessage('duration.minutes') }}
       </div>
     </div>
 
     <!-- Location -->
     <div class="form-group">
       <label for="location">Location:</label>
-      <input id="location" formControlName="location" type="text" placeholder="Enter location"/>
-      <div class="error" *ngIf="eventForm.get('location')?.invalid && eventForm.get('location')?.touched">
-        {{ getErrorMessage('location') }}
+      <select id="location" formControlName="location">
+        <option [value]="" disabled>-- Select Location --</option>
+        <option *ngFor="let location of locations" [value]="location">{{ location }}</option>
+      </select>
+      <div *ngIf="isFieldInvalid('location')" class="error">
+        <div *ngIf="eventForm.get('location')?.errors?.['required']">
+          Please select your location.
+        </div>
       </div>
     </div>
 

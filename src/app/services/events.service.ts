@@ -4,7 +4,7 @@ import {fetchAuthSession} from 'aws-amplify/auth';
 import {Observable, of} from 'rxjs';
 import {catchError, map, switchMap} from 'rxjs/operators';
 import {environment} from '../../environments/environment';
-import {WTPEvent} from '../shared/model/events.model';
+import {WTPEvent, WTPEventRequest} from '../shared/model/events.model';
 import {v4 as uuidv4} from 'uuid';
 
 
@@ -107,7 +107,7 @@ export class EventsService {
     );
   }
 
-  createEvent(eventData: any) {
+  createEvent(eventData: WTPEventRequest) {
     return this.addAuthHeaders().pipe(
       switchMap((headers) =>
         this.http.post(`${this.baseUrl}/events`, eventData, {

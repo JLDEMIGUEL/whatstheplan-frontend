@@ -15,3 +15,13 @@ export interface WTPEvent {
   activityTypes: string[];
   registrations: number;
 }
+
+export interface WTPEventRequest {
+  title: string;
+  description: string;
+  dateTime: string;
+  duration: string;
+  location: string;
+  capacity: number;
+  activityTypes: string[];
+}
