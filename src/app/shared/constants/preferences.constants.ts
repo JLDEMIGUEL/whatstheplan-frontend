@@ -1,12 +1,12 @@
-export interface PreferenceCategory {
+export interface ActivityCategory {
   category: string;
-  preferences: string[];
+  names: string[];
 }
 
-export const PREFERENCES_LIST: PreferenceCategory[] = [
+export const ACTIVITY_TYPE: ActivityCategory[] = [
   {
     category: 'Sports',
-    preferences: [
+    names: [
       'Soccer',
       'Basketball',
       'Tennis',
@@ -27,7 +27,7 @@ export const PREFERENCES_LIST: PreferenceCategory[] = [
   },
   {
     category: 'Arts & Culture',
-    preferences: [
+    names: [
       'Music',
       'Arts',
       'Photography',
@@ -37,7 +37,7 @@ export const PREFERENCES_LIST: PreferenceCategory[] = [
   },
   {
     category: 'Technology & Education',
-    preferences: [
+    names: [
       'Technology',
       'Education',
       'Language Learning',
@@ -47,7 +47,7 @@ export const PREFERENCES_LIST: PreferenceCategory[] = [
   },
   {
     category: 'Health & Wellness',
-    preferences: [
+    names: [
       'Wellness & Fitness',
       'Fitness & Bodybuilding',
       'Meditation & Mindfulness'
@@ -55,7 +55,7 @@ export const PREFERENCES_LIST: PreferenceCategory[] = [
   },
   {
     category: 'Social & Outdoor Activities',
-    preferences: [
+    names: [
       'Outdoors',
       'Social Events',
       'Networking',
@@ -72,16 +72,16 @@ export const PREFERENCES_LIST: PreferenceCategory[] = [
 ];
 
 
-export function categorizePreferences(preferences: string[]): PreferenceCategory[] {
-  return PREFERENCES_LIST.reduce((result: PreferenceCategory[], category) => {
-    const matchedPreferences = category.preferences.filter((pref) =>
+export function categorizePreferences(preferences: string[]): ActivityCategory[] {
+  return ACTIVITY_TYPE.reduce((result: ActivityCategory[], category) => {
+    const matchedPreferences = category.names.filter((pref) =>
       preferences.includes(pref)
     );
 
     if (matchedPreferences.length > 0) {
       result.push({
         category: category.category,
-        preferences: matchedPreferences
+        names: matchedPreferences
       });
     }
 

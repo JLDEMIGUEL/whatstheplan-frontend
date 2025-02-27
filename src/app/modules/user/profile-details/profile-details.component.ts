@@ -3,7 +3,7 @@ import {CommonModule} from '@angular/common';
 import {UserService} from '../../../services/users.service';
 import {Router} from '@angular/router';
 import {HttpErrorResponse} from '@angular/common/http';
-import {categorizePreferences, PreferenceCategory} from '../../../shared/constants/preferences.constants';
+import {ActivityCategory, categorizePreferences} from '../../../shared/constants/preferences.constants';
 
 interface UserProfile {
   username: string;
@@ -22,7 +22,7 @@ interface UserProfile {
 })
 export class ProfileDetailsComponent implements OnInit {
   userProfile!: UserProfile;
-  preferencesSelected!: PreferenceCategory [];
+  preferencesSelected!: ActivityCategory [];
   isLoading: boolean = true;
   errorMessage!: string;
 

@@ -5,7 +5,7 @@ import {UserService} from '../../../services/users.service';
 import {Router} from '@angular/router';
 import {HttpErrorResponse} from '@angular/common/http';
 import {CITIES_LIST} from '../../../shared/constants/cities.constants';
-import {PreferenceCategory, PREFERENCES_LIST} from '../../../shared/constants/preferences.constants';
+import {ACTIVITY_TYPE, ActivityCategory} from '../../../shared/constants/preferences.constants';
 import {UserProfile} from '../../../shared/model/users-profile.model';
 
 @Component({
@@ -17,7 +17,7 @@ import {UserProfile} from '../../../shared/model/users-profile.model';
 })
 export class UpdateProfileComponent implements OnInit {
   cities: string[] = CITIES_LIST;
-  preferencesList: PreferenceCategory[] = PREFERENCES_LIST;
+  preferencesList: ActivityCategory[] = ACTIVITY_TYPE;
   profileUpdateForm!: FormGroup;
   errorMessage!: string;
   isLoading: boolean = true;

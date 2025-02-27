@@ -5,12 +5,7 @@ import {CommonModule} from '@angular/common';
 import {UserService} from '../../../services/users.service';
 import {HttpErrorResponse} from '@angular/common/http';
 import {CITIES_LIST} from '../../../shared/constants/cities.constants';
-import {PREFERENCES_LIST} from '../../../shared/constants/preferences.constants';
-
-interface PreferenceCategory {
-  category: string;
-  preferences: string[];
-}
+import {ACTIVITY_TYPE, ActivityCategory} from '../../../shared/constants/preferences.constants';
 
 @Component({
   selector: 'app-complete-profile',
@@ -21,7 +16,7 @@ interface PreferenceCategory {
 })
 export class CompleteProfileComponent implements OnInit {
   cities: string[] = CITIES_LIST;
-  preferencesList: PreferenceCategory[] = PREFERENCES_LIST;
+  preferencesList: ActivityCategory[] = ACTIVITY_TYPE;
 
   completeProfileForm!: FormGroup;
   errorMessage!: string;
