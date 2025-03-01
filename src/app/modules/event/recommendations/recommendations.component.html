@@ -13,23 +13,22 @@
       <!-- Duration Range Dropdown -->
       <div class="dropdown-range">
         <div class="dropdown-header" (click)="toggleDurationDropdown()">
-            <span *ngIf="filters.durationFrom || filters.durationTo; else durationPlaceholder">
-              {{ filters.durationFrom }} - {{ filters.durationTo }}
-            </span>
-          <ng-template #durationPlaceholder>
-            Duration range
-          </ng-template>
+          Duration range
         </div>
         <div class="dropdown-content" *ngIf="durationDropdownOpen">
           <input
-            type="text"
-            placeholder="From"
+            type="number"
+            min="0"
+            max="24"
+            placeholder="Hours From"
             [(ngModel)]="filters.durationFrom"
             name="durationFrom"
           />
           <input
-            type="text"
-            placeholder="To"
+            type="number"
+            min="0"
+            max="24"
+            placeholder="Hours To"
             [(ngModel)]="filters.durationTo"
             name="durationTo"
           />
@@ -40,13 +39,7 @@
       <!-- Datetime Range Dropdown -->
       <div class="dropdown-range">
         <div class="dropdown-header" (click)="toggleDateTimeDropdown()">
-            <span *ngIf="filters.dateTimeFrom || filters.dateTimeTo; else datetimePlaceholder">
-              {{ filters.dateTimeFrom ? (filters.dateTimeFrom | date:'short') : '' }} -
-              {{ filters.dateTimeTo ? (filters.dateTimeTo | date:'short') : '' }}
-            </span>
-          <ng-template #datetimePlaceholder>
-            Datetime range
-          </ng-template>
+          Datetime range
         </div>
         <div class="dropdown-content" *ngIf="dateTimeDropdownOpen">
           <input

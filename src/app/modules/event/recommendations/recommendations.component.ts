@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {CommonModule, NgForOf, NgIf} from '@angular/common';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {Router} from '@angular/router';
 import {HttpErrorResponse} from '@angular/common/http';
 import {EventsService} from '../../../services/events.service';
@@ -14,7 +14,8 @@ import {environment} from '../../../../environments/environment';
     NgIf,
     NgForOf,
     FormsModule,
-    CommonModule
+    CommonModule,
+    ReactiveFormsModule
   ],
   templateUrl: './recommendations.component.html',
   styleUrls: ['./recommendations.component.scss']
