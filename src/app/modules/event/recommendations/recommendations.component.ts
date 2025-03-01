@@ -1,22 +1,17 @@
 import {Component, OnInit} from '@angular/core';
-import {CommonModule, NgForOf, NgIf} from '@angular/common';
+import {CommonModule} from '@angular/common';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {Router} from '@angular/router';
 import {HttpErrorResponse} from '@angular/common/http';
 import {EventsService} from '../../../services/events.service';
 import {WTPEvent} from '../../../shared/model/events.model';
 import {environment} from '../../../../environments/environment';
+import {ACTIVITY_TYPE, ActivityCategory} from '../../../shared/constants/activities.constants';
 
 @Component({
   selector: 'app-recommendations',
   standalone: true,
-  imports: [
-    NgIf,
-    NgForOf,
-    FormsModule,
-    CommonModule,
-    ReactiveFormsModule
-  ],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule],
   templateUrl: './recommendations.component.html',
   styleUrls: ['./recommendations.component.scss']
 })
@@ -48,12 +43,13 @@ export class RecommendationsComponent implements OnInit {
     'Berlin'
   ];
 
-  // Example list of activity types
-  availableActivityTypes: string[] = ['Music', 'Sports', 'Arts', 'Technology'];
+  // Activity types from the ACTIVITY_TYPE constant
+  activityTypes: ActivityCategory[] = ACTIVITY_TYPE;
 
   // Dropdown toggles for range pickers
   durationDropdownOpen: boolean = false;
   dateTimeDropdownOpen: boolean = false;
+  activityDropdownOpen: boolean = false;
 
   constructor(private eventsService: EventsService, private router: Router) {
   }
@@ -92,26 +88,51 @@ export class RecommendationsComponent implements OnInit {
     await this.router.navigate(['/events-create']);
   }
 
-  // Method to toggle the duration dropdown
+  // Toggle methods for dropdowns
   toggleDurationDropdown(): void {
     this.dateTimeDropdownOpen = false;
     this.durationDropdownOpen = !this.durationDropdownOpen;
   }
 
-  // Close duration dropdown (e.g., after selection)
   closeDurationDropdown(): void {
     this.durationDropdownOpen = false;
   }
 
-  // Method to toggle the datetime dropdown
   toggleDateTimeDropdown(): void {
     this.durationDropdownOpen = false;
     this.dateTimeDropdownOpen = !this.dateTimeDropdownOpen;
   }
 
-  // Close datetime dropdown (e.g., after selection)
   closeDateTimeDropdown(): void {
     this.dateTimeDropdownOpen = false;
+  }
+
+  // Toggle Activity Types Dropdown
+  toggleActivityDropdown(): void {
+    this.activityDropdownOpen = !this.activityDropdownOpen;
+  }
+
+  closeActivityDropdown(): void {
+    this.activityDropdownOpen = false;
+  }
+
+  // Update filters when an activity checkbox is toggled
+  onActivityChange(activity: string, event: any): void {
+    if (event.target.checked) {
+      if (!this.filters.activityTypes.includes(activity)) {
+        this.filters.activityTypes.push(activity);
+      }
+    } else {
+      const index = this.filters.activityTypes.indexOf(activity);
+      if (index > -1) {
+        this.filters.activityTypes.splice(index, 1);
+      }
+    }
+  }
+
+  // Helper to show selected activity types as a comma-separated string
+  getSelectedActivityTypes(): string {
+    return this.filters.activityTypes.join(', ');
   }
 
   // Stub for applying filters

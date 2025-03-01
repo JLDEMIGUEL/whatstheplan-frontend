@@ -224,4 +224,38 @@
   }
 }
 
+.activity-dropdown {
+  position: relative;
+
+  .dropdown-header {
+    padding: 0.5rem;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #fff;
+    cursor: pointer;
+  }
+
+  .dropdown-content {
+    width: 91%;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 10;
+    background-color: #fff;
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .category-label {
+    font-weight: bold;
+    margin-top: 0.5rem;
+  }
+}
+
+
 

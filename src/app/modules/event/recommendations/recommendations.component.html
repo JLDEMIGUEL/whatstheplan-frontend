@@ -59,11 +59,27 @@
       </div>
 
       <!-- Activity Types (Multiple selection) -->
-      <select multiple [(ngModel)]="filters.activityTypes" name="activityTypes">
-        <option *ngFor="let type of availableActivityTypes" [value]="type">
-          {{ type }}
-        </option>
-      </select>
+      <div class="dropdown-range activity-dropdown">
+        <div class="dropdown-header" (click)="toggleActivityDropdown()">
+          Activity Types
+        </div>
+        <div class="dropdown-content" *ngIf="activityDropdownOpen">
+          <div *ngFor="let category of activityTypes">
+            <div class="category-label">{{ category.category }}</div>
+            <div *ngFor="let activity of category.names">
+              <label>
+                <input
+                  type="checkbox"
+                  [checked]="filters.activityTypes.includes(activity)"
+                  (change)="onActivityChange(activity, $event)"
+                />
+                {{ activity }}
+              </label>
+            </div>
+          </div>
+          <button type="button" (click)="closeActivityDropdown()">OK</button>
+        </div>
+      </div>
 
       <button type="submit">Apply Filters</button>
     </form>
