@@ -1,11 +1,89 @@
 <div *ngIf="recommendations.length > 0; else noRecommendations">
   <div class="events-container">
+    <!-- Filters Bar -->
+    <form class="filters-bar" (ngSubmit)="applyFilters()">
+      <!-- Location Dropdown -->
+      <select [(ngModel)]="filters.location" name="location">
+        <option value="">Select a city</option>
+        <option *ngFor="let city of availableCities" [value]="city">
+          {{ city }}
+        </option>
+      </select>
+
+      <!-- Duration Range Dropdown -->
+      <div class="dropdown-range">
+        <div class="dropdown-header" (click)="toggleDurationDropdown()">
+            <span *ngIf="filters.durationFrom || filters.durationTo; else durationPlaceholder">
+              {{ filters.durationFrom }} - {{ filters.durationTo }}
+            </span>
+          <ng-template #durationPlaceholder>
+            Duration range
+          </ng-template>
+        </div>
+        <div class="dropdown-content" *ngIf="durationDropdownOpen">
+          <input
+            type="text"
+            placeholder="From"
+            [(ngModel)]="filters.durationFrom"
+            name="durationFrom"
+          />
+          <input
+            type="text"
+            placeholder="To"
+            [(ngModel)]="filters.durationTo"
+            name="durationTo"
+          />
+          <button type="button" (click)="closeDurationDropdown()">OK</button>
+        </div>
+      </div>
+
+      <!-- Datetime Range Dropdown -->
+      <div class="dropdown-range">
+        <div class="dropdown-header" (click)="toggleDateTimeDropdown()">
+            <span *ngIf="filters.dateTimeFrom || filters.dateTimeTo; else datetimePlaceholder">
+              {{ filters.dateTimeFrom ? (filters.dateTimeFrom | date:'short') : '' }} -
+              {{ filters.dateTimeTo ? (filters.dateTimeTo | date:'short') : '' }}
+            </span>
+          <ng-template #datetimePlaceholder>
+            Datetime range
+          </ng-template>
+        </div>
+        <div class="dropdown-content" *ngIf="dateTimeDropdownOpen">
+          <input
+            type="datetime-local"
+            placeholder="From"
+            [(ngModel)]="filters.dateTimeFrom"
+            name="dateTimeFrom"
+          />
+          <input
+            type="datetime-local"
+            placeholder="To"
+            [(ngModel)]="filters.dateTimeTo"
+            name="dateTimeTo"
+          />
+          <button type="button" (click)="closeDateTimeDropdown()">OK</button>
+        </div>
+      </div>
+
+      <!-- Activity Types (Multiple selection) -->
+      <select multiple [(ngModel)]="filters.activityTypes" name="activityTypes">
+        <option *ngFor="let type of availableActivityTypes" [value]="type">
+          {{ type }}
+        </option>
+      </select>
+
+      <button type="submit">Apply Filters</button>
+    </form>
+
+    <!-- Create New Event Button -->
     <div class="create-event-container">
       <button (click)="createNewEvent()">
         <span class="plus-circle">+</span>
         <span class="btn-text">Create new event</span>
       </button>
     </div>
+
+    <!-- Events Cards -->
     <div *ngFor="let event of recommendations" class="event-card">
       <img
         [src]="getImageUrl(event.imageKey)"
