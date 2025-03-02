@@ -91,6 +91,7 @@ export class RecommendationsComponent implements OnInit {
   // Toggle methods for dropdowns
   toggleDurationDropdown(): void {
     this.dateTimeDropdownOpen = false;
+    this.activityDropdownOpen = false;
     this.durationDropdownOpen = !this.durationDropdownOpen;
   }
 
@@ -100,6 +101,7 @@ export class RecommendationsComponent implements OnInit {
 
   toggleDateTimeDropdown(): void {
     this.durationDropdownOpen = false;
+    this.activityDropdownOpen = false;
     this.dateTimeDropdownOpen = !this.dateTimeDropdownOpen;
   }
 
@@ -109,6 +111,8 @@ export class RecommendationsComponent implements OnInit {
 
   // Toggle Activity Types Dropdown
   toggleActivityDropdown(): void {
+    this.durationDropdownOpen = false;
+    this.dateTimeDropdownOpen = false;
     this.activityDropdownOpen = !this.activityDropdownOpen;
   }
 
