@@ -23,25 +23,12 @@ export class RecommendationsComponent implements OnInit {
 
   // Filters object
   filters = {
-    location: '',
     durationFrom: '',
     durationTo: '',
     dateTimeFrom: '',
     dateTimeTo: '',
     activityTypes: [] as string[]
   };
-
-  // List of available cities for the location dropdown
-  availableCities: string[] = [
-    'Madrid',
-    'Barcelona',
-    'Sevilla',
-    'Valencia',
-    'Bilbao',
-    'London',
-    'Paris',
-    'Berlin'
-  ];
 
   // Activity types from the ACTIVITY_TYPE constant
   activityTypes: ActivityCategory[] = ACTIVITY_TYPE;
@@ -88,7 +75,6 @@ export class RecommendationsComponent implements OnInit {
     await this.router.navigate(['/events-create']);
   }
 
-  // Toggle methods for dropdowns
   toggleDurationDropdown(): void {
     this.dateTimeDropdownOpen = false;
     this.activityDropdownOpen = false;
@@ -109,7 +95,6 @@ export class RecommendationsComponent implements OnInit {
     this.dateTimeDropdownOpen = false;
   }
 
-  // Toggle Activity Types Dropdown
   toggleActivityDropdown(): void {
     this.durationDropdownOpen = false;
     this.dateTimeDropdownOpen = false;
@@ -120,7 +105,6 @@ export class RecommendationsComponent implements OnInit {
     this.activityDropdownOpen = false;
   }
 
-  // Update filters when an activity checkbox is toggled
   onActivityChange(activity: string, event: any): void {
     if (event.target.checked) {
       if (!this.filters.activityTypes.includes(activity)) {
@@ -134,12 +118,6 @@ export class RecommendationsComponent implements OnInit {
     }
   }
 
-  // Helper to show selected activity types as a comma-separated string
-  getSelectedActivityTypes(): string {
-    return this.filters.activityTypes.join(', ');
-  }
-
-  // Stub for applying filters
   applyFilters(): void {
     console.log('Applied filters:', this.filters);
     // TODO: Call service to query events with these filters.

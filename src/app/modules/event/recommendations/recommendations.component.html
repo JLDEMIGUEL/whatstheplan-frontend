@@ -2,14 +2,6 @@
   <div class="events-container">
     <!-- Filters Bar -->
     <form class="filters-bar" (ngSubmit)="applyFilters()">
-      <!-- Location Dropdown -->
-      <select [(ngModel)]="filters.location" name="location">
-        <option value="">Select a city</option>
-        <option *ngFor="let city of availableCities" [value]="city">
-          {{ city }}
-        </option>
-      </select>
-
       <!-- Duration Range Dropdown -->
       <div class="dropdown-range">
         <div class="dropdown-header" (click)="toggleDurationDropdown()">
