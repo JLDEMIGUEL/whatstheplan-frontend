@@ -38,11 +38,11 @@ export class RecommendationsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.fetchEvents();
+    this.fetchEvents(false);
   }
 
-  fetchEvents(): void {
-    this.eventsService.getEvents().subscribe({
+  fetchEvents(withFilters: boolean): void {
+    this.eventsService.getEvents(withFilters ? this.filters : undefined).subscribe({
       next: (events: WTPEvent[]) => {
         this.recommendations = events;
         this.isLoading = false;
@@ -124,6 +124,6 @@ export class RecommendationsComponent implements OnInit {
     this.dateTimeDropdownOpen = false;
     this.activityDropdownOpen = false;
     console.log('Applied filters:', this.filters);
-    // TODO: Call service to query events with these filters.
+    this.fetchEvents(true);
   }
 }

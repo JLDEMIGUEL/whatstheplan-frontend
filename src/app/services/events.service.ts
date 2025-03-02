@@ -1,11 +1,12 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpHeaders, HttpResponse} from '@angular/common/http';
+import {HttpClient, HttpHeaders, HttpParams, HttpResponse} from '@angular/common/http';
 import {fetchAuthSession} from 'aws-amplify/auth';
 import {Observable, of} from 'rxjs';
 import {catchError, map, switchMap} from 'rxjs/operators';
 import {environment} from '../../environments/environment';
 import {WTPEvent, WTPEventRequest} from '../shared/model/events.model';
 import {v4 as uuidv4} from 'uuid';
+import {Duration} from 'luxon';
 
 
 @Injectable({
@@ -122,11 +123,42 @@ export class EventsService {
   constructor(private http: HttpClient) {
   }
 
-  getEvents(): Observable<WTPEvent[]> {
+  getEvents(filters: {
+    durationFrom?: string,
+    durationTo?: string,
+    dateTimeFrom?: string,
+    dateTimeTo?: string,
+    activityTypes?: string[]
+  } = {
+    durationFrom: "",
+    durationTo: "",
+    dateTimeFrom: "",
+    dateTimeTo: "",
+    activityTypes: []
+  }): Observable<WTPEvent[]> {
+    let params = new HttpParams();
+
+    if (filters.durationFrom) {
+      params = params.set('durationFrom', Duration.fromObject({hours: Number(filters.durationFrom)}).toISO());
+    }
+    if (filters.durationTo) {
+      params = params.set('durationTo', Duration.fromObject({hours: Number(filters.durationTo)}).toISO());
+    }
+    if (filters.dateTimeFrom) {
+      params = params.set('dateTimeFrom', filters.dateTimeFrom);
+    }
+    if (filters.dateTimeTo) {
+      params = params.set('dateTimeTo', filters.dateTimeTo);
+    }
+    if (filters.activityTypes && filters.activityTypes.length > 0) {
+      params = params.set('activityTypes', filters.activityTypes.join(','));
+    }
+
     return this.addAuthHeaders().pipe(
-      switchMap((headers) =>
-        this.http.get<WTPEvent[]>(`${this.baseUrl}/events`, {
+      switchMap(headers =>
+        this.http.get<WTPEvent[]>(`${this.baseUrl}/events/search`, {
           headers,
+          params,
           observe: 'response',
           withCredentials: true
         })
@@ -134,11 +166,11 @@ export class EventsService {
       map((response: HttpResponse<WTPEvent[]>) => response.body as WTPEvent[]),
       catchError((error) => {
         console.error('Error fetching user profile:', error);
-        // TODO REPLACE BY        return throwError(error);
         return of(this.defaultEvents);
       })
     );
   }
+
 
   getEventById(eventId: string): Observable<WTPEvent> {
     return this.addAuthHeaders().pipe(
