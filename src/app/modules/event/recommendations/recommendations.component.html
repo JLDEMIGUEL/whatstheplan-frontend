@@ -11,14 +11,14 @@
           <input
             type="number"
             min="0"
-            max="24"
+            max="{{filters.durationTo || 24}}"
             placeholder="Hours From"
             [(ngModel)]="filters.durationFrom"
             name="durationFrom"
           />
           <input
             type="number"
-            min="0"
+            min="{{filters.durationFrom || 0}}"
             max="24"
             placeholder="Hours To"
             [(ngModel)]="filters.durationTo"
@@ -38,12 +38,15 @@
             type="datetime-local"
             placeholder="From"
             [(ngModel)]="filters.dateTimeFrom"
+            min="{{today}}"
+            max="{{filters.dateTimeTo || ''}}"
             name="dateTimeFrom"
           />
           <input
             type="datetime-local"
             placeholder="To"
             [(ngModel)]="filters.dateTimeTo"
+            min="{{filters.dateTimeFrom || today}}"
             name="dateTimeTo"
           />
           <button type="button" (click)="closeDateTimeDropdown()">OK</button>

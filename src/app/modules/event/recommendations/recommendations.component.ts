@@ -20,6 +20,8 @@ export class RecommendationsComponent implements OnInit {
   recommendations: WTPEvent[] = [];
   errorMessage!: string;
   isLoading: boolean = true;
+  today = new Date().toISOString().slice(0, -8);
+
 
   // Filters object
   filters = {
