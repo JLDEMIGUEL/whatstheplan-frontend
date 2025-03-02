@@ -21,9 +21,11 @@ export class RecommendationsComponent implements OnInit {
   errorMessage!: string;
   isLoading: boolean = true;
   today = new Date().toISOString().slice(0, -8);
+  activityTypes: ActivityCategory[] = ACTIVITY_TYPE;
+  durationDropdownOpen: boolean = false;
+  dateTimeDropdownOpen: boolean = false;
+  activityDropdownOpen: boolean = false;
 
-
-  // Filters object
   filters = {
     durationFrom: '',
     durationTo: '',
@@ -31,14 +33,6 @@ export class RecommendationsComponent implements OnInit {
     dateTimeTo: '',
     activityTypes: [] as string[]
   };
-
-  // Activity types from the ACTIVITY_TYPE constant
-  activityTypes: ActivityCategory[] = ACTIVITY_TYPE;
-
-  // Dropdown toggles for range pickers
-  durationDropdownOpen: boolean = false;
-  dateTimeDropdownOpen: boolean = false;
-  activityDropdownOpen: boolean = false;
 
   constructor(private eventsService: EventsService, private router: Router) {
   }
@@ -120,7 +114,15 @@ export class RecommendationsComponent implements OnInit {
     }
   }
 
+  getActivityTypesPlaceholder(): string {
+    const selected = this.filters.activityTypes.join(', ');
+    return selected.length > 15 ? selected.substring(0, 15) + ' ...' : selected;
+  }
+
   applyFilters(): void {
+    this.durationDropdownOpen = false;
+    this.dateTimeDropdownOpen = false;
+    this.activityDropdownOpen = false;
     console.log('Applied filters:', this.filters);
     // TODO: Call service to query events with these filters.
   }

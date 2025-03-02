@@ -67,7 +67,12 @@
       <!-- Activity Types (Multiple selection) -->
       <div class="dropdown-range activity-dropdown">
         <div class="dropdown-header" (click)="toggleActivityDropdown()">
-          Activity Types
+          <span *ngIf="filters.activityTypes.length > 0; else defaultPlaceholder">
+            Categories: {{ getActivityTypesPlaceholder() }}
+          </span>
+          <ng-template #defaultPlaceholder>
+            Categories
+          </ng-template>
         </div>
         <div class="dropdown-content" *ngIf="activityDropdownOpen">
           <div *ngFor="let category of activityTypes">

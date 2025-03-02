@@ -45,10 +45,10 @@ export class UserService {
         console.error('Error fetching user profile:', error);
         // TODO REPLACE BY        return throwError(error);
         return of({
-          username: "string",
-          firstName: "string",
-          lastName: "string",
-          city: "string",
+          username: "Username",
+          firstName: "First Name",
+          lastName: "Last Name",
+          city: "Madrid",
           preferences: ["Swimming", "Soccer"]
         });
       })
