@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {WTPEvent} from '../../../shared/model/events.model';
 import {EventsService} from '../../../services/events.service';
 import {environment} from '../../../../environments/environment';
@@ -9,20 +9,18 @@ import {NgIf} from '@angular/common';
   selector: 'app-event-details',
   templateUrl: './event-details.component.html',
   styleUrls: ['./event-details.component.scss'],
-  imports: [
-    NgIf
-  ],
+  imports: [NgIf],
 })
 export class EventDetailsComponent implements OnInit {
   event!: WTPEvent;
   errorMessage: string | null = null;
   isFull: boolean = false;
-
   s3BaseUrl: string = environment.s3BaseUrl;
 
   constructor(
     private route: ActivatedRoute,
-    private eventsService: EventsService
+    private eventsService: EventsService,
+    private router: Router
   ) {
   }
 
@@ -60,6 +58,12 @@ export class EventDetailsComponent implements OnInit {
     if (this.event) {
       alert(`You have registered for "${this.event.title}"!`);
       // Here you can implement actual registration logic
+    }
+  }
+
+  onUpdate(): void {
+    if (this.event) {
+      this.router.navigate([`/events-update/${this.event.id}`]);
     }
   }
 }

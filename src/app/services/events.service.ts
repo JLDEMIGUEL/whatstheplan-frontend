@@ -17,7 +17,7 @@ export class EventsService {
 
   private defaultEvents: WTPEvent[] = [
     {
-      id: uuidv4(),
+      id: 'd495f0c8-e246-44ec-84aa-5a9beadd55d9',
       title: 'Default Event 1',
       description: 'This is a default event description. This is a default event description. This is a default event description. This is a default event description. This is a default event description. This is a default event description. This is a default event description. This is a default event description. This is a default event description. This is a default event description. This is a default event description. This is a default event description. This is a default event description. This is a default event description.',
       imageKey: 'events-1.png',
@@ -32,9 +32,10 @@ export class EventsService {
       lastModifiedDate: new Date().toISOString(),
       activityTypes: ['Workshop', 'Networking'],
       registrations: 50,
+      isOwnedByUser: true,
     },
     {
-      id: uuidv4(),
+      id: '679b766f-9aee-4358-b021-4c76500f18d7',
       title: 'Default Event 2',
       description: 'Another default event for fallback.',
       imageKey: 'events-1.png',
@@ -49,9 +50,10 @@ export class EventsService {
       lastModifiedDate: new Date().toISOString(),
       activityTypes: ['Seminar', 'Exhibition'],
       registrations: 75,
+      isOwnedByUser: false,
     },
     {
-      id: uuidv4(),
+      id: '1ea29b55-9838-4ccd-a717-abcbfa388d20',
       title: 'Default Event 3',
       description: 'This is a default event description.',
       imageKey: 'events-1.png',
@@ -66,9 +68,10 @@ export class EventsService {
       lastModifiedDate: new Date().toISOString(),
       activityTypes: ['Conference', 'Meetup'],
       registrations: 60,
+      isOwnedByUser: true,
     },
     {
-      id: uuidv4(),
+      id: '0367373d-a982-474d-94f0-3609243b5c28',
       title: 'Default Event 4',
       description: 'This is a default event description.',
       imageKey: 'events-1.png',
@@ -83,9 +86,10 @@ export class EventsService {
       lastModifiedDate: new Date().toISOString(),
       activityTypes: ['Conference', 'Meetup'],
       registrations: 60,
+      isOwnedByUser: false,
     },
     {
-      id: uuidv4(),
+      id: 'e071d14e-8f03-40eb-8e1a-0d79fb73e789',
       title: 'Default Event 5',
       description: 'This is a default event description.',
       imageKey: 'events-1.png',
@@ -100,9 +104,10 @@ export class EventsService {
       lastModifiedDate: new Date().toISOString(),
       activityTypes: ['Conference', 'Meetup'],
       registrations: 60,
+      isOwnedByUser: true,
     },
     {
-      id: uuidv4(),
+      id: '6baa9a21-f1b9-4960-8e79-69bb6b2632aa',
       title: 'Default Event 6',
       description: 'This is a default event description.',
       imageKey: 'events-1.png',
@@ -117,6 +122,7 @@ export class EventsService {
       lastModifiedDate: new Date().toISOString(),
       activityTypes: ['Conference', 'Meetup'],
       registrations: 60,
+      isOwnedByUser: false,
     }
   ];
 
@@ -185,7 +191,7 @@ export class EventsService {
       catchError((error) => {
         console.error('Error fetching event details:', error);
         // TODO REPLACE BY        return throwError(error);
-        return of(this.defaultEvents[0]);
+        return of(this.defaultEvents.find(event => event.id === eventId) || this.defaultEvents[0]);
       })
     );
   }

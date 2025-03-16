@@ -20,8 +20,12 @@
         <p><strong>Organized by:</strong> {{ event.organizerUsername }} ({{ event.organizerEmail }})</p>
       </div>
 
-      <button class="register-button" (click)="onRegister()" [disabled]="isFull">
+      <button class="register-button" (click)="onRegister()" [disabled]="isFull" *ngIf="!event.isOwnedByUser">
         {{ isFull ? 'Event Full' : 'Register Now' }}
+      </button>
+
+      <button class="update-button" (click)="onUpdate()" *ngIf="event.isOwnedByUser">
+        Update Event
       </button>
     </div>
   </div>

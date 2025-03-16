@@ -32,6 +32,7 @@ export const AppRoutes: Routes = [
   {path: 'edit-profile', component: UpdateProfileComponent, canActivate: [AuthGuard]},
   {path: 'events/:id', component: EventDetailsComponent, canActivate: [AuthGuard]},
   {path: 'events-create', component: EventCreateComponent, canActivate: [AuthGuard]},
+  {path: 'events-update/:id', component: EventCreateComponent, canActivate: [AuthGuard]},
 
 
   // Redirections

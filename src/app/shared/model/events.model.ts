@@ -14,6 +14,7 @@ export interface WTPEvent {
   lastModifiedDate: string;
   activityTypes: string[];
   registrations: number;
+  isOwnedByUser: boolean;
 }
 
 export interface WTPEventRequest {
