@@ -1,0 +1,104 @@
+<div class="event-update-container">
+  <h1>Update Event</h1>
+
+  <form [formGroup]="eventForm" (ngSubmit)="onSubmit()">
+    <!-- Title -->
+    <div class="form-group">
+      <label for="title">Event Title:</label>
+      <input id="title" formControlName="title" type="text" placeholder="Enter event title"/>
+      <div class="error" *ngIf="eventForm.get('title')?.invalid && eventForm.get('title')?.touched">
+        {{ getErrorMessage('title') }}
+      </div>
+    </div>
+
+    <!-- Description -->
+    <div class="form-group">
+      <label for="description">Description:</label>
+      <textarea id="description" formControlName="description" rows="4"
+                placeholder="Enter event description"></textarea>
+      <div class="error" *ngIf="eventForm.get('description')?.invalid && eventForm.get('description')?.touched">
+        {{ getErrorMessage('description') }}
+      </div>
+    </div>
+
+    <!-- Date and Time -->
+    <div class="form-group">
+      <label for="dateTime">Event Date & Time:</label>
+      <input id="dateTime" formControlName="dateTime" type="datetime-local"/>
+      <div class="error" *ngIf="eventForm.get('dateTime')?.invalid && eventForm.get('dateTime')?.touched">
+        {{ getErrorMessage('dateTime') }}
+      </div>
+    </div>
+
+    <!-- Duration -->
+    <div class="form-group">
+      <label>Duration:</label>
+      <div formGroupName="duration" class="duration-group">
+        <!-- Hours -->
+        <input id="duration-hours" formControlName="hours" type="number" min="0" placeholder="Hours"/>
+        <span class="separator">:</span>
+        <!-- Minutes -->
+        <input id="duration-minutes" formControlName="minutes" type="number" min="0" max="59" placeholder="Minutes"/>
+      </div>
+      <!-- Error handling -->
+      <div class="error" *ngIf="eventForm.get('duration.hours')?.invalid && eventForm.get('duration.hours')?.touched">
+        {{ getErrorMessage('duration.hours') }}
+      </div>
+      <div class="error"
+           *ngIf="eventForm.get('duration.minutes')?.invalid && eventForm.get('duration.minutes')?.touched">
+        {{ getErrorMessage('duration.minutes') }}
+      </div>
+    </div>
+
+    <!-- Location -->
+    <div class="form-group">
+      <label for="location">Location:</label>
+      <select id="location" formControlName="location">
+        <option [value]="" disabled>-- Select Location --</option>
+        <option *ngFor="let location of locations" [value]="location">{{ location }}</option>
+      </select>
+      <div *ngIf="isFieldInvalid('location')" class="error">
+        <div *ngIf="eventForm.get('location')?.errors?.['required']">
+          Please select your location.
+        </div>
+      </div>
+    </div>
+
+    <!-- Capacity -->
+    <div class="form-group">
+      <label for="capacity">Capacity:</label>
+      <input id="capacity" formControlName="capacity" type="number" min="1" placeholder="Enter event capacity"/>
+      <div class="error" *ngIf="eventForm.get('capacity')?.invalid && eventForm.get('capacity')?.touched">
+        {{ getErrorMessage('capacity') }}
+      </div>
+    </div>
+
+    <!-- Activity Types -->
+    <div class="form-group">
+      <label for="activityTypes">Activity Types:</label>
+      <div *ngFor="let category of activityOptions" class="activity-category">
+        <h3>{{ category.category }}</h3>
+        <div class="chip-container">
+          <span
+            *ngFor="let pref of category.names"
+            class="chip"
+            [class.selected]="isPreferenceSelected(pref)"
+            (click)="togglePreference(pref)"
+          >
+            {{ pref }}
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Submit Button -->
+    <div class="form-group">
+      <button type="submit" [disabled]="eventForm.invalid">Update Event</button>
+    </div>
+
+    <!-- Error Message -->
+    <div *ngIf="errorMessage" class="error-message">
+      {{ errorMessage }}
+    </div>
+  </form>
+</div>

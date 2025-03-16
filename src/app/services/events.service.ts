@@ -30,7 +30,7 @@ export class EventsService {
       organizerEmail: 'organizer1@example.com',
       createdDate: new Date().toISOString(),
       lastModifiedDate: new Date().toISOString(),
-      activityTypes: ['Workshop', 'Networking'],
+      activityTypes: ['Soccer', 'Swimming'],
       registrations: 50,
       isOwnedByUser: true,
     },
@@ -48,7 +48,7 @@ export class EventsService {
       organizerEmail: 'organizer2@example.com',
       createdDate: new Date().toISOString(),
       lastModifiedDate: new Date().toISOString(),
-      activityTypes: ['Seminar', 'Exhibition'],
+      activityTypes: ['Golf', 'Music'],
       registrations: 75,
       isOwnedByUser: false,
     },
@@ -66,7 +66,7 @@ export class EventsService {
       organizerEmail: 'organizer3@example.com',
       createdDate: new Date().toISOString(),
       lastModifiedDate: new Date().toISOString(),
-      activityTypes: ['Conference', 'Meetup'],
+      activityTypes: ['Technology', 'Writing'],
       registrations: 60,
       isOwnedByUser: true,
     },
@@ -84,7 +84,7 @@ export class EventsService {
       organizerEmail: 'organizer3@example.com',
       createdDate: new Date().toISOString(),
       lastModifiedDate: new Date().toISOString(),
-      activityTypes: ['Conference', 'Meetup'],
+      activityTypes: ['Wellness & Fitness', 'Gaming'],
       registrations: 60,
       isOwnedByUser: false,
     },
@@ -102,7 +102,7 @@ export class EventsService {
       organizerEmail: 'organizer3@example.com',
       createdDate: new Date().toISOString(),
       lastModifiedDate: new Date().toISOString(),
-      activityTypes: ['Conference', 'Meetup'],
+      activityTypes: ['Volunteering', 'Cooking'],
       registrations: 60,
       isOwnedByUser: true,
     },
@@ -120,7 +120,7 @@ export class EventsService {
       organizerEmail: 'organizer3@example.com',
       createdDate: new Date().toISOString(),
       lastModifiedDate: new Date().toISOString(),
-      activityTypes: ['Conference', 'Meetup'],
+      activityTypes: ['Baking', 'Martial Arts'],
       registrations: 60,
       isOwnedByUser: false,
     }
@@ -200,6 +200,17 @@ export class EventsService {
     return this.addAuthHeaders().pipe(
       switchMap((headers) =>
         this.http.post(`${this.baseUrl}/events`, eventData, {
+          headers,
+          withCredentials: true
+        })
+      )
+    );
+  }
+
+  updateEvent(eventId: string, eventData: WTPEventRequest) {
+    return this.addAuthHeaders().pipe(
+      switchMap((headers) =>
+        this.http.put(`${this.baseUrl}/events/${eventId}`, eventData, {
           headers,
           withCredentials: true
         })

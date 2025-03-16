@@ -13,6 +13,7 @@ import {ProfileDetailsComponent} from './modules/user/profile-details/profile-de
 import {UpdateProfileComponent} from './modules/user/update-profile/update-profile.component';
 import {EventDetailsComponent} from './modules/event/event-details/event-details.component';
 import {EventCreateComponent} from './modules/event/event-create/event-create.component';
+import {EventUpdateComponent} from './modules/event/event-update/event-update.component';
 
 export const AppRoutes: Routes = [
   // Public routes
@@ -32,7 +33,7 @@ export const AppRoutes: Routes = [
   {path: 'edit-profile', component: UpdateProfileComponent, canActivate: [AuthGuard]},
   {path: 'events/:id', component: EventDetailsComponent, canActivate: [AuthGuard]},
   {path: 'events-create', component: EventCreateComponent, canActivate: [AuthGuard]},
-  {path: 'events-update/:id', component: EventCreateComponent, canActivate: [AuthGuard]},
+  {path: 'events-update/:id', component: EventUpdateComponent, canActivate: [AuthGuard]},
 
 
   // Redirections
