@@ -196,6 +196,24 @@ export class EventsService {
     );
   }
 
+  getMyRegistrations(): Observable<WTPEvent[]> {
+    return this.addAuthHeaders().pipe(
+      switchMap((headers) =>
+        this.http.get<WTPEvent[]>(`${this.baseUrl}/events/registration`, {
+          headers,
+          observe: 'response',
+          withCredentials: true
+        })
+      ),
+      map((response: HttpResponse<WTPEvent[]>) => response.body as WTPEvent[]),
+      catchError((error) => {
+        console.error('Error fetching event details:', error);
+        // TODO REPLACE BY        return throwError(error);
+        return of(this.defaultEvents);
+      })
+    );
+  }
+
 
   getEventById(eventId: string): Observable<WTPEvent> {
     return this.addAuthHeaders().pipe(

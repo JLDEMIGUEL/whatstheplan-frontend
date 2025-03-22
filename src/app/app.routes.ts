@@ -15,6 +15,7 @@ import {EventDetailsComponent} from './modules/event/event-details/event-details
 import {EventCreateComponent} from './modules/event/event-create/event-create.component';
 import {EventUpdateComponent} from './modules/event/event-update/event-update.component';
 import {MyEventsComponent} from './modules/event/my-events/my-events.component';
+import {MyRegistrationsComponent} from './modules/event/my-registrations/my-registrations.component';
 
 export const AppRoutes: Routes = [
   // Public routes
@@ -36,6 +37,7 @@ export const AppRoutes: Routes = [
   {path: 'events-create', component: EventCreateComponent, canActivate: [AuthGuard]},
   {path: 'events-update/:id', component: EventUpdateComponent, canActivate: [AuthGuard]},
   {path: 'my-events', component: MyEventsComponent, canActivate: [AuthGuard]},
+  {path: 'my-registrations', component: MyRegistrationsComponent, canActivate: [AuthGuard]},
 
 
   // Redirections
