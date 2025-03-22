@@ -14,6 +14,7 @@ import {UpdateProfileComponent} from './modules/user/update-profile/update-profi
 import {EventDetailsComponent} from './modules/event/event-details/event-details.component';
 import {EventCreateComponent} from './modules/event/event-create/event-create.component';
 import {EventUpdateComponent} from './modules/event/event-update/event-update.component';
+import {MyEventsComponent} from './modules/event/my-events/my-events.component';
 
 export const AppRoutes: Routes = [
   // Public routes
@@ -34,6 +35,7 @@ export const AppRoutes: Routes = [
   {path: 'events/:id', component: EventDetailsComponent, canActivate: [AuthGuard]},
   {path: 'events-create', component: EventCreateComponent, canActivate: [AuthGuard]},
   {path: 'events-update/:id', component: EventUpdateComponent, canActivate: [AuthGuard]},
+  {path: 'my-events', component: MyEventsComponent, canActivate: [AuthGuard]},
 
 
   // Redirections
