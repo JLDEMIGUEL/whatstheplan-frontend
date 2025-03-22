@@ -233,6 +233,23 @@ export class EventsService {
     );
   }
 
+  deleteEventById(eventId: string): Observable<void> {
+    return this.addAuthHeaders().pipe(
+      switchMap((headers) =>
+        this.http.delete<void>(`${this.baseUrl}/events/${eventId}`, {
+          headers,
+          withCredentials: true
+        })
+      ),
+      catchError((error) => {
+        console.error(`Error deleting event with ID ${eventId}:`, error)
+        // TODO REPLACE BY        return throwError(() => error);
+        return of(void 0);
+      })
+    );
+  }
+
+
   createEvent(eventData: WTPEventRequest) {
     return this.addAuthHeaders().pipe(
       switchMap((headers) =>

@@ -20,21 +20,42 @@
         <p><strong>Organized by:</strong> {{ event.organizerUsername }} ({{ event.organizerEmail }})</p>
       </div>
 
+      <!-- Register Button (for non-owners) -->
       <button class="register-button" (click)="onRegister()" [disabled]="isFull" *ngIf="!event.isOwnedByUser">
         {{ isFull ? 'Event Full' : 'Register Now' }}
       </button>
 
+      <!-- Update Button (for owners) -->
       <button class="update-button" (click)="onUpdate()" *ngIf="event.isOwnedByUser">
         Update Event
+      </button>
+
+      <!-- Delete Button (for owners) -->
+      <button class="delete-button" (click)="openDelete()" *ngIf="event.isOwnedByUser">
+        Delete Event
       </button>
     </div>
   </div>
 
+  <!-- Error Message -->
   <div *ngIf="errorMessage" class="error-message">
     {{ errorMessage }}
   </div>
 </div>
 
+<!-- Loading State -->
 <div *ngIf="!event && !errorMessage" class="loading">
   Loading event details...
+</div>
+
+<!-- Custom Popup (Modal) for Delete Confirmation -->
+<div class="modal-backdrop" *ngIf="showDeletePopup">
+  <div class="modal">
+    <h2>Delete Event</h2>
+    <p>Are you sure you want to delete "{{ event?.title }}"?</p>
+    <div class="modal-buttons">
+      <button (click)="confirmDelete()">Yes</button>
+      <button (click)="cancelDelete()">No</button>
+    </div>
+  </div>
 </div>
