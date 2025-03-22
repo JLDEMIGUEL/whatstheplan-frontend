@@ -16,6 +16,7 @@ import {RouterLink} from '@angular/router';
 })
 export class NavbarComponent implements OnInit {
   isLoggedIn$!: Observable<boolean>;
+  dropdownOpen = false;
 
   constructor(private authService: AuthService) {
   }
@@ -24,8 +25,18 @@ export class NavbarComponent implements OnInit {
     this.isLoggedIn$ = this.authService.isLoggedIn$;
   }
 
-  onLogout() {
-    console.log('Logged out');
+  toggleDropdown(): void {
+    this.dropdownOpen = !this.dropdownOpen;
+  }
+
+  closeDropdown(): void {
+    this.dropdownOpen = false;
+  }
+
+  onLogout(event?: Event): void {
+    if (event) {
+      event.stopPropagation();
+    }
     this.authService.logout();
   }
 }
