@@ -84,6 +84,13 @@ header {
         &:hover {
           color: #ffcccc;
         }
+
+        .user-icon {
+          width: 24px;
+          height: 24px;
+          display: inline-block;
+          border-radius: 50%;
+        }
       }
 
       .arrow {

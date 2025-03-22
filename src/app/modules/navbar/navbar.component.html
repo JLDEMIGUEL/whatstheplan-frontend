@@ -4,6 +4,7 @@
       <a routerLink="/" class="brand-logo">WhatsThePlan</a>
     </div>
     <div class="nav-links">
+      <!-- Links for non-authenticated users -->
       <ul *ngIf="!(isLoggedIn$ | async)">
         <li>
           <a routerLink="/login" class="nav-link">Login</a>
@@ -13,13 +14,16 @@
         </li>
       </ul>
 
+      <!-- Dropdown for authenticated users -->
       <div
         class="user-dropdown"
         *ngIf="isLoggedIn$ | async"
         (click)="toggleDropdown()"
       >
+        <!-- Button with user icon -->
         <button class="nav-link dropdown-button">
-          Profile <span class="arrow" [class.open]="dropdownOpen">&#9662;</span>
+          <img ngSrc="/assets/user-icon.png" alt="User icon" class="user-icon" height="800" width="800"/>
+          <span class="arrow" [class.open]="dropdownOpen">&#9662;</span>
         </button>
 
         <!-- Floating / Dropdown Menu -->

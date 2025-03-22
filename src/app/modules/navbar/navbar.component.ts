@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {AuthService} from '../../services/auth.service';
 import {Observable} from 'rxjs';
-import {AsyncPipe, NgIf} from '@angular/common';
+import {AsyncPipe, NgIf, NgOptimizedImage} from '@angular/common';
 import {RouterLink} from '@angular/router';
 
 @Component({
@@ -9,7 +9,8 @@ import {RouterLink} from '@angular/router';
   imports: [
     AsyncPipe,
     NgIf,
-    RouterLink
+    RouterLink,
+    NgOptimizedImage
   ],
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.scss']
