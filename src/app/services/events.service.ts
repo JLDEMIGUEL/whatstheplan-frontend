@@ -250,14 +250,16 @@ export class EventsService {
   }
 
 
-  createEvent(eventData: WTPEventRequest) {
+  createEvent(formData: FormData) {
     return this.addAuthHeaders().pipe(
-      switchMap((headers) =>
-        this.http.post(`${this.baseUrl}/events`, eventData, {
-          headers,
+      switchMap((headers) => {
+        const finalHeaders = headers.delete('Content-Type');
+
+        return this.http.post(`${this.baseUrl}/events`, formData, {
+          headers: finalHeaders,
           withCredentials: true
-        })
-      )
+        });
+      })
     );
   }
 

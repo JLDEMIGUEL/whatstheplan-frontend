@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
+import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {EventsService} from '../../../services/events.service';
 import {NgForOf, NgIf} from '@angular/common';
 import {CITIES_LIST} from '../../../shared/constants/cities.constants';
@@ -20,10 +20,15 @@ import {ACTIVITY_TYPE, ActivityCategory} from '../../../shared/constants/activit
 export class EventCreateComponent {
   eventForm: FormGroup;
   activityOptions: ActivityCategory[] = ACTIVITY_TYPE;
-  errorMessage: string | null = null;
   locations: string[] = CITIES_LIST;
+  errorMessage: string | null = null;
+  imageError: string | null = null;
+  selectedFileName: string | null = null;
 
-  constructor(private fb: FormBuilder, private eventsService: EventsService) {
+  constructor(
+    private fb: FormBuilder,
+    private eventsService: EventsService
+  ) {
     this.eventForm = this.fb.group({
       title: ['', [Validators.required]],
       description: ['', [Validators.required, Validators.minLength(10)]],
@@ -34,8 +39,33 @@ export class EventCreateComponent {
       }),
       location: ['', [Validators.required]],
       capacity: [1, [Validators.required, Validators.min(1)]],
-      activityTypes: [[]]
+      activityTypes: [[]],
+      image: [null]
     });
+  }
+
+  onFileSelected(event: Event): void {
+    const file = (event.target as HTMLInputElement).files?.[0];
+    if (!file) {
+      return;
+    }
+
+    const extension = file.name.split('.').pop()?.toLowerCase();
+    if (!['png', 'jpg', 'jpeg'].includes(extension || '')) {
+      this.imageError = 'Invalid image format. Allowed: PNG, JPG, JPEG.';
+      this.eventForm.patchValue({image: null});
+      return;
+    }
+
+    if (file.size > 5 * 1024 * 1024) {
+      this.imageError = 'Image size exceeds 5MB.';
+      this.eventForm.patchValue({image: null});
+      return;
+    }
+
+    this.selectedFileName = file.name;
+    this.imageError = null;
+    this.eventForm.patchValue({image: file});
   }
 
   getErrorMessage(controlName: string): string {
@@ -48,38 +78,8 @@ export class EventCreateComponent {
     return '';
   }
 
-  onSubmit(): void {
-    if (this.eventForm.valid) {
-      const eventData = this.eventForm.value;
-      const hours = eventData.duration.hours;
-      const minutes = eventData.duration.minutes;
-      const eventRequest = {
-        title: eventData.title,
-        description: eventData.description,
-        dateTime: eventData.dateTime,
-        duration: Duration.fromObject({hours, minutes}).toISO(),
-        location: eventData.location,
-        capacity: eventData.capacity,
-        activityTypes: eventData.activityTypes,
-      }
-      console.log('Event Request:', eventRequest);
-
-
-      this.eventsService.createEvent(eventRequest).subscribe({
-        next: () => {
-          alert('Event created successfully!');
-          this.eventForm.reset();
-        },
-        error: (err) => {
-          console.error('Failed to create event:', err);
-          this.errorMessage = 'Failed to create the event. Please try again later.';
-        }
-      });
-    }
-  }
-
   isFieldInvalid(field: string): boolean {
-    const control: AbstractControl | null = this.eventForm.get(field);
+    const control = this.eventForm.get(field);
     return !!(control && control.invalid && (control.dirty || control.touched));
   }
 
@@ -87,7 +87,7 @@ export class EventCreateComponent {
     const selectedActivities = this.eventForm.get('activityTypes')?.value as string[];
     if (selectedActivities.includes(activity)) {
       this.eventForm.patchValue({
-        activityTypes: selectedActivities.filter(p => p !== activity)
+        activityTypes: selectedActivities.filter((p) => p !== activity)
       });
     } else {
       this.eventForm.patchValue({
@@ -98,5 +98,47 @@ export class EventCreateComponent {
 
   isPreferenceSelected(pref: string): boolean {
     return this.eventForm.get('activityTypes')?.value.includes(pref);
+  }
+
+  onSubmit(): void {
+    if (this.eventForm.invalid || this.imageError) {
+      return;
+    }
+
+    const formValue = this.eventForm.value;
+
+    const hours = formValue.duration.hours;
+    const minutes = formValue.duration.minutes;
+    const isoDuration = Duration.fromObject({hours, minutes}).toISO();
+
+    const eventRequest = {
+      title: formValue.title,
+      description: formValue.description,
+      dateTime: formValue.dateTime,
+      duration: isoDuration,
+      location: formValue.location,
+      capacity: formValue.capacity,
+      activityTypes: formValue.activityTypes
+    };
+
+    const formData = new FormData();
+    formData.append(
+      'event',
+      new Blob([JSON.stringify(eventRequest)], {type: 'application/json'})
+    );
+    if (formValue.image) {
+      formData.append('image', formValue.image);
+    }
+
+    this.eventsService.createEvent(formData).subscribe({
+      next: () => {
+        alert('Event created successfully!');
+        this.eventForm.reset();
+      },
+      error: (err) => {
+        console.error('Failed to create event:', err);
+        this.errorMessage = 'Failed to create the event. Please try again later.';
+      }
+    });
   }
 }
