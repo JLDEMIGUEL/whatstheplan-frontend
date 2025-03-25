@@ -250,27 +250,31 @@ export class EventsService {
   }
 
 
-  createEvent(formData: FormData) {
+  createEvent(formData: FormData): Observable<WTPEvent> {
     return this.addAuthHeaders().pipe(
       switchMap((headers) => {
         const finalHeaders = headers.delete('Content-Type');
-        return this.http.post(`${this.baseUrl}/events`, formData, {
+        return this.http.post<WTPEvent>(`${this.baseUrl}/events`, formData, {
           headers: finalHeaders,
+          observe: 'response',
           withCredentials: true
         });
-      })
+      }),
+      map((response: HttpResponse<WTPEvent>) => response.body as WTPEvent)
     );
   }
 
-  updateEvent(eventId: string, formData: FormData) {
+  updateEvent(eventId: string, formData: FormData): Observable<WTPEvent> {
     return this.addAuthHeaders().pipe(
       switchMap((headers) => {
         const finalHeaders = headers.delete('Content-Type');
-        return this.http.put(`${this.baseUrl}/events/${eventId}`, formData, {
+        return this.http.put<WTPEvent>(`${this.baseUrl}/events/${eventId}`, formData, {
           headers: finalHeaders,
+          observe: 'response',
           withCredentials: true
-        });
-      })
+        })
+      }),
+      map((response: HttpResponse<WTPEvent>) => response.body as WTPEvent)
     );
   }
 

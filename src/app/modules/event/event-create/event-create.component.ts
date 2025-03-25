@@ -1,10 +1,11 @@
-import {Component} from '@angular/core';
+import {Component, ElementRef, ViewChild} from '@angular/core';
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {EventsService} from '../../../services/events.service';
 import {NgForOf, NgIf} from '@angular/common';
 import {CITIES_LIST} from '../../../shared/constants/cities.constants';
 import {Duration} from "luxon";
 import {ACTIVITY_TYPE, ActivityCategory} from '../../../shared/constants/activities.constants';
+import {Router} from '@angular/router';
 
 
 @Component({
@@ -24,10 +25,14 @@ export class EventCreateComponent {
   errorMessage: string | null = null;
   imageError: string | null = null;
   selectedFileName: string | null = null;
+  imagePreviewUrl: string | ArrayBuffer | null = null;
+
+  @ViewChild('fileInput') fileInput!: ElementRef<HTMLInputElement>;
 
   constructor(
     private fb: FormBuilder,
-    private eventsService: EventsService
+    private eventsService: EventsService,
+    private router: Router
   ) {
     this.eventForm = this.fb.group({
       title: ['', [Validators.required]],
@@ -40,7 +45,7 @@ export class EventCreateComponent {
       location: ['', [Validators.required]],
       capacity: [1, [Validators.required, Validators.min(1)]],
       activityTypes: [[]],
-      image: [null]
+      image: [null, [Validators.required]]
     });
   }
 
@@ -53,12 +58,14 @@ export class EventCreateComponent {
     const extension = file.name.split('.').pop()?.toLowerCase();
     if (!['png', 'jpg', 'jpeg'].includes(extension || '')) {
       this.imageError = 'Invalid image format. Allowed: PNG, JPG, JPEG.';
+      this.imagePreviewUrl = null;
       this.eventForm.patchValue({image: null});
       return;
     }
 
     if (file.size > 5 * 1024 * 1024) {
       this.imageError = 'Image size exceeds 5MB.';
+      this.imagePreviewUrl = null;
       this.eventForm.patchValue({image: null});
       return;
     }
@@ -66,6 +73,17 @@ export class EventCreateComponent {
     this.selectedFileName = file.name;
     this.imageError = null;
     this.eventForm.patchValue({image: file});
+
+    // Create a preview using FileReader
+    const reader = new FileReader();
+    reader.onload = () => {
+      this.imagePreviewUrl = reader.result;
+    };
+    reader.readAsDataURL(file);
+  }
+
+  triggerFileInput(): void {
+    this.fileInput.nativeElement.click();
   }
 
   getErrorMessage(controlName: string): string {
@@ -131,9 +149,9 @@ export class EventCreateComponent {
     }
 
     this.eventsService.createEvent(formData).subscribe({
-      next: () => {
+      next: (event) => {
         alert('Event created successfully!');
-        this.eventForm.reset();
+        this.router.navigate(['/events', event.id]);
       },
       error: (err) => {
         console.error('Failed to create event:', err);

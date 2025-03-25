@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
 import {EventsService} from '../../../services/events.service';
@@ -22,13 +22,12 @@ export class EventUpdateComponent implements OnInit {
   eventId!: string;
   imageError: string | null = null;
   selectedFileName: string | null = null;
+  imagePreviewUrl: string | ArrayBuffer | null = null;
 
-  constructor(
-    private fb: FormBuilder,
-    private eventsService: EventsService,
-    private route: ActivatedRoute,
-    private router: Router
-  ) {
+  @ViewChild('fileInput') fileInput!: ElementRef<HTMLInputElement>;
+
+  constructor(private fb: FormBuilder, private eventsService: EventsService, private route: ActivatedRoute,
+              private router: Router) {
     this.eventForm = this.fb.group({
       title: ['', [Validators.required]],
       description: ['', [Validators.required, Validators.minLength(10)]],
@@ -127,6 +126,7 @@ export class EventUpdateComponent implements OnInit {
     if (!file) {
       this.imageError = null;
       this.selectedFileName = null;
+      this.imagePreviewUrl = null;
       this.eventForm.patchValue({image: null});
       return;
     }
@@ -136,6 +136,7 @@ export class EventUpdateComponent implements OnInit {
     if (!['png', 'jpg', 'jpeg'].includes(extension || '')) {
       this.imageError = 'Invalid image format. Allowed: PNG, JPG, JPEG.';
       this.selectedFileName = null;
+      this.imagePreviewUrl = null;
       this.eventForm.patchValue({image: null});
       return;
     }
@@ -144,6 +145,7 @@ export class EventUpdateComponent implements OnInit {
     if (file.size > 5 * 1024 * 1024) {
       this.imageError = 'Image size exceeds 5MB.';
       this.selectedFileName = null;
+      this.imagePreviewUrl = null;
       this.eventForm.patchValue({image: null});
       return;
     }
@@ -151,6 +153,17 @@ export class EventUpdateComponent implements OnInit {
     this.imageError = null;
     this.selectedFileName = file.name;
     this.eventForm.patchValue({image: file});
+
+    // Create a preview using FileReader
+    const reader = new FileReader();
+    reader.onload = () => {
+      this.imagePreviewUrl = reader.result;
+    };
+    reader.readAsDataURL(file);
+  }
+
+  triggerFileInput(): void {
+    this.fileInput.nativeElement.click();
   }
 
   onSubmit(): void {

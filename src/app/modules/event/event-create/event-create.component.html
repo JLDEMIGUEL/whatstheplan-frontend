@@ -93,22 +93,18 @@
     <div class="form-group file-upload-group">
       <label for="image">Image:</label>
       <div class="file-upload-wrapper">
-        <!-- The label acts as a custom button -->
-        <label class="custom-file-upload" [class.has-file]="selectedFileName">
-          <!-- If no file is selected, prompt the user -->
-          <span *ngIf="!selectedFileName">Choose an image...</span>
-          <!-- If a file is selected, display its name -->
-          <span *ngIf="selectedFileName">{{ selectedFileName }}</span>
-          <!-- Hidden file input -->
-          <input
-            id="image"
-            type="file"
-            accept=".png,.jpg,.jpeg"
-            (change)="onFileSelected($event)"
-          />
-        </label>
+        <!-- Show preview if available; otherwise show custom button -->
+        <ng-container *ngIf="imagePreviewUrl; else fileUploadLabel">
+          <img [src]="imagePreviewUrl" alt="Image Preview" class="image-preview" (click)="triggerFileInput()"/>
+        </ng-container>
+        <ng-template #fileUploadLabel>
+          <label class="custom-file-upload" (click)="triggerFileInput()">
+            Choose an image...
+          </label>
+        </ng-template>
+        <!-- Hidden file input -->
+        <input id="image" type="file" accept=".png,.jpg,.jpeg" (change)="onFileSelected($event)" #fileInput hidden/>
       </div>
-      <!-- Show error message for invalid file formats or size -->
       <div class="error" *ngIf="imageError">
         {{ imageError }}
       </div>

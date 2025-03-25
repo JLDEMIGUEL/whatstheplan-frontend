@@ -91,21 +91,23 @@
           transition: background-color 0.3s ease, color 0.3s ease;
           text-align: center;
           min-width: 200px;
-
-          &:hover {
-            background-color: #e0e0e0;
-          }
-
-          &.has-file {
-            background-color: #d32f2f;
-            color: #ffffff;
-            border-color: #b71c1c;
-
-            &:hover {
-              background-color: #b71c1c;
-            }
-          }
         }
+      }
+    }
+
+    .image-preview {
+      display: block;
+      max-width: 200px;
+      max-height: 200px;
+      margin: 0 auto;
+      border-radius: 6px;
+      cursor: pointer;
+      object-fit: cover;
+      border: 2px solid transparent;
+      transition: border-color 0.3s ease;
+
+      &:hover {
+        border-color: #d32f2f;
       }
     }
   }
