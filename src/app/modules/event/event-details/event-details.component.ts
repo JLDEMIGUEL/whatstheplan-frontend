@@ -90,7 +90,7 @@ export class EventDetailsComponent implements OnInit {
           verticalPosition: 'top'
         });
         this.showDeletePopup = false;
-        this.router.navigate(['/my-events']);
+        this.router.navigate(['/']);
       },
       error: (error) => {
         console.error('Error deleting event:', error);

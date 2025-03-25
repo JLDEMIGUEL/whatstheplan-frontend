@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, Validators,} from '@angular/forms';
+import {AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
 import {EventsService} from '../../../services/events.service';
 import {NgForOf, NgIf} from '@angular/common';
@@ -20,6 +20,8 @@ export class EventUpdateComponent implements OnInit {
   errorMessage: string | null = null;
   locations: string[] = CITIES_LIST;
   eventId!: string;
+  imageError: string | null = null;
+  selectedFileName: string | null = null;
 
   constructor(
     private fb: FormBuilder,
@@ -37,7 +39,8 @@ export class EventUpdateComponent implements OnInit {
       }),
       location: ['', [Validators.required]],
       capacity: [1, [Validators.required, Validators.min(1)]],
-      activityTypes: [[]]
+      activityTypes: [[]],
+      image: [null]
     });
   }
 
@@ -72,18 +75,14 @@ export class EventUpdateComponent implements OnInit {
     });
   }
 
-  // Helper to format ISO datetime to value accepted by datetime-local input
   formatDateForInput(dateTime: string): string {
     const date = new Date(dateTime);
-    // Format: YYYY-MM-DDTHH:mm (local)
     const pad = (n: number) => n.toString().padStart(2, '0');
-    return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}T${pad(date.getHours())}:${pad(date.getMinutes())}`;
+    return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}T${pad(date.getHours())}:${pad(
+      date.getMinutes())}`;
   }
 
-  // Convert ISO duration to an object with hours and minutes (assuming duration is in ISO format)
   convertDurationToHoursMinutes(isoDuration: string): { hours: number; minutes: number } {
-    // Here you may want to use a library or custom logic.
-    // For simplicity, we assume the duration is in the format "PT#H#M" (e.g., PT2H30M).
     const regex = /PT(?:(\d+)H)?(?:(\d+)M)?/;
     const match = regex.exec(isoDuration);
     const hours = match && match[1] ? parseInt(match[1], 10) : 0;
@@ -110,7 +109,7 @@ export class EventUpdateComponent implements OnInit {
     const selectedActivities = this.eventForm.get('activityTypes')?.value as string[];
     if (selectedActivities.includes(activity)) {
       this.eventForm.patchValue({
-        activityTypes: selectedActivities.filter(p => p !== activity)
+        activityTypes: selectedActivities.filter((p) => p !== activity)
       });
     } else {
       this.eventForm.patchValue({
@@ -123,34 +122,77 @@ export class EventUpdateComponent implements OnInit {
     return this.eventForm.get('activityTypes')?.value.includes(pref);
   }
 
-  onSubmit(): void {
-    if (this.eventForm.valid) {
-      const eventData = this.eventForm.value;
-      const hours = eventData.duration.hours;
-      const minutes = eventData.duration.minutes;
-      const eventRequest = {
-        title: eventData.title,
-        description: eventData.description,
-        dateTime: eventData.dateTime,
-        duration: Duration.fromObject({hours, minutes}).toISO(),
-        location: eventData.location,
-        capacity: eventData.capacity,
-        activityTypes: eventData.activityTypes,
-      };
-
-      console.log('Update Event Request:', eventRequest);
-
-      this.eventsService.updateEvent(this.eventId, eventRequest).subscribe({
-        next: () => {
-          alert('Event updated successfully!');
-          // Optionally navigate away or refresh the data
-          this.router.navigate(['/events', this.eventId]);
-        },
-        error: (err) => {
-          console.error('Failed to update event:', err);
-          this.errorMessage = 'Failed to update the event. Please try again later.';
-        }
-      });
+  onFileSelected(event: Event): void {
+    const file = (event.target as HTMLInputElement).files?.[0];
+    if (!file) {
+      this.imageError = null;
+      this.selectedFileName = null;
+      this.eventForm.patchValue({image: null});
+      return;
     }
+
+    // Validate extension
+    const extension = file.name.split('.').pop()?.toLowerCase();
+    if (!['png', 'jpg', 'jpeg'].includes(extension || '')) {
+      this.imageError = 'Invalid image format. Allowed: PNG, JPG, JPEG.';
+      this.selectedFileName = null;
+      this.eventForm.patchValue({image: null});
+      return;
+    }
+
+    // Validate size (up to 5MB)
+    if (file.size > 5 * 1024 * 1024) {
+      this.imageError = 'Image size exceeds 5MB.';
+      this.selectedFileName = null;
+      this.eventForm.patchValue({image: null});
+      return;
+    }
+
+    this.imageError = null;
+    this.selectedFileName = file.name;
+    this.eventForm.patchValue({image: file});
+  }
+
+  onSubmit(): void {
+    if (this.eventForm.invalid || this.imageError) {
+      return;
+    }
+
+    const formValue = this.eventForm.value;
+    const hours = formValue.duration.hours;
+    const minutes = formValue.duration.minutes;
+    const isoDuration = Duration.fromObject({hours, minutes}).toISO();
+
+    const eventRequest = {
+      title: formValue.title,
+      description: formValue.description,
+      dateTime: formValue.dateTime,
+      duration: isoDuration,
+      location: formValue.location,
+      capacity: formValue.capacity,
+      activityTypes: formValue.activityTypes
+    };
+
+    const formData = new FormData();
+    formData.append(
+      'event',
+      new Blob([JSON.stringify(eventRequest)], {type: 'application/json'})
+    );
+
+    if (formValue.image) {
+      formData.append('image', formValue.image);
+    }
+
+    // Update event via service
+    this.eventsService.updateEvent(this.eventId, formData).subscribe({
+      next: () => {
+        alert('Event updated successfully!');
+        this.router.navigate(['/events', this.eventId]);
+      },
+      error: (err) => {
+        console.error('Failed to update event:', err);
+        this.errorMessage = 'Failed to update the event. Please try again later.';
+      }
+    });
   }
 }

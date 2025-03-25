@@ -4,7 +4,7 @@ import {fetchAuthSession} from 'aws-amplify/auth';
 import {Observable, of} from 'rxjs';
 import {catchError, map, switchMap} from 'rxjs/operators';
 import {environment} from '../../environments/environment';
-import {WTPEvent, WTPEventRequest} from '../shared/model/events.model';
+import {WTPEvent} from '../shared/model/events.model';
 import {v4 as uuidv4} from 'uuid';
 import {Duration} from 'luxon';
 
@@ -254,7 +254,6 @@ export class EventsService {
     return this.addAuthHeaders().pipe(
       switchMap((headers) => {
         const finalHeaders = headers.delete('Content-Type');
-
         return this.http.post(`${this.baseUrl}/events`, formData, {
           headers: finalHeaders,
           withCredentials: true
@@ -263,14 +262,15 @@ export class EventsService {
     );
   }
 
-  updateEvent(eventId: string, eventData: WTPEventRequest) {
+  updateEvent(eventId: string, formData: FormData) {
     return this.addAuthHeaders().pipe(
-      switchMap((headers) =>
-        this.http.put(`${this.baseUrl}/events/${eventId}`, eventData, {
-          headers,
+      switchMap((headers) => {
+        const finalHeaders = headers.delete('Content-Type');
+        return this.http.put(`${this.baseUrl}/events/${eventId}`, formData, {
+          headers: finalHeaders,
           withCredentials: true
-        })
-      )
+        });
+      })
     );
   }
 
