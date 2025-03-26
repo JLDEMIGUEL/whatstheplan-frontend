@@ -6,6 +6,7 @@ import {NgForOf, NgIf} from '@angular/common';
 import {CITIES_LIST} from '../../../shared/constants/cities.constants';
 import {Duration} from 'luxon';
 import {ACTIVITY_TYPE, ActivityCategory} from '../../../shared/constants/activities.constants';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-event-update',
@@ -26,8 +27,13 @@ export class EventUpdateComponent implements OnInit {
 
   @ViewChild('fileInput') fileInput!: ElementRef<HTMLInputElement>;
 
-  constructor(private fb: FormBuilder, private eventsService: EventsService, private route: ActivatedRoute,
-              private router: Router) {
+  constructor(
+    private fb: FormBuilder,
+    private eventsService: EventsService,
+    private route: ActivatedRoute,
+    private router: Router,
+    private snackBar: MatSnackBar
+  ) {
     this.eventForm = this.fb.group({
       title: ['', [Validators.required]],
       description: ['', [Validators.required, Validators.minLength(10)]],
@@ -199,7 +205,11 @@ export class EventUpdateComponent implements OnInit {
     // Update event via service
     this.eventsService.updateEvent(this.eventId, formData).subscribe({
       next: () => {
-        alert('Event updated successfully!');
+        this.snackBar.open('Event successfully updated.', 'OK', {
+          duration: 3000,
+          horizontalPosition: 'right',
+          verticalPosition: 'top'
+        });
         this.router.navigate(['/events', this.eventId]);
       },
       error: (err) => {

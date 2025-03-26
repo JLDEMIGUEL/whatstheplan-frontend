@@ -6,6 +6,7 @@ import {CITIES_LIST} from '../../../shared/constants/cities.constants';
 import {Duration} from "luxon";
 import {ACTIVITY_TYPE, ActivityCategory} from '../../../shared/constants/activities.constants';
 import {Router} from '@angular/router';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 
 @Component({
@@ -32,7 +33,8 @@ export class EventCreateComponent {
   constructor(
     private fb: FormBuilder,
     private eventsService: EventsService,
-    private router: Router
+    private router: Router,
+    private snackBar: MatSnackBar
   ) {
     this.eventForm = this.fb.group({
       title: ['', [Validators.required]],
@@ -150,7 +152,11 @@ export class EventCreateComponent {
 
     this.eventsService.createEvent(formData).subscribe({
       next: (event) => {
-        alert('Event created successfully!');
+        this.snackBar.open('Event successfully created.', 'OK', {
+          duration: 3000,
+          horizontalPosition: 'right',
+          verticalPosition: 'top'
+        });
         this.router.navigate(['/events', event.id]);
       },
       error: (err) => {
