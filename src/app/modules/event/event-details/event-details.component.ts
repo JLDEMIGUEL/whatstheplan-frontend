@@ -60,8 +60,20 @@ export class EventDetailsComponent implements OnInit {
 
   onRegister(): void {
     if (this.event) {
-      alert(`You have registered for "${this.event.title}"!`);
-      // Implement actual registration logic here
+      this.eventsService.registerToEvent(this.event.id).subscribe({
+        next: () => {
+          this.snackBar.open('Successfully registered to event.', 'OK', {
+            duration: 3000,
+            horizontalPosition: 'right',
+            verticalPosition: 'top'
+          });
+          this.fetchEventDetails(this.event.id);
+        },
+        error: (error) => {
+          console.error('Error registering to event:', error);
+          this.errorMessage = 'Failed to register to event. Please try again later.';
+        }
+      });
     }
   }
 

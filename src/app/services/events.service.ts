@@ -214,6 +214,24 @@ export class EventsService {
     );
   }
 
+  registerToEvent(eventId: string): Observable<void> {
+    return this.addAuthHeaders().pipe(
+      switchMap((headers) =>
+        this.http.post<void>(`${this.baseUrl}/events/registration/${eventId}`, null, {
+          headers,
+          observe: 'response',
+          withCredentials: true
+        })
+      ),
+      map((response: HttpResponse<void>) => response.body as void),
+      catchError((error) => {
+        console.error(`Error registering to event ${eventId}:`, error);
+        // TODO REPLACE BY        return throwError(() => error);
+        return of(void 0);
+      })
+    );
+  }
+
 
   getEventById(eventId: string): Observable<WTPEvent> {
     return this.addAuthHeaders().pipe(
