@@ -4,7 +4,7 @@ import {fetchAuthSession} from 'aws-amplify/auth';
 import {Observable, of} from 'rxjs';
 import {catchError, map, switchMap} from 'rxjs/operators';
 import {environment} from '../../environments/environment';
-import {WTPEvent} from '../shared/model/events.model';
+import {WTPEvent, WTPEventDetailed} from '../shared/model/events.model';
 import {v4 as uuidv4} from 'uuid';
 import {Duration} from 'luxon';
 
@@ -15,7 +15,7 @@ import {Duration} from 'luxon';
 export class EventsService {
   private baseUrl = environment.api;
 
-  private defaultEvents: WTPEvent[] = [
+  private defaultEvents: WTPEventDetailed[] = [
     {
       id: 'd495f0c8-e246-44ec-84aa-5a9beadd55d9',
       title: 'Default Event 1',
@@ -33,6 +33,7 @@ export class EventsService {
       activityTypes: ['Soccer', 'Swimming'],
       registrations: 50,
       isOwnedByUser: true,
+      isRegistered: false
     },
     {
       id: '679b766f-9aee-4358-b021-4c76500f18d7',
@@ -51,6 +52,7 @@ export class EventsService {
       activityTypes: ['Golf', 'Music'],
       registrations: 75,
       isOwnedByUser: false,
+      isRegistered: true
     },
     {
       id: '1ea29b55-9838-4ccd-a717-abcbfa388d20',
@@ -69,6 +71,7 @@ export class EventsService {
       activityTypes: ['Technology', 'Writing'],
       registrations: 60,
       isOwnedByUser: true,
+      isRegistered: false
     },
     {
       id: '0367373d-a982-474d-94f0-3609243b5c28',
@@ -87,6 +90,7 @@ export class EventsService {
       activityTypes: ['Wellness & Fitness', 'Gaming'],
       registrations: 60,
       isOwnedByUser: false,
+      isRegistered: false
     },
     {
       id: 'e071d14e-8f03-40eb-8e1a-0d79fb73e789',
@@ -105,6 +109,7 @@ export class EventsService {
       activityTypes: ['Volunteering', 'Cooking'],
       registrations: 60,
       isOwnedByUser: true,
+      isRegistered: false
     },
     {
       id: '6baa9a21-f1b9-4960-8e79-69bb6b2632aa',
@@ -121,8 +126,9 @@ export class EventsService {
       createdDate: new Date().toISOString(),
       lastModifiedDate: new Date().toISOString(),
       activityTypes: ['Baking', 'Martial Arts'],
-      registrations: 60,
+      registrations: 80,
       isOwnedByUser: false,
+      isRegistered: false
     }
   ];
 
@@ -233,16 +239,16 @@ export class EventsService {
   }
 
 
-  getEventById(eventId: string): Observable<WTPEvent> {
+  getEventById(eventId: string): Observable<WTPEventDetailed> {
     return this.addAuthHeaders().pipe(
       switchMap((headers) =>
-        this.http.get<WTPEvent>(`${this.baseUrl}/events/${eventId}`, {
+        this.http.get<WTPEventDetailed>(`${this.baseUrl}/events/${eventId}`, {
           headers,
           observe: 'response',
           withCredentials: true
         })
       ),
-      map((response: HttpResponse<WTPEvent>) => response.body as WTPEvent),
+      map((response: HttpResponse<WTPEventDetailed>) => response.body as WTPEventDetailed),
       catchError((error) => {
         console.error('Error fetching event details:', error);
         // TODO REPLACE BY        return throwError(error);

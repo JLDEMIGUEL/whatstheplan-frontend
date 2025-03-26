@@ -17,12 +17,6 @@ export interface WTPEvent {
   isOwnedByUser: boolean;
 }
 
-export interface WTPEventRequest {
-  title: string;
-  description: string;
-  dateTime: string;
-  duration: string;
-  location: string;
-  capacity: number;
-  activityTypes: string[];
+export interface WTPEventDetailed extends WTPEvent {
+  isRegistered: boolean;
 }

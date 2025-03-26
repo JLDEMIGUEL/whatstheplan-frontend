@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {WTPEvent} from '../../../shared/model/events.model';
+import {WTPEventDetailed} from '../../../shared/model/events.model';
 import {EventsService} from '../../../services/events.service';
 import {environment} from '../../../../environments/environment';
 import {NgIf} from '@angular/common';
@@ -14,7 +14,7 @@ import {MatSnackBar} from '@angular/material/snack-bar';
   imports: [NgIf],
 })
 export class EventDetailsComponent implements OnInit {
-  event!: WTPEvent;
+  event!: WTPEventDetailed;
   errorMessage: string | null = null;
   isFull: boolean = false;
   s3BaseUrl: string = environment.s3BaseUrl;
@@ -68,6 +68,7 @@ export class EventDetailsComponent implements OnInit {
             verticalPosition: 'top'
           });
           this.fetchEventDetails(this.event.id);
+          this.event.isRegistered = true;//TODO REMOVE JUST FOR TESTS
         },
         error: (error) => {
           console.error('Error registering to event:', error);
