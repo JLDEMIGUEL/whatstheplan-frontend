@@ -260,7 +260,12 @@ export class EventsService {
           withCredentials: true
         });
       }),
-      map((response: HttpResponse<WTPEvent>) => response.body as WTPEvent)
+      map((response: HttpResponse<WTPEvent>) => response.body as WTPEvent),
+      catchError((error) => {
+        console.error('Error creating event:', error);
+        // TODO REPLACE BY        return throwError(error);
+        return of(this.defaultEvents[0]);
+      })
     );
   }
 
@@ -274,7 +279,12 @@ export class EventsService {
           withCredentials: true
         })
       }),
-      map((response: HttpResponse<WTPEvent>) => response.body as WTPEvent)
+      map((response: HttpResponse<WTPEvent>) => response.body as WTPEvent),
+      catchError((error) => {
+        console.error('Error updating event:', error);
+        // TODO REPLACE BY        return throwError(error);
+        return of(this.defaultEvents.find(event => event.id === eventId) || this.defaultEvents[0]);
+      })
     );
   }
 
