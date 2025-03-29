@@ -2,8 +2,19 @@
   <div class="events-container">
     <!-- Filters Bar -->
     <form class="filters-bar" (ngSubmit)="applyFilters()">
+      <!-- Location Dropdown -->
+      <div class="filter-element">
+        <select [(ngModel)]="filters.location" name="location" class="dropdown-header ">
+          <option value="">Select a city</option>
+          <option *ngFor="let city of availableCities" [value]="city">
+            {{ city }}
+          </option>
+        </select>
+      </div>
+
+
       <!-- Duration Range Dropdown -->
-      <div class="dropdown-range">
+      <div class="filter-element">
         <div class="dropdown-header" (click)="toggleDurationDropdown()">
           <span *ngIf="filters.durationFrom || filters.durationTo; else durationPlaceholder">
               Duration: {{ filters.durationFrom }} Hours - {{ filters.durationTo }} Hours
@@ -34,7 +45,7 @@
       </div>
 
       <!-- Datetime Range Dropdown -->
-      <div class="dropdown-range">
+      <div class="filter-element">
         <div class="dropdown-header" (click)="toggleDateTimeDropdown()">
           <span *ngIf="filters.dateTimeFrom || filters.dateTimeTo; else datetimePlaceholder">
               Date time: {{ filters.dateTimeFrom ? (filters.dateTimeFrom |  date:'dd/MM') : '' }} -
@@ -65,7 +76,7 @@
       </div>
 
       <!-- Activity Types (Multiple selection) -->
-      <div class="dropdown-range activity-dropdown">
+      <div class="filter-element activity-dropdown">
         <div class="dropdown-header" (click)="toggleActivityDropdown()">
           <span *ngIf="filters.activityTypes.length > 0; else defaultPlaceholder">
             Categories: {{ getActivityTypesPlaceholder() }}
@@ -75,17 +86,19 @@
           </ng-template>
         </div>
         <div class="dropdown-content" *ngIf="activityDropdownOpen">
-          <div *ngFor="let category of activityTypes">
-            <div class="category-label">{{ category.category }}</div>
-            <div *ngFor="let activity of category.names">
-              <label>
-                <input
-                  type="checkbox"
-                  [checked]="filters.activityTypes.includes(activity)"
-                  (change)="onActivityChange(activity, $event)"
-                />
-                {{ activity }}
-              </label>
+          <div class="activity-list">
+            <div *ngFor="let category of activityTypes">
+              <div class="category-label">{{ category.category }}</div>
+              <div *ngFor="let activity of category.names">
+                <label>
+                  <input
+                    type="checkbox"
+                    [checked]="filters.activityTypes.includes(activity)"
+                    (change)="onActivityChange(activity, $event)"
+                  />
+                  {{ activity }}
+                </label>
+              </div>
             </div>
           </div>
           <button type="button" (click)="closeActivityDropdown()">OK</button>

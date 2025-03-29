@@ -143,13 +143,25 @@
   align-items: center;
   gap: 0.5rem;
 
-  .dropdown-range {
+  select,
+  filter-element {
+    width: 100%;
+  }
+
+  select {
+    padding: 0.5rem;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+
+  .filter-element {
     position: relative;
-    min-width: 270px;
+    min-width: 200px;
 
     .dropdown-header {
       padding: 0.5rem;
-      font-size: 1rem;
+      font-size: 0.85rem;
       border: 1px solid #ccc;
       border-radius: 4px;
       background-color: #fff;
@@ -157,7 +169,7 @@
     }
 
     .dropdown-content {
-      width: 94%;
+      width: 91%;
       position: absolute;
       top: 100%;
       left: 0;
@@ -226,7 +238,22 @@
 
   .dropdown-content {
     max-height: 300px;
-    overflow-y: auto;
+    width: 91%;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 10;
+    background-color: #fff;
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+
+    .activity-list {
+      overflow-y: auto;
+    }
   }
 
   .category-label {

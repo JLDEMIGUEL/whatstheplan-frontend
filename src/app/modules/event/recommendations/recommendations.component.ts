@@ -7,6 +7,7 @@ import {EventsService} from '../../../services/events.service';
 import {WTPEvent} from '../../../shared/model/events.model';
 import {environment} from '../../../../environments/environment';
 import {ACTIVITY_TYPE, ActivityCategory} from '../../../shared/constants/activities.constants';
+import {CITIES_LIST} from '../../../shared/constants/cities.constants';
 
 @Component({
   selector: 'app-recommendations',
@@ -20,13 +21,15 @@ export class RecommendationsComponent implements OnInit {
   recommendations: WTPEvent[] = [];
   errorMessage!: string;
   isLoading: boolean = true;
-  today = new Date().toISOString().slice(0, -8);
+  today = new Date().toISOString().slice(0, 16);
   activityTypes: ActivityCategory[] = ACTIVITY_TYPE;
+  availableCities: string[] = CITIES_LIST;
   durationDropdownOpen: boolean = false;
   dateTimeDropdownOpen: boolean = false;
   activityDropdownOpen: boolean = false;
 
   filters = {
+    location: '',
     durationFrom: '',
     durationTo: '',
     dateTimeFrom: '',
@@ -115,8 +118,9 @@ export class RecommendationsComponent implements OnInit {
   }
 
   getActivityTypesPlaceholder(): string {
+    const charsLimit = 15;
     const selected = this.filters.activityTypes.join(', ');
-    return selected.length > 15 ? selected.substring(0, 15) + ' ...' : selected;
+    return selected.length > charsLimit ? selected.substring(0, charsLimit) + ' ...' : selected;
   }
 
   applyFilters(): void {
