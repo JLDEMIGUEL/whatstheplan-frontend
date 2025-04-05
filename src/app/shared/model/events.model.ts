@@ -9,7 +9,6 @@ export interface WTPEvent {
   imageKey: string;
   organizerId: string;
   organizerUsername: string;
-  organizerEmail: string;
   createdDate: string;
   lastModifiedDate: string;
   activityTypes: string[];
