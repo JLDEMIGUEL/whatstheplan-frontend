@@ -1,9 +1,11 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {WTPEventDetailed} from '../../../shared/model/events.model';
+import {WTPReview} from '../../../shared/model/reviews.model';
 import {EventsService} from '../../../services/events.service';
+import {ReviewsService} from '../../../services/reviews.service';
 import {environment} from '../../../../environments/environment';
-import {NgIf} from '@angular/common';
+import {NgForOf, NgIf} from '@angular/common';
 import {MatSnackBar} from '@angular/material/snack-bar';
 
 
@@ -11,10 +13,11 @@ import {MatSnackBar} from '@angular/material/snack-bar';
   selector: 'app-event-details',
   templateUrl: './event-details.component.html',
   styleUrls: ['./event-details.component.scss'],
-  imports: [NgIf],
+  imports: [NgIf, NgForOf],
 })
 export class EventDetailsComponent implements OnInit {
   event!: WTPEventDetailed;
+  reviews: WTPReview[] = [];
   errorMessage: string | null = null;
   isFull: boolean = false;
   s3BaseUrl: string = environment.s3BaseUrl;
@@ -23,6 +26,7 @@ export class EventDetailsComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private eventsService: EventsService,
+    private reviewsService: ReviewsService,
     private router: Router,
     private snackBar: MatSnackBar
   ) {
@@ -32,6 +36,7 @@ export class EventDetailsComponent implements OnInit {
     const eventId = this.route.snapshot.paramMap.get('id');
     if (eventId) {
       this.fetchEventDetails(eventId);
+      this.fetchEventReviews(eventId);
     } else {
       this.errorMessage = 'Event ID not provided.';
     }
@@ -46,6 +51,18 @@ export class EventDetailsComponent implements OnInit {
       error: (error) => {
         console.error('Error fetching event details:', error);
         this.errorMessage = 'Failed to load event details. Please try again later.';
+      }
+    });
+  }
+
+  fetchEventReviews(eventId: string): void {
+    this.reviewsService.getReviewsByUserId(eventId).subscribe({
+      next: (reviews) => {
+        this.reviews = reviews;
+      },
+      error: (error) => {
+        console.error('Error fetching reviews:', error);
+        this.errorMessage = 'Failed to load reviews. Please try again later.';
       }
     });
   }
@@ -109,6 +126,23 @@ export class EventDetailsComponent implements OnInit {
         console.error('Error deleting event:', error);
         this.errorMessage = 'Failed to delete event. Please try again later.';
         this.showDeletePopup = false;
+      }
+    });
+  }
+
+  onDeleteReview(reviewId: string): void {
+    this.reviewsService.deleteReview(reviewId).subscribe({
+      next: () => {
+        this.snackBar.open('Review deleted successfully.', 'OK', {
+          duration: 3000,
+          horizontalPosition: 'right',
+          verticalPosition: 'top'
+        });
+        this.fetchEventReviews(this.event.id);
+      },
+      error: (error) => {
+        console.error('Error deleting review:', error);
+        this.errorMessage = 'Failed to delete review. Please try again later.';
       }
     });
   }

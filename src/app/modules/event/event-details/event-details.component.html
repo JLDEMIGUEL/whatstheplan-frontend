@@ -41,6 +41,30 @@
       <div *ngIf="event.isRegistered" class="registration-info">
         You are registered for this event.
       </div>
+
+      <!-- Reviews Section -->
+      <div class="reviews-section" *ngIf="reviews.length > 0">
+        <h2>Reviews ({{ reviews.length }})</h2>
+        <div *ngFor="let review of reviews" class="review-card">
+          <div class="review-header">
+            <span class="review-username">{{ review.raterUsername }}</span>
+            <span class="review-rating">Rating: {{ review.rating }} / 5</span>
+          </div>
+          <p class="review-text">{{ review.text }}</p>
+          <p class="review-date">{{ formatDateTime(review.createdAt) }}</p>
+
+          <!-- Edit/Delete Button for Owner -->
+          <div *ngIf="review.isOwnedByUser" class="review-actions">
+            <button class="delete-button" (click)="onDeleteReview(review.id)">Delete</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- No Reviews Message -->
+      <div *ngIf="reviews.length === 0" class="no-reviews-message">
+        No reviews available for this event.
+      </div>
+
     </div>
   </div>
 
