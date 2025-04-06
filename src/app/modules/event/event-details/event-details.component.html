@@ -99,3 +99,15 @@
     </div>
   </div>
 </div>
+
+<!-- Custom Popup (Modal) for Review Delete Confirmation -->
+<div class="modal-backdrop" *ngIf="showReviewDeletePopup">
+  <div class="modal">
+    <h2>Delete Review</h2>
+    <p>Are you sure you want to delete your review of event "{{ event.title }}"?</p>
+    <div class="modal-buttons">
+      <button (click)="confirmReviewDelete()">Yes</button>
+      <button (click)="cancelReviewDelete()">No</button>
+    </div>
+  </div>
+</div>

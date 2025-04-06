@@ -22,6 +22,8 @@ export class EventDetailsComponent implements OnInit {
   isFull: boolean = false;
   s3BaseUrl: string = environment.s3BaseUrl;
   showDeletePopup = false;
+  showReviewDeletePopup = false;
+  reviewToDelete: string | null = null;
 
   constructor(
     private route: ActivatedRoute,
@@ -143,18 +145,34 @@ export class EventDetailsComponent implements OnInit {
   }
 
   onDeleteReview(reviewId: string): void {
-    this.reviewsService.deleteReview(reviewId).subscribe({
+    this.reviewToDelete = reviewId;
+    this.showReviewDeletePopup = true;
+  }
+
+  cancelReviewDelete(): void {
+    this.showReviewDeletePopup = false;
+    this.reviewToDelete = null;
+  }
+
+  confirmReviewDelete(): void {
+    if (!this.reviewToDelete) return;
+
+    this.reviewsService.deleteReview(this.reviewToDelete).subscribe({
       next: () => {
         this.snackBar.open('Review deleted successfully.', 'OK', {
           duration: 3000,
           horizontalPosition: 'right',
           verticalPosition: 'top'
         });
+        this.reviewToDelete = null;
+        this.showReviewDeletePopup = false;
         this.fetchEventReviews(this.event.id);
       },
       error: (error) => {
         console.error('Error deleting review:', error);
         this.errorMessage = 'Failed to delete review. Please try again later.';
+        this.reviewToDelete = null;
+        this.showReviewDeletePopup = false;
       }
     });
   }
