@@ -67,12 +67,24 @@ export class EventDetailsComponent implements OnInit {
     });
   }
 
+  getStarArray(rating: number): number[] {
+    return Array(5).fill(0).map((_, index) => index + 1);
+  }
+
+
   getImageUrl(imageKey: string): string {
     return `${this.s3BaseUrl}${imageKey}`;
   }
 
   formatDateTime(dateTime: string): string {
-    return new Date(dateTime).toLocaleString();
+    return new Date(dateTime).toLocaleString('en-US', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: false
+    });
   }
 
   onRegister(): void {

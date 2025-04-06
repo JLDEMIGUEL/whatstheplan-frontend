@@ -46,16 +46,25 @@
       <div class="reviews-section" *ngIf="reviews.length > 0">
         <h2>Reviews ({{ reviews.length }})</h2>
         <div *ngFor="let review of reviews" class="review-card">
+
+
+          <!-- Review Header -->
           <div class="review-header">
             <span class="review-username">{{ review.raterUsername }}</span>
-            <span class="review-rating">Rating: {{ review.rating }} / 5</span>
+            <!-- Delete Button at Top Right for Owners -->
+            <button class="review-delete-button" (click)="onDeleteReview(review.id)" *ngIf="review.isOwnedByUser">Delete
+            </button>
           </div>
+
+          <!-- Review Text -->
           <p class="review-text">{{ review.text }}</p>
           <p class="review-date">{{ formatDateTime(review.createdAt) }}</p>
 
-          <!-- Edit/Delete Button for Owner -->
-          <div *ngIf="review.isOwnedByUser" class="review-actions">
-            <button class="delete-button" (click)="onDeleteReview(review.id)">Delete</button>
+          <!-- Star Rating at the Bottom -->
+          <div class="review-rating">
+            <ng-container *ngFor="let star of getStarArray(review.rating); let i = index">
+              <span class="star" [class.filled]="i < review.rating">★</span>
+            </ng-container>
           </div>
         </div>
       </div>
