@@ -1,0 +1,43 @@
+<div class="review-container" *ngIf="event">
+  <h2>Review Event Organizer</h2>
+  <p>Please rate and review the organizer of the event: {{ event.title }}</p>
+  <p>Organizer: {{ event.organizerUsername }}</p>
+
+  <!-- Review Form -->
+  <form [formGroup]="reviewForm" (ngSubmit)="submitReview()">
+    <!-- Star Rating -->
+    <div class="star-rating">
+      <span *ngFor="let star of [1, 2, 3, 4, 5]"
+            (click)="setRating(star)"
+            class="star"
+            [class.filled]="star <= reviewForm.get('rating')?.value">
+        ★
+      </span>
+    </div>
+    <div *ngIf="reviewForm.get('rating')?.invalid && reviewForm.get('rating')?.touched" class="error-message">
+      Please select a rating.
+    </div>
+
+    <!-- Review Text -->
+    <textarea placeholder="Write your review here..."
+              formControlName="text"
+              rows="5"
+              class="review-textarea"></textarea>
+    <div *ngIf="reviewForm.get('text')?.invalid && reviewForm.get('text')?.touched" class="error-message">
+      Review text is required and must be between 10 and 1000 characters.
+    </div>
+
+    <!-- Submit Button -->
+    <button class="submit-button" type="submit" [disabled]="reviewForm.invalid">Submit Review</button>
+
+    <!-- Error Message -->
+    <div *ngIf="errorMessage" class="error-message">
+      {{ errorMessage }}
+    </div>
+  </form>
+</div>
+
+<!-- Loading State -->
+<div *ngIf="!event && !errorMessage" class="loading">
+  Loading event details...
+</div>
