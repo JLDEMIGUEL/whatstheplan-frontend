@@ -8,7 +8,6 @@ export interface WTPEvent {
   capacity: number;
   imageKey: string;
   organizerId: string;
-  organizerUsername: string;
   createdDate: string;
   lastModifiedDate: string;
   activityTypes: string[];
@@ -18,4 +17,5 @@ export interface WTPEvent {
 
 export interface WTPEventDetailed extends WTPEvent {
   isRegistered: boolean;
+  organizerUsername: string;
 }
