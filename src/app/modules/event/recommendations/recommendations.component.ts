@@ -27,6 +27,8 @@ export class RecommendationsComponent implements OnInit {
   durationDropdownOpen: boolean = false;
   dateTimeDropdownOpen: boolean = false;
   activityDropdownOpen: boolean = false;
+  currentPage: number = 0;
+  totalPages: number = 0;
 
   filters = {
     location: '',
@@ -44,10 +46,13 @@ export class RecommendationsComponent implements OnInit {
     this.fetchEvents(false);
   }
 
-  fetchEvents(withFilters: boolean): void {
-    this.eventsService.getEvents(withFilters ? this.filters : undefined).subscribe({
-      next: (events: WTPEvent[]) => {
-        this.recommendations = events;
+  fetchEvents(withFilters: boolean, page: number = 0): void {
+    this.isLoading = true;
+    this.eventsService.getEvents(withFilters ? this.filters : {}, page).subscribe({
+      next: (data) => {
+        this.recommendations = data.content;
+        this.totalPages = data.totalPages;
+        this.currentPage = data.number;
         this.isLoading = false;
       },
       error: (error: any) => {
@@ -57,7 +62,6 @@ export class RecommendationsComponent implements OnInit {
         } else {
           this.errorMessage = 'An unexpected error occurred.';
         }
-        console.error(this.errorMessage);
       }
     });
   }
@@ -128,6 +132,25 @@ export class RecommendationsComponent implements OnInit {
     this.dateTimeDropdownOpen = false;
     this.activityDropdownOpen = false;
     console.log('Applied filters:', this.filters);
-    this.fetchEvents(true);
+    this.fetchEvents(true, 0);
   }
+
+  goToPage(page: number): void {
+    if (page >= 0 && page < this.totalPages) {
+      this.fetchEvents(true, page);
+    }
+  }
+
+  getMiddlePages(): number[] {
+    const pages: number[] = [];
+    const start = Math.max(1, this.currentPage - 1);
+    const end = Math.min(this.totalPages - 2, this.currentPage + 1);
+
+    for (let i = start; i <= end; i++) {
+      pages.push(i);
+    }
+
+    return pages;
+  }
+
 }

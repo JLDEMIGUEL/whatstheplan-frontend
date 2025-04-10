@@ -15,6 +15,7 @@ import {Duration} from 'luxon';
 export class EventsService {
   private baseUrl = environment.api;
 
+  private defaultTotalPages: number = 10;
   private defaultEvents: WTPEventDetailed[] = [
     {
       id: 'd495f0c8-e246-44ec-84aa-5a9beadd55d9',
@@ -129,20 +130,19 @@ export class EventsService {
   constructor(private http: HttpClient) {
   }
 
-  getEvents(filters: {
-    durationFrom?: string,
-    durationTo?: string,
-    dateTimeFrom?: string,
-    dateTimeTo?: string,
-    activityTypes?: string[]
-  } = {
-    durationFrom: "",
-    durationTo: "",
-    dateTimeFrom: "",
-    dateTimeTo: "",
-    activityTypes: []
-  }): Observable<WTPEvent[]> {
-    let params = new HttpParams();
+  getEvents(
+    filters: {
+      durationFrom?: string,
+      durationTo?: string,
+      dateTimeFrom?: string,
+      dateTimeTo?: string,
+      activityTypes?: string[]
+    } = {},
+    page: number = 0
+  ): Observable<{ content: WTPEvent[]; totalPages: number; number: number }> {
+    let params = new HttpParams()
+      .set('page', page.toString())
+      .set('size', '10');
 
     if (filters.durationFrom) {
       params = params.set('durationFrom', Duration.fromObject({hours: Number(filters.durationFrom)}).toISO());
@@ -162,17 +162,20 @@ export class EventsService {
 
     return this.addAuthHeaders().pipe(
       switchMap(headers =>
-        this.http.get<WTPEvent[]>(`${this.baseUrl}/events/search`, {
+        this.http.get<any>(`${this.baseUrl}/events/search`, {
           headers,
           params,
-          observe: 'response',
           withCredentials: true
         })
       ),
-      map((response: HttpResponse<WTPEvent[]>) => response.body as WTPEvent[]),
+      map((response) => ({
+        content: response.content,
+        totalPages: response.totalPages,
+        number: response.number
+      })),
       catchError((error) => {
-        console.error('Error fetching user profile:', error);
-        return of(this.defaultEvents);
+        console.error('Error fetching events:', error);
+        return of({content: this.defaultEvents, totalPages: this.defaultTotalPages, number: page});
       })
     );
   }
