@@ -1,3 +1,7 @@
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
 :host {
   display: flex;
   flex-direction: column;
@@ -26,7 +30,6 @@
 
 .event-card {
   display: flex;
-  flex-direction: row;
   width: 100%;
   max-width: 950px;
   background-color: #ffffff;
@@ -36,16 +39,28 @@
   overflow: hidden;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 
+  flex-direction: column;
+  @media (min-width: 768px) {
+    flex-direction: row;
+  }
+
   &:hover {
     transform: translateY(-5px);
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
   }
 
   .event-image {
-    width: 150px;
-    min-height: 100%;
-    object-fit: cover;
-    border-right: 1px solid #ccc;
+    width: 100%;
+    height: 200px;
+    border-right: none;
+    border-bottom: 1px solid #ccc;
+
+    @media (min-width: 768px) {
+      width: 150px;
+      height: auto;
+      border-right: 1px solid #ccc;
+      border-bottom: none;
+    }
   }
 
   .event-content {

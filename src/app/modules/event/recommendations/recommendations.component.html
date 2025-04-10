@@ -131,8 +131,9 @@
     </div>
 
     <div class="pagination-container" *ngIf="totalPages > 1">
-      <button (click)="goToPage(currentPage - 1)" [disabled]="currentPage === 0">Previous</button>
-
+      <button class="arrow-btn" (click)="goToPage(currentPage - 1)" [disabled]="currentPage === 0">
+        &#8592;
+      </button>
       <!-- First Page -->
       <button (click)="goToPage(0)" [class.active]="currentPage === 0">1</button>
 
@@ -159,7 +160,9 @@
         {{ totalPages }}
       </button>
 
-      <button (click)="goToPage(currentPage + 1)" [disabled]="currentPage === totalPages - 1">Next</button>
+      <button class="arrow-btn" (click)="goToPage(currentPage + 1)" [disabled]="currentPage === totalPages - 1">
+        &#8594;
+      </button>
     </div>
 
 

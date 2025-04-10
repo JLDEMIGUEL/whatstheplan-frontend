@@ -1,3 +1,7 @@
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
 :host {
   display: flex;
   justify-content: center;
@@ -31,7 +35,6 @@
     /* Flex para colocar el “+” y el texto en una sola fila */
     display: flex;
     align-items: center;
-    justify-content: flex-start; /* Todo alineado a la izquierda */
     padding: 1rem;
     font-size: 1rem;
     font-weight: 600;
@@ -42,6 +45,12 @@
     cursor: pointer;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     transition: background-color 0.3s ease, box-shadow 0.3s ease;
+
+    justify-content: center;
+    @media (min-width: 768px) {
+      justify-content: flex-start;
+    }
+
 
     &:hover {
       background-color: #f59595;
@@ -73,7 +82,6 @@
 
 .event-card {
   display: flex;
-  flex-direction: row;
   width: 100%;
   max-width: 950px;
   background-color: #ffffff;
@@ -83,16 +91,28 @@
   overflow: hidden;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 
+  flex-direction: column;
+  @media (min-width: 768px) {
+    flex-direction: row;
+  }
+
   &:hover {
     transform: translateY(-5px);
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
   }
 
   .event-image {
-    width: 150px;
-    min-height: 100%;
-    object-fit: cover;
-    border-right: 1px solid #ccc;
+    width: 100%;
+    height: 200px;
+    border-right: none;
+    border-bottom: 1px solid #ccc;
+
+    @media (min-width: 768px) {
+      width: 150px;
+      height: auto;
+      border-right: 1px solid #ccc;
+      border-bottom: none;
+    }
   }
 
   .event-content {
@@ -142,6 +162,7 @@
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  flex-wrap: wrap;
 
   select,
   filter-element {
@@ -157,7 +178,14 @@
 
   .filter-element {
     position: relative;
-    min-width: 200px;
+    min-width: unset;
+    width: 100%;
+
+    @media (min-width: 768px) {
+      width: auto;
+      min-width: 200px;
+    }
+
 
     .dropdown-header {
       padding: 0.5rem;
@@ -208,7 +236,6 @@
   }
 
   button[type="submit"] {
-    width: 50%;
     padding: 0.5rem 0.2rem;
     font-size: 1rem;
     color: #fff;
@@ -217,6 +244,11 @@
     border-radius: 4px;
     cursor: pointer;
     transition: background-color 0.3s ease;
+
+    width: 100%;
+    @media (min-width: 768px) {
+      width: auto;
+    }
 
     &:hover {
       background-color: #b71c1c;
@@ -265,12 +297,24 @@
 .pagination-container {
   display: flex;
   justify-content: center;
-  gap: 0.5rem;
   margin-top: 1rem;
-  width: 100%;
+  max-width: 100%;
+
+  gap: 0.3rem;
+  @media (min-width: 768px) {
+    gap: 0.5rem;
+  }
+
+  button, .arrow-btn {
+    font-weight: bold;
+
+    padding: 0.1rem 0.4rem;
+    @media (min-width: 768px) {
+      padding: 0.5rem 1rem;
+    }
+  }
 
   button {
-    padding: 0.5rem 1rem;
     font-size: 1rem;
     background-color: #fff;
     color: #d32f2f;
@@ -295,8 +339,28 @@
     }
   }
 
+  .arrow-btn {
+    font-size: 1.2rem;
+    background-color: #fff;
+    color: #d32f2f;
+    border: 1px solid #d32f2f;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+
+    &:hover:not(:disabled) {
+      background-color: #d32f2f;
+      color: #fff;
+    }
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+  }
+
+
   .pagination-ellipsis {
-    padding: 0.3rem 0.7rem;
     border-radius: 4px;
     color: #888;
     font-weight: bold;
@@ -306,6 +370,10 @@
     justify-content: center;
     cursor: default;
     user-select: none;
+    padding: 0.1rem 0rem;
+    @media (min-width: 768px) {
+      padding: 0.5rem;
+    }
   }
 
 }
