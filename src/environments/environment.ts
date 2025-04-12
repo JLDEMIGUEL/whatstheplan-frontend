@@ -8,5 +8,5 @@ export const environment = {
     redirectSignOut: 'http://localhost:4200/'
   },
   api: 'http://localhost:8080',
-  s3BaseUrl: 'https://whatstheplan-s3-images.s3.eu-west-1.amazonaws.com/'
+  s3BaseUrl: 'https://whatstheplan-s3-images.s3.eu-west-1.amazonaws.com/events/'
 };
