@@ -32,6 +32,7 @@
   display: flex;
   width: 100%;
   max-width: 950px;
+  height: 400px;
   background-color: #ffffff;
   border: 1px solid #ccc;
   border-radius: 8px;
@@ -42,6 +43,7 @@
   flex-direction: column;
   @media (min-width: 768px) {
     flex-direction: row;
+    height: 200px;
   }
 
   &:hover {
@@ -58,18 +60,19 @@
 
     @media (min-width: 768px) {
       width: 150px;
-      height: auto;
+      height: 100%;
       border-right: 1px solid #ccc;
       border-bottom: none;
     }
   }
 
   .event-content {
-    padding-left: 1rem;
+    padding: 0 1rem;
     display: flex;
     flex-direction: column;
     justify-content: center;
     width: 100%;
+    overflow: hidden;
 
     h3 {
       margin-top: 0.5rem;
@@ -82,6 +85,13 @@
       font-size: 1rem;
       color: #555;
       margin-bottom: 1rem;
+
+      // Truncate description with ellipsis (for multiline)
+      display: -webkit-box;
+      -webkit-line-clamp: 3; // adjust number of lines
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
     button {
