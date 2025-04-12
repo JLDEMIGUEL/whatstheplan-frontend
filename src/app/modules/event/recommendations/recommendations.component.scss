@@ -18,7 +18,13 @@
   padding: 1rem;
   justify-content: center;
   align-items: flex-start;
-  max-width: 1000px;
+  width: 100%;
+  box-sizing: border-box;
+  max-width: 100vw;
+
+  @media (min-width: 768px) {
+    max-width: 1000px;
+  }
 }
 
 .create-event-container {
@@ -269,6 +275,10 @@
 
 .activity-dropdown {
   position: relative;
+  max-width: 100%;
+  @media (min-width: 768px) {
+    max-width: 200px;
+  }
 
   .dropdown-header {
     padding: 0.5rem;
@@ -277,6 +287,19 @@
     border-radius: 4px;
     background-color: #fff;
     cursor: pointer;
+
+    max-width: 100%;
+    width: 100%;
+    display: block;
+    box-sizing: border-box;
+
+    span {
+      display: block;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 100%;
+    }
   }
 
   .dropdown-content {

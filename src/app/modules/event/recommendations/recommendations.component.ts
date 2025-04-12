@@ -121,10 +121,8 @@ export class RecommendationsComponent implements OnInit {
     }
   }
 
-  getActivityTypesPlaceholder(): string {
-    const charsLimit = 15;
-    const selected = this.filters.activityTypes.join(', ');
-    return selected.length > charsLimit ? selected.substring(0, charsLimit) + ' ...' : selected;
+  getActivityTypes(): string {
+    return this.filters.activityTypes.join(', ');
   }
 
   applyFilters(): void {

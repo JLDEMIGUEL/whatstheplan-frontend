@@ -78,8 +78,8 @@
       <!-- Activity Types (Multiple selection) -->
       <div class="filter-element activity-dropdown">
         <div class="dropdown-header" (click)="toggleActivityDropdown()">
-          <span *ngIf="filters.activityTypes.length > 0; else defaultPlaceholder">
-            Categories: {{ getActivityTypesPlaceholder() }}
+          <span *ngIf="filters.activityTypes.length > 0; else defaultPlaceholder" [title]="getActivityTypes()">
+            Categories: {{ getActivityTypes() }}
           </span>
           <ng-template #defaultPlaceholder>
             Categories
