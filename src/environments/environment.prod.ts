@@ -8,6 +8,6 @@ export const environment = {
     redirectSignOut: 'https://d7dp1q4urbiq5.cloudfront.net/'
   },
   api: '<API_PLACEHOLDER>',
-  s3BaseUrl: 'https://whatstheplan-s3-images.s3.eu-west-1.amazonaws.com/'
+  s3BaseUrl: 'https://whatstheplan-s3-images.s3.eu-west-1.amazonaws.com/events/'
 };
 
