@@ -383,6 +383,7 @@ export class EventsService {
 
   getEvents(
     filters: {
+      location?: string,
       durationFrom?: string,
       durationTo?: string,
       dateTimeFrom?: string,
@@ -395,6 +396,9 @@ export class EventsService {
       .set('page', page.toString())
       .set('size', '10');
 
+    if (filters.location) {
+      params = params.set('location', filters.location);
+    }
     if (filters.durationFrom) {
       params = params.set('durationFrom', Duration.fromObject({hours: Number(filters.durationFrom)}).toISO());
     }
@@ -457,7 +461,7 @@ export class EventsService {
   getMyRegistrations(): Observable<WTPEvent[]> {
     return this.addAuthHeaders().pipe(
       switchMap((headers) =>
-        this.http.get<WTPEvent[]>(`${this.baseUrl}/registration`, {
+        this.http.get<WTPEvent[]>(`${this.baseUrl}/events/registration`, {
           headers,
           observe: 'response',
           withCredentials: true
@@ -475,7 +479,7 @@ export class EventsService {
   registerToEvent(eventId: string): Observable<void> {
     return this.addAuthHeaders().pipe(
       switchMap((headers) =>
-        this.http.post<void>(`${this.baseUrl}/registration/${eventId}`, null, {
+        this.http.post<void>(`${this.baseUrl}/events/registration/${eventId}`, null, {
           headers,
           observe: 'response',
           withCredentials: true

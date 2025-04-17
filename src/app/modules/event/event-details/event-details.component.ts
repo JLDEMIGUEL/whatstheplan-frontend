@@ -38,7 +38,6 @@ export class EventDetailsComponent implements OnInit {
     const eventId = this.route.snapshot.paramMap.get('id');
     if (eventId) {
       this.fetchEventDetails(eventId);
-      this.fetchEventReviews(eventId);
     } else {
       this.errorMessage = 'Event ID not provided.';
     }
@@ -49,6 +48,7 @@ export class EventDetailsComponent implements OnInit {
       next: (event) => {
         this.event = event;
         this.isFull = event.registrations >= event.capacity;
+        this.fetchEventReviews(event.organizerId);
       },
       error: (error) => {
         console.error('Error fetching event details:', error);

@@ -25,14 +25,19 @@
   padding: 1rem;
   justify-content: center;
   align-items: flex-start;
-  max-width: 1000px;
+  width: 100vw;
+  box-sizing: border-box;
+  max-width: 100vw;
+
+  @media (min-width: 768px) {
+    max-width: 1000px;
+  }
 }
 
 .event-card {
   display: flex;
   width: 100%;
   max-width: 950px;
-  height: 400px;
   background-color: #ffffff;
   border: 1px solid #ccc;
   border-radius: 8px;
@@ -43,7 +48,6 @@
   flex-direction: column;
   @media (min-width: 768px) {
     flex-direction: row;
-    height: 200px;
   }
 
   &:hover {
@@ -60,7 +64,6 @@
 
     @media (min-width: 768px) {
       width: 150px;
-      height: 100%;
       border-right: 1px solid #ccc;
       border-bottom: none;
     }
