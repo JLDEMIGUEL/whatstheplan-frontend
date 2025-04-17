@@ -1,7 +1,15 @@
-<h2 class="my-events-header">Events You Have Created</h2>
+<div class="page-container">
+  <h2 class="my-events-header">Events You Have Created</h2>
 
-<div *ngIf="myEvents.length > 0; else noEvents">
-  <div class="events-container">
+  <!-- Create New Event Button -->
+  <div class="create-event-container">
+    <button (click)="createNewEvent()">
+      <span class="plus-circle">+</span>
+      <span class="btn-text">Create new event</span>
+    </button>
+  </div>
+
+  <div class="events-container" *ngIf="myEvents.length > 0; else noEvents">
     <!-- Events Cards -->
     <div *ngFor="let event of myEvents" class="event-card">
       <img
@@ -16,12 +24,14 @@
       </div>
     </div>
   </div>
-</div>
 
-<ng-template #noEvents>
-  <p>No events available.</p>
-</ng-template>
+  <ng-template #noEvents>
+    <div class="no-events">
+      <p>You have not create any event yet</p>
+    </div>
+  </ng-template>
 
-<div *ngIf="errorMessage" class="error-message">
-  {{ errorMessage }}
+  <div *ngIf="errorMessage" class="error-message">
+    {{ errorMessage }}
+  </div>
 </div>

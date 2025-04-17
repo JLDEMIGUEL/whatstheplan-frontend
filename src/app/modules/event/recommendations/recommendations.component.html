@@ -1,121 +1,121 @@
-<div *ngIf="recommendations.length > 0; else noRecommendations">
-  <div class="events-container">
-    <!-- Filters Bar -->
-    <form class="filters-bar" (ngSubmit)="applyFilters()">
-      <!-- Location Dropdown -->
-      <div class="filter-element">
-        <select [(ngModel)]="filters.location" name="location" class="dropdown-header ">
-          <option value="">Select a city</option>
-          <option *ngFor="let city of availableCities" [value]="city">
-            {{ city }}
-          </option>
-        </select>
-      </div>
+<div class="page-container">
+  <!-- Filters Bar -->
+  <form class="filters-bar" (ngSubmit)="applyFilters()">
+    <!-- Location Dropdown -->
+    <div class="filter-element">
+      <select [(ngModel)]="filters.location" name="location" class="dropdown-header ">
+        <option value="">Select a city</option>
+        <option *ngFor="let city of availableCities" [value]="city">
+          {{ city }}
+        </option>
+      </select>
+    </div>
 
 
-      <!-- Duration Range Dropdown -->
-      <div class="filter-element">
-        <div class="dropdown-header" (click)="toggleDurationDropdown()">
+    <!-- Duration Range Dropdown -->
+    <div class="filter-element">
+      <div class="dropdown-header" (click)="toggleDurationDropdown()">
           <span *ngIf="filters.durationFrom || filters.durationTo; else durationPlaceholder">
               Duration: {{ filters.durationFrom }} Hours - {{ filters.durationTo }} Hours
             </span>
-          <ng-template #durationPlaceholder>
-            Duration range
-          </ng-template>
-        </div>
-        <div class="dropdown-content" *ngIf="durationDropdownOpen">
-          <input
-            type="number"
-            min="0"
-            max="{{filters.durationTo || 24}}"
-            placeholder="Hours From"
-            [(ngModel)]="filters.durationFrom"
-            name="durationFrom"
-          />
-          <input
-            type="number"
-            min="{{filters.durationFrom || 0}}"
-            max="24"
-            placeholder="Hours To"
-            [(ngModel)]="filters.durationTo"
-            name="durationTo"
-          />
-          <button type="button" (click)="closeDurationDropdown()">OK</button>
-        </div>
+        <ng-template #durationPlaceholder>
+          Duration range
+        </ng-template>
       </div>
+      <div class="dropdown-content" *ngIf="durationDropdownOpen">
+        <input
+          type="number"
+          min="0"
+          max="{{filters.durationTo || 24}}"
+          placeholder="Hours From"
+          [(ngModel)]="filters.durationFrom"
+          name="durationFrom"
+        />
+        <input
+          type="number"
+          min="{{filters.durationFrom || 0}}"
+          max="24"
+          placeholder="Hours To"
+          [(ngModel)]="filters.durationTo"
+          name="durationTo"
+        />
+        <button type="button" (click)="closeDurationDropdown()">OK</button>
+      </div>
+    </div>
 
-      <!-- Datetime Range Dropdown -->
-      <div class="filter-element">
-        <div class="dropdown-header" (click)="toggleDateTimeDropdown()">
+    <!-- Datetime Range Dropdown -->
+    <div class="filter-element">
+      <div class="dropdown-header" (click)="toggleDateTimeDropdown()">
           <span *ngIf="filters.dateTimeFrom || filters.dateTimeTo; else datetimePlaceholder">
               Date time: {{ filters.dateTimeFrom ? (filters.dateTimeFrom |  date:'dd/MM') : '' }} -
             {{ filters.dateTimeTo ? (filters.dateTimeTo | date:'dd/MM') : '' }}
             </span>
-          <ng-template #datetimePlaceholder>
-            Datetime range
-          </ng-template>
-        </div>
-        <div class="dropdown-content" *ngIf="dateTimeDropdownOpen">
-          <input
-            type="datetime-local"
-            placeholder="From"
-            [(ngModel)]="filters.dateTimeFrom"
-            min="{{today}}"
-            max="{{filters.dateTimeTo || ''}}"
-            name="dateTimeFrom"
-          />
-          <input
-            type="datetime-local"
-            placeholder="To"
-            [(ngModel)]="filters.dateTimeTo"
-            min="{{filters.dateTimeFrom || today}}"
-            name="dateTimeTo"
-          />
-          <button type="button" (click)="closeDateTimeDropdown()">OK</button>
-        </div>
+        <ng-template #datetimePlaceholder>
+          Datetime range
+        </ng-template>
       </div>
+      <div class="dropdown-content" *ngIf="dateTimeDropdownOpen">
+        <input
+          type="datetime-local"
+          placeholder="From"
+          [(ngModel)]="filters.dateTimeFrom"
+          min="{{today}}"
+          max="{{filters.dateTimeTo || ''}}"
+          name="dateTimeFrom"
+        />
+        <input
+          type="datetime-local"
+          placeholder="To"
+          [(ngModel)]="filters.dateTimeTo"
+          min="{{filters.dateTimeFrom || today}}"
+          name="dateTimeTo"
+        />
+        <button type="button" (click)="closeDateTimeDropdown()">OK</button>
+      </div>
+    </div>
 
-      <!-- Activity Types (Multiple selection) -->
-      <div class="filter-element activity-dropdown">
-        <div class="dropdown-header" (click)="toggleActivityDropdown()">
+    <!-- Activity Types (Multiple selection) -->
+    <div class="filter-element activity-dropdown">
+      <div class="dropdown-header" (click)="toggleActivityDropdown()">
           <span *ngIf="filters.activityTypes.length > 0; else defaultPlaceholder" [title]="getActivityTypes()">
             Categories: {{ getActivityTypes() }}
           </span>
-          <ng-template #defaultPlaceholder>
-            Categories
-          </ng-template>
-        </div>
-        <div class="dropdown-content" *ngIf="activityDropdownOpen">
-          <div class="activity-list">
-            <div *ngFor="let category of activityTypes">
-              <div class="category-label">{{ category.category }}</div>
-              <div *ngFor="let activity of category.names">
-                <label>
-                  <input
-                    type="checkbox"
-                    [checked]="filters.activityTypes.includes(activity)"
-                    (change)="onActivityChange(activity, $event)"
-                  />
-                  {{ activity }}
-                </label>
-              </div>
+        <ng-template #defaultPlaceholder>
+          Categories
+        </ng-template>
+      </div>
+      <div class="dropdown-content" *ngIf="activityDropdownOpen">
+        <div class="activity-list">
+          <div *ngFor="let category of activityTypes">
+            <div class="category-label">{{ category.category }}</div>
+            <div *ngFor="let activity of category.names">
+              <label>
+                <input
+                  type="checkbox"
+                  [checked]="filters.activityTypes.includes(activity)"
+                  (change)="onActivityChange(activity, $event)"
+                />
+                {{ activity }}
+              </label>
             </div>
           </div>
-          <button type="button" (click)="closeActivityDropdown()">OK</button>
         </div>
+        <button type="button" (click)="closeActivityDropdown()">OK</button>
       </div>
-
-      <button type="submit">Apply Filters</button>
-    </form>
-
-    <!-- Create New Event Button -->
-    <div class="create-event-container">
-      <button (click)="createNewEvent()">
-        <span class="plus-circle">+</span>
-        <span class="btn-text">Create new event</span>
-      </button>
     </div>
 
+    <button type="submit">Apply Filters</button>
+  </form>
+
+  <!-- Create New Event Button -->
+  <div class="create-event-container">
+    <button (click)="createNewEvent()">
+      <span class="plus-circle">+</span>
+      <span class="btn-text">Create new event</span>
+    </button>
+  </div>
+
+  <div class="events-container" *ngIf="recommendations.length > 0; else noEvents">
     <!-- Events Cards -->
     <div *ngFor="let event of recommendations" class="event-card">
       <img
@@ -129,50 +129,50 @@
         <button (click)="viewEventDetails(event)">See Details</button>
       </div>
     </div>
-
-    <div class="pagination-container" *ngIf="totalPages > 1">
-      <button class="arrow-btn" (click)="goToPage(currentPage - 1)" [disabled]="currentPage === 0">
-        &#8592;
-      </button>
-      <!-- First Page -->
-      <button (click)="goToPage(0)" [class.active]="currentPage === 0">1</button>
-
-      <!-- Left Ellipsis -->
-      <span *ngIf="currentPage > 2" class="pagination-ellipsis">•••</span>
-
-      <!-- Middle Pages -->
-      <button
-        *ngFor="let page of getMiddlePages()"
-        (click)="goToPage(page)"
-        [class.active]="currentPage === page"
-      >
-        {{ page + 1 }}
-      </button>
-
-      <!-- Right Ellipsis -->
-      <span *ngIf="currentPage < totalPages - 3" class="pagination-ellipsis">•••</span>
-      <!-- Last Page -->
-      <button
-        *ngIf="totalPages > 1"
-        (click)="goToPage(totalPages - 1)"
-        [class.active]="currentPage === totalPages - 1"
-      >
-        {{ totalPages }}
-      </button>
-
-      <button class="arrow-btn" (click)="goToPage(currentPage + 1)" [disabled]="currentPage === totalPages - 1">
-        &#8594;
-      </button>
-    </div>
-
-
   </div>
-</div>
 
-<ng-template #noRecommendations>
-  <p>No personalized recommendations available.</p>
-</ng-template>
+  <ng-template #noEvents>
+    <div class="no-events">
+      <p>No events found, try other filters</p>
+    </div>
+  </ng-template>
 
-<div *ngIf="errorMessage" class="error-message">
-  {{ errorMessage }}
+  <div class="pagination-container" *ngIf="totalPages > 1">
+    <button class="arrow-btn" (click)="goToPage(currentPage - 1)" [disabled]="currentPage === 0">
+      &#8592;
+    </button>
+    <!-- First Page -->
+    <button (click)="goToPage(0)" [class.active]="currentPage === 0">1</button>
+
+    <!-- Left Ellipsis -->
+    <span *ngIf="currentPage > 2" class="pagination-ellipsis">•••</span>
+
+    <!-- Middle Pages -->
+    <button
+      *ngFor="let page of getMiddlePages()"
+      (click)="goToPage(page)"
+      [class.active]="currentPage === page"
+    >
+      {{ page + 1 }}
+    </button>
+
+    <!-- Right Ellipsis -->
+    <span *ngIf="currentPage < totalPages - 3" class="pagination-ellipsis">•••</span>
+    <!-- Last Page -->
+    <button
+      *ngIf="totalPages > 1"
+      (click)="goToPage(totalPages - 1)"
+      [class.active]="currentPage === totalPages - 1"
+    >
+      {{ totalPages }}
+    </button>
+
+    <button class="arrow-btn" (click)="goToPage(currentPage + 1)" [disabled]="currentPage === totalPages - 1">
+      &#8594;
+    </button>
+  </div>
+
+  <div *ngIf="errorMessage" class="error-message">
+    {{ errorMessage }}
+  </div>
 </div>

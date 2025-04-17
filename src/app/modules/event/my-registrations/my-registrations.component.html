@@ -1,27 +1,32 @@
-<h2 class="my-registrations-header">Events Are Registered In</h2>
+<div class="page-container">
+  <h2 class="my-registrations-header">Events Are Registered In</h2>
 
-<div *ngIf="myRegistrations.length > 0; else noEvents">
-  <div class="events-container">
-    <!-- Events Cards -->
-    <div *ngFor="let event of myRegistrations" class="event-card">
-      <img
-        [src]="getImageUrl(event.imageKey)"
-        alt="{{ event.title }}"
-        class="event-image"
-      />
-      <div class="event-content">
-        <h3>{{ event.title }}</h3>
-        <p>{{ event.description }}</p>
-        <button (click)="viewEventDetails(event)">See Details</button>
+  <div *ngIf="myRegistrations.length > 0; else noEvents">
+    <div class="events-container">
+      <!-- Events Cards -->
+      <div *ngFor="let event of myRegistrations" class="event-card">
+        <img
+          [src]="getImageUrl(event.imageKey)"
+          alt="{{ event.title }}"
+          class="event-image"
+        />
+        <div class="event-content">
+          <h3>{{ event.title }}</h3>
+          <p>{{ event.description }}</p>
+          <button (click)="viewEventDetails(event)">See Details</button>
+        </div>
       </div>
     </div>
   </div>
-</div>
 
-<ng-template #noEvents>
-  <p>No events available.</p>
-</ng-template>
+  <ng-template #noEvents>
+    <div class="no-events">
+      <p>No events available.</p>
+    </div>
+  </ng-template>
 
-<div *ngIf="errorMessage" class="error-message">
-  {{ errorMessage }}
+
+  <div *ngIf="errorMessage" class="error-message">
+    {{ errorMessage }}
+  </div>
 </div>

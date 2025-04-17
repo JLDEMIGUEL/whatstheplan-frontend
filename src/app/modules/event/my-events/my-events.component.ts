@@ -52,4 +52,8 @@ export class MyEventsComponent implements OnInit {
   async viewEventDetails(event: WTPEvent): Promise<void> {
     await this.router.navigate([`/events/${event.id}`]);
   }
+
+  async createNewEvent(): Promise<void> {
+    await this.router.navigate(['/events-create']);
+  }
 }
