@@ -21,7 +21,7 @@ export class EventsService {
       title: 'Sunset Yoga Retreat',
       description: 'Unwind from the stress of daily life with our rejuvenating Sunset Yoga Retreat in the beautiful outdoors of Valencia. Surrounded by nature and kissed by the warm hues of the setting sun, this session is perfect for beginners and seasoned yogis alike. Expect a gentle flow of movement, deep breathing exercises, and mindful relaxation techniques designed to leave you feeling refreshed and grounded. Stay after the session to soak in the golden sky and connect with fellow attendees over herbal tea and good vibes.',
       activityTypes: ["Yoga", "Outdoors"],
-      imageKey: '7384abd1-8284-4ef2-8a09-b162b6ee8e4f_events-1.webp',
+      imageKey: 'events/7384abd1-8284-4ef2-8a09-b162b6ee8e4f_events-1.webp',
       dateTime: new Date().toISOString(),
       duration: 'PT1H',
       location: 'Valencia',
@@ -39,7 +39,7 @@ export class EventsService {
       title: 'Barcelona Coding Bootcamp',
       description: 'Step up your coding game with an immersive weekend at our Barcelona Coding Bootcamp. Designed for both aspiring developers and intermediate coders, this fast-paced, hands-on experience is all about building real projects, learning new technologies, and growing your network. With mentorship from seasoned tech pros, team-based challenges, and lightning talks, you’ll leave with sharpened skills and a stronger portfolio—all while enjoying the vibrant atmosphere of central Barcelona.',
       activityTypes: ["Technology", "Education"],
-      imageKey: '70f82bbc-98ae-4113-8c30-2a460c4fb2f5_events-2.webp',
+      imageKey: 'events/70f82bbc-98ae-4113-8c30-2a460c4fb2f5_events-2.webp',
       dateTime: new Date().toISOString(),
       duration: 'PT4H',
       location: 'Barcelona',
@@ -57,7 +57,7 @@ export class EventsService {
       title: 'Madrid Salsa Social',
       description: 'Feel the rhythm, move your feet, and embrace the joy of dance at our Madrid Salsa Social! Whether you’re a complete newbie or a salsa pro, this inclusive and lively event brings dancers of all levels together for an unforgettable night. No partner needed—just come ready to dance, meet new people, and let the music guide you. Expect vibrant tunes, spontaneous dance-offs, and plenty of energy in the heart of Madrid’s nightlife scene.',
       activityTypes: ["Dancing", "Social Events"],
-      imageKey: '78bef142-486e-473d-92b9-e723256a34ee_events-3.webp',
+      imageKey: 'events/78bef142-486e-473d-92b9-e723256a34ee_events-3.webp',
       dateTime: new Date().toISOString(),
       duration: 'PT4H',
       location: 'Madrid',
@@ -75,7 +75,7 @@ export class EventsService {
       title: 'Berlin Photography Walk',
       description: 'Capture the essence of Berlin one frame at a time with our guided Photography Walk. Led by an experienced urban photographer, this experience blends technical tips with creative storytelling. You’ll explore graffiti-lined alleyways, iconic architecture, and hidden gems while learning to frame compelling shots. Whether you’re using a DSLR or a phone camera, this walk is about seeing the city with fresh eyes and connecting with fellow creatives.',
       activityTypes: ["Photography", "Outdoors"],
-      imageKey: 'e3d3c3be-e132-425e-83fc-99cbfe09dcdd_events-4.webp',
+      imageKey: 'events/e3d3c3be-e132-425e-83fc-99cbfe09dcdd_events-4.webp',
       dateTime: new Date().toISOString(),
       duration: 'PT3H',
       location: 'Berlin',
@@ -93,7 +93,7 @@ export class EventsService {
       title: 'Cooking & Networking in Paris',
       description: 'Whip up something delicious and make new professional connections at Cooking & Networking in Paris. This event combines the joy of cooking with the benefits of social networking, all in a relaxed, welcoming kitchen setting. Guided by a local chef, you’ll prepare a gourmet dish from scratch, then sit down to enjoy the meal while exchanging ideas, stories, and contacts with fellow creatives, freelancers, and entrepreneurs.',
       activityTypes: ["Cooking", "Networking"],
-      imageKey: '00b5557e-dd7a-4073-bfc7-ce987a0d681f_events-5.webp',
+      imageKey: 'events/00b5557e-dd7a-4073-bfc7-ce987a0d681f_events-5.webp',
       dateTime: new Date().toISOString(),
       duration: 'PT2H',
       location: 'Paris',
@@ -111,7 +111,7 @@ export class EventsService {
       title: 'Climb & Chill in Bilbao',
       description: 'Looking for a fun, active way to meet new people? Join Climb & Chill in Bilbao, where indoor climbing meets laid-back socializing. Whether you´re a total beginner or a bouldering regular, this session is all about challenging yourself at your own pace. All gear is provided, and instructors are on hand to guide you. After the climb, stick around for drinks and chill conversations with your fellow adventurers.',
       activityTypes: ["Climbing", "Social Events"],
-      imageKey: '96a13a9f-a6e4-4919-978a-7e3567218f2f_events-6.webp',
+      imageKey: 'events/96a13a9f-a6e4-4919-978a-7e3567218f2f_events-6.webp',
       dateTime: new Date().toISOString(),
       duration: 'PT3H',
       location: 'Bilbao',
@@ -129,7 +129,7 @@ export class EventsService {
       title: 'Sevilla Street Art Tour',
       description: 'Dive into the colorful and rebellious world of street art with our Sevilla Street Art Tour. You’ll discover vibrant murals, hidden graffiti spots, and thought-provoking pieces that tell the city’s stories. Guided by a local artist, the tour ends with a live mural-painting session where you can witness creativity in action—or even contribute your own touch to a community wall. A must for creatives and culture lovers!',
       activityTypes: ["Arts", "Outdoors"],
-      imageKey: 'aaf8a758-3b35-4d3e-abbd-b97a536f2165_events-7.webp',
+      imageKey: 'events/aaf8a758-3b35-4d3e-abbd-b97a536f2165_events-7.webp',
       dateTime: new Date().toISOString(),
       duration: 'PT2H',
       location: 'Sevilla',
@@ -147,7 +147,7 @@ export class EventsService {
       title: 'London Meditation Morning',
       description: 'Ease into your day with calm and clarity at our London Meditation Morning. Held in a serene park setting, this session combines mindfulness meditation, gentle breathwork, and light stretching to help you reset and reconnect. Open to all levels, it’s a peaceful way to start the morning before the bustle of city life begins. Bring a mat, an open mind, and maybe a warm drink to sip afterward.',
       activityTypes: ["Meditation & Mindfulness", "Wellness & Fitness"],
-      imageKey: '92fe66c9-8eb8-4d6b-9256-54c4dc215e91_events-8.webp',
+      imageKey: 'events/92fe66c9-8eb8-4d6b-9256-54c4dc215e91_events-8.webp',
       dateTime: new Date().toISOString(),
       duration: 'PT3H',
       location: 'London',
@@ -165,7 +165,7 @@ export class EventsService {
       title: 'Valencia Beach Volleyball Bash',
       description: 'Spike your weekend with sunshine and team spirit at the Valencia Beach Volleyball Bash! Whether you’re playing to win or just for laughs, this friendly tournament welcomes players of all skill levels. Enjoy epic rallies on the sand, cheer on your teammates, and catch some rays by the sea. Stick around after the matches for a beachside hangout with music, drinks, and good company.',
       activityTypes: ["Social Events", "Outdoors"],
-      imageKey: 'd454b66d-bba7-44ed-bfa4-103b0cbcc515_events-9.webp',
+      imageKey: 'events/d454b66d-bba7-44ed-bfa4-103b0cbcc515_events-9.webp',
       dateTime: new Date().toISOString(),
       duration: 'PT2H',
       location: 'Valencia',
@@ -183,7 +183,7 @@ export class EventsService {
       title: 'Fashion & Style Talk in Paris',
       description: 'Calling all trendsetters, designers, and fashion lovers! Fashion & Style Talk in Paris is a relaxed meetup where you can swap ideas, share outfit inspo, and dive into the world of style. Hear mini-talks from stylists, show off your latest look, or just vibe with other fashionable folks. A perfect place to network, get inspired, and maybe find your next fashion muse.',
       activityTypes: ["Fashion & Style", "Networking"],
-      imageKey: '385fcae5-e9dc-4472-85e6-e105a35a48a5_events-10.webp',
+      imageKey: 'events/385fcae5-e9dc-4472-85e6-e105a35a48a5_events-10.webp',
       dateTime: new Date().toISOString(),
       duration: 'PT1H',
       location: 'Paris',
@@ -201,7 +201,7 @@ export class EventsService {
       title: 'Gaming Night in Berlin',
       description: 'Ready to level up your evening? Join us for Gaming Night in Berlin, where board games, console classics, and new indie favorites come together in a cozy gaming café. Whether you\'re a casual player or a strategy master, there\'s something for everyone. Team up, face off, and enjoy snacks and drinks while meeting fellow gamers in a relaxed, nerd-friendly zone.',
       activityTypes: ["Gaming", "Board Games"],
-      imageKey: 'c6100492-adf1-4b05-9bc7-858b0c32d3d9_events-11.webp',
+      imageKey: 'events/c6100492-adf1-4b05-9bc7-858b0c32d3d9_events-11.webp',
       dateTime: new Date().toISOString(),
       duration: 'PT2H',
       location: 'Berlin',
@@ -219,7 +219,7 @@ export class EventsService {
       title: 'Bilbao Hiking Escape',
       description: 'Escape the city and reconnect with nature on our Bilbao Hiking Escape. This guided hike takes you through breathtaking trails, rolling hills, and hidden spots around Bilbao’s countryside. Whether you\'re a seasoned hiker or just looking for a scenic stroll, the pace is comfortable and the views are worth every step. Expect fresh air, great company, and a few peaceful moments to take it all in.',
       activityTypes: ["Hiking", "Outdoors"],
-      imageKey: '9810754d-d223-411c-b065-a52678c4a5e0_events-12.webp',
+      imageKey: 'events/9810754d-d223-411c-b065-a52678c4a5e0_events-12.webp',
       dateTime: new Date().toISOString(),
       duration: 'PT1H',
       location: 'Bilbao',
@@ -237,7 +237,7 @@ export class EventsService {
       title: 'Tennis Mixer in Madrid',
       description: 'Serve up some fun at our Tennis Mixer in Madrid! This casual social event is perfect for players of all levels looking to enjoy a few friendly doubles matches and meet new tennis buddies. With music playing and snacks on the sidelines, it\'s less about competition and more about connection. Rackets and balls provided if you need them—just bring your game face and a smile.',
       activityTypes: ["Tennis", "Social Events"],
-      imageKey: '5f4babdc-9fd6-4c3a-88f7-704c1a37b204_events-13.webp',
+      imageKey: 'events/5f4babdc-9fd6-4c3a-88f7-704c1a37b204_events-13.webp',
       dateTime: new Date().toISOString(),
       duration: 'PT1H',
       location: 'Madrid',
@@ -255,7 +255,7 @@ export class EventsService {
       title: 'Cycling & Coffee in Sevilla',
       description: 'Pedal through the charm of Sevilla on our Cycling & Coffee ride. You\'ll cruise scenic bike paths, pass riverside views, and explore city gems before ending with a chill café meetup. Great for casual riders and cycling enthusiasts alike, this event is all about movement, conversation, and a shared love for bikes and good brews.',
       activityTypes: ["Cycling", "Social Events"],
-      imageKey: '40f0a928-a1f8-48c5-8169-987983de9427_events-14.webp',
+      imageKey: 'events/40f0a928-a1f8-48c5-8169-987983de9427_events-14.webp',
       dateTime: new Date().toISOString(),
       duration: 'PT4H',
       location: 'Sevilla',
@@ -273,7 +273,7 @@ export class EventsService {
       title: 'Snowboarding Weekend in Paris',
       description: 'Craving snow and adrenaline? Our Snowboarding Weekend near Paris is your winter escape! Perfect for beginners and seasoned riders, this trip includes transportation, rentals, and expert guidance on the slopes. Enjoy a weekend packed with powder, laughter, and après-ski vibes, just a short trip from the city. Gear up and let the mountain adventures begin!',
       activityTypes: ["Snowboarding", "Travel"],
-      imageKey: '70a141df-64fe-4d07-b530-43a05e67794f_events-15.webp',
+      imageKey: 'events/70a141df-64fe-4d07-b530-43a05e67794f_events-15.webp',
       dateTime: new Date().toISOString(),
       duration: 'PT2H',
       location: 'Paris',
@@ -291,7 +291,7 @@ export class EventsService {
       title: 'Writing Circle in London',
       description: 'Got stories to share? Join the Writing Circle in London, a cozy gathering of writers looking to give and receive feedback in a supportive, non-judgmental space. Whether you\'re into fiction, poetry, or journaling, this is a chance to read your work aloud, spark new ideas, and connect with fellow wordsmiths. Bring your notebook and an open heart.',
       activityTypes: ["Writing", "Reading"],
-      imageKey: '74128379-193f-473f-8544-1f1f34ccf15b_events-16.webp',
+      imageKey: 'events/74128379-193f-473f-8544-1f1f34ccf15b_events-16.webp',
       dateTime: new Date().toISOString(),
       duration: 'PT2H',
       location: 'London',
@@ -309,7 +309,7 @@ export class EventsService {
       title: 'Valencia Language Exchange Picnic',
       description: 'Mix languages and sunshine at our Language Exchange Picnic in Valencia! Set in one of the city’s beautiful parks, this relaxed gathering invites people from around the world to practice different languages in a chill, friendly environment. Bring a snack or drink to share, a blanket, and get ready for conversation, laughter, and cultural exchange under the open sky.',
       activityTypes: ["Language Learning", "Social Events"],
-      imageKey: 'dec37f0c-487e-4603-b966-e7680311dd7b_events-17.webp',
+      imageKey: 'events/dec37f0c-487e-4603-b966-e7680311dd7b_events-17.webp',
       dateTime: new Date().toISOString(),
       duration: 'PT4H',
       location: 'Valencia',
@@ -327,7 +327,7 @@ export class EventsService {
       title: 'Fishing & Chill in Barcelona',
       description: 'Reel in some calm at Fishing & Chill in Barcelona. Whether you\'re new to fishing or just looking to unwind by the water, this laid-back event offers a peaceful way to spend your day. Gear is available, and friendly locals will help you get started. Bring your favorite snacks, your curiosity, and enjoy a few hours of good vibes and quiet reflection by the shore.',
       activityTypes: ["Fishing", "Outdoors"],
-      imageKey: '4cc0dfd3-1146-4d11-acf0-2bc9e896c50a_events-18.webp',
+      imageKey: 'events/4cc0dfd3-1146-4d11-acf0-2bc9e896c50a_events-18.webp',
       dateTime: new Date().toISOString(),
       duration: 'PT1H',
       location: 'Barcelona',
@@ -345,7 +345,7 @@ export class EventsService {
       title: 'Basketball Jam in Berlin',
       description: 'Lace up your sneakers and bring your A-game to the Basketball Jam in Berlin! Whether you\'re shooting hoops for fun or ready for full-court action, this event brings together basketball lovers of all skill levels for pick-up games, skill drills, and a whole lot of energy. Music, hype, and team spirit guaranteed.',
       activityTypes: ["Basketball", "Fitness & Bodybuilding"],
-      imageKey: '3d133d00-6d9b-4f22-9218-34fedb9824ff_events-19.webp',
+      imageKey: 'events/3d133d00-6d9b-4f22-9218-34fedb9824ff_events-19.webp',
       dateTime: new Date().toISOString(),
       duration: 'PT1H',
       location: 'Berlin',
@@ -363,7 +363,7 @@ export class EventsService {
       title: 'Baking & Bonding in Madrid',
       description: 'Whisk, mix, and frost your way to new friendships at Baking & Bonding in Madrid. This sweet social session is part baking class, part hangout. You’ll learn how to make delicious desserts from scratch, and then enjoy the fruits of your labor while chatting with fellow foodies. It’s cozy, creative, and oh-so-tasty.',
       activityTypes: ["Baking", "Cooking"],
-      imageKey: '4c071398-429d-4a4e-810f-4f80fb725f9f_events-20.webp',
+      imageKey: 'events/4c071398-429d-4a4e-810f-4f80fb725f9f_events-20.webp',
       dateTime: new Date().toISOString(),
       duration: 'PT3H',
       location: 'Madrid',
@@ -413,7 +413,7 @@ export class EventsService {
 
     return this.addAuthHeaders().pipe(
       switchMap(headers =>
-        this.http.get<any>(`${this.baseUrl}/search`, {
+        this.http.get<any>(`${this.baseUrl}/events/search`, {
           headers,
           params,
           withCredentials: true
@@ -494,7 +494,7 @@ export class EventsService {
   getEventById(eventId: string): Observable<WTPEventDetailed> {
     return this.addAuthHeaders().pipe(
       switchMap((headers) =>
-        this.http.get<WTPEventDetailed>(`${this.baseUrl}/${eventId}`, {
+        this.http.get<WTPEventDetailed>(`${this.baseUrl}/events/${eventId}`, {
           headers,
           observe: 'response',
           withCredentials: true
@@ -512,7 +512,7 @@ export class EventsService {
   deleteEventById(eventId: string): Observable<void> {
     return this.addAuthHeaders().pipe(
       switchMap((headers) =>
-        this.http.delete<void>(`${this.baseUrl}/${eventId}`, {
+        this.http.delete<void>(`${this.baseUrl}/events/${eventId}`, {
           headers,
           withCredentials: true
         })
@@ -549,7 +549,7 @@ export class EventsService {
     return this.addAuthHeaders().pipe(
       switchMap((headers) => {
         const finalHeaders = headers.delete('Content-Type');
-        return this.http.put<WTPEvent>(`${this.baseUrl}/${eventId}`, formData, {
+        return this.http.put<WTPEvent>(`${this.baseUrl}/events/${eventId}`, formData, {
           headers: finalHeaders,
           observe: 'response',
           withCredentials: true
