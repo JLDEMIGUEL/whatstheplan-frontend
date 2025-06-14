@@ -5,7 +5,7 @@ import {WTPReview} from '../../../shared/model/reviews.model';
 import {EventsService} from '../../../services/events.service';
 import {ReviewsService} from '../../../services/reviews.service';
 import {environment} from '../../../../environments/environment';
-import {NgForOf, NgIf} from '@angular/common';
+import {Location, NgForOf, NgIf} from '@angular/common';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {Duration} from 'luxon';
 
@@ -31,7 +31,8 @@ export class EventDetailsComponent implements OnInit {
     private eventsService: EventsService,
     private reviewsService: ReviewsService,
     private router: Router,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private location: Location
   ) {
   }
 
@@ -181,5 +182,9 @@ export class EventDetailsComponent implements OnInit {
         this.showReviewDeletePopup = false;
       }
     });
+  }
+
+  goBack(): void {
+    this.location.back();
   }
 }

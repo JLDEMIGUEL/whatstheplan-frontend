@@ -1,7 +1,7 @@
 import {Component, ElementRef, ViewChild} from '@angular/core';
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {EventsService} from '../../../services/events.service';
-import {NgForOf, NgIf} from '@angular/common';
+import {Location, NgForOf, NgIf} from '@angular/common';
 import {CITIES_LIST} from '../../../shared/constants/cities.constants';
 import {Duration} from "luxon";
 import {ACTIVITY_TYPE, ActivityCategory} from '../../../shared/constants/activities.constants';
@@ -34,7 +34,8 @@ export class EventCreateComponent {
     private fb: FormBuilder,
     private eventsService: EventsService,
     private router: Router,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private location: Location
   ) {
     this.eventForm = this.fb.group({
       title: ['', [Validators.required]],
@@ -164,5 +165,9 @@ export class EventCreateComponent {
         this.errorMessage = 'Failed to create the event. Please try again later.';
       }
     });
+  }
+
+  goBack(): void {
+    this.location.back();
   }
 }

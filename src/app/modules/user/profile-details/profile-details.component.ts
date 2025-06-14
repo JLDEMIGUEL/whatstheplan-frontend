@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {CommonModule} from '@angular/common';
+import {CommonModule, Location} from '@angular/common';
 import {UserService} from '../../../services/users.service';
 import {Router} from '@angular/router';
 import {HttpErrorResponse} from '@angular/common/http';
@@ -28,7 +28,8 @@ export class ProfileDetailsComponent implements OnInit {
 
   constructor(
     private userService: UserService,
-    private router: Router
+    private router: Router,
+    private location: Location
   ) {
   }
 
@@ -57,5 +58,9 @@ export class ProfileDetailsComponent implements OnInit {
 
   editProfile(): void {
     this.router.navigate(['/edit-profile']);
+  }
+
+  goBack(): void {
+    this.location.back();
   }
 }

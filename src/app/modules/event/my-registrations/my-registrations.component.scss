@@ -6,9 +6,32 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 2rem 1rem;
+  padding: 0.5rem 1rem;
   background-color: #f4f4f4;
   flex-grow: 1;
+}
+
+.back-container {
+  max-width: 800px;
+  width: 100%;
+
+  .go-back-button {
+    max-width: 800px;
+    align-self: flex-start;
+    margin: 0.5rem;
+    padding: 0.25rem 0.5rem;
+    font-size: 1rem;
+    background-color: #d32f2f;
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+
+    &:hover {
+      background-color: #b71c1c;
+    }
+  }
 }
 
 .my-registrations-header {

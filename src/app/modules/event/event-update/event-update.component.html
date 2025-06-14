@@ -1,4 +1,10 @@
 <div class="event-update-container">
+
+  <!-- Go Back Button -->
+  <div class="back-container">
+    <button class="go-back-button" (click)="goBack()">← Back</button>
+  </div>
+
   <h1>Update Event</h1>
 
   <form [formGroup]="eventForm" (ngSubmit)="onSubmit()">

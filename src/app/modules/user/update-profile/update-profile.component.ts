@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
-import {CommonModule} from '@angular/common';
+import {CommonModule, Location} from '@angular/common';
 import {UserService} from '../../../services/users.service';
 import {Router} from '@angular/router';
 import {HttpErrorResponse} from '@angular/common/http';
@@ -25,7 +25,8 @@ export class UpdateProfileComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private userService: UserService,
-    private router: Router
+    private router: Router,
+    private location: Location
   ) {
   }
 
@@ -106,5 +107,9 @@ export class UpdateProfileComponent implements OnInit {
   isFieldInvalid(field: string): boolean {
     const control: AbstractControl | null = this.profileUpdateForm.get(field);
     return !!(control && control.invalid && (control.dirty || control.touched));
+  }
+
+  goBack(): void {
+    this.location.back();
   }
 }

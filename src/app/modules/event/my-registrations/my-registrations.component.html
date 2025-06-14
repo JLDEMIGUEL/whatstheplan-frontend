@@ -1,4 +1,10 @@
 <div class="page-container">
+
+  <!-- Go Back Button -->
+  <div class="back-container">
+    <button class="go-back-button" (click)="goBack()">← Back</button>
+  </div>
+
   <h2 class="my-registrations-header">Events Are Registered In</h2>
 
   <div *ngIf="myRegistrations.length > 0; else noEvents">

@@ -1,9 +1,34 @@
 .event-details-container {
   display: flex;
-  justify-content: center;
-  padding: 2rem;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 2rem;
   background-color: #f9f9f9;
   min-height: 82vh;
+
+  .back-container {
+    max-width: 800px;
+    width: 100%;
+
+    .go-back-button {
+      max-width: 800px;
+      align-self: flex-start;
+      margin: 1rem;
+      padding: 0.25rem 0.5rem;
+      font-size: 1rem;
+      background-color: #d32f2f;
+      color: #ffffff;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+
+      &:hover {
+        background-color: #b71c1c;
+      }
+    }
+  }
+
 
   .event-card {
     display: flex;

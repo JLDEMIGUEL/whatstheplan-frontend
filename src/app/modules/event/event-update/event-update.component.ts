@@ -2,7 +2,7 @@ import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
 import {EventsService} from '../../../services/events.service';
-import {NgForOf, NgIf} from '@angular/common';
+import {Location, NgForOf, NgIf} from '@angular/common';
 import {CITIES_LIST} from '../../../shared/constants/cities.constants';
 import {Duration} from 'luxon';
 import {ACTIVITY_TYPE, ActivityCategory} from '../../../shared/constants/activities.constants';
@@ -32,7 +32,8 @@ export class EventUpdateComponent implements OnInit {
     private eventsService: EventsService,
     private route: ActivatedRoute,
     private router: Router,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private location: Location
   ) {
     this.eventForm = this.fb.group({
       title: ['', [Validators.required]],
@@ -217,5 +218,9 @@ export class EventUpdateComponent implements OnInit {
         this.errorMessage = 'Failed to update the event. Please try again later.';
       }
     });
+  }
+
+  goBack(): void {
+    this.location.back();
   }
 }

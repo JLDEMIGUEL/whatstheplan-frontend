@@ -1,4 +1,10 @@
 <div class="event-details-container" *ngIf="event">
+
+  <!-- Go Back Button -->
+  <div class="back-container">
+    <button class="go-back-button" (click)="goBack()">← Back</button>
+  </div>
+
   <div class="event-card">
     <!-- Event Image at the Top -->
     <img [src]="getImageUrl(event.imageKey)" alt="{{ event.title }}" class="event-image"/>

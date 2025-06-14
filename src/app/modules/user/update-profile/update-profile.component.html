@@ -1,4 +1,10 @@
 <div class="profile-update-container" *ngIf="!isLoading; else loading">
+
+  <!-- Go Back Button -->
+  <div class="back-container">
+    <button class="go-back-button" (click)="goBack()">← Back</button>
+  </div>
+
   <form [formGroup]="profileUpdateForm" (ngSubmit)="onSubmit()">
     <div>
       <label for="username">Username:</label>

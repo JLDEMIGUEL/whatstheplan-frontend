@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {CommonModule} from '@angular/common';
+import {CommonModule, Location} from '@angular/common';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {Router} from '@angular/router';
 import {HttpErrorResponse} from '@angular/common/http';
@@ -20,7 +20,7 @@ export class MyRegistrationsComponent implements OnInit {
   errorMessage!: string;
   isLoading: boolean = true;
 
-  constructor(private eventsService: EventsService, private router: Router) {
+  constructor(private eventsService: EventsService, private router: Router, private location: Location) {
   }
 
   ngOnInit(): void {
@@ -51,5 +51,9 @@ export class MyRegistrationsComponent implements OnInit {
 
   async viewEventDetails(event: WTPEvent): Promise<void> {
     await this.router.navigate([`/events/${event.id}`]);
+  }
+
+  goBack(): void {
+    this.location.back();
   }
 }

@@ -1,4 +1,10 @@
 <div class="profile-container" *ngIf="!isLoading; else loading">
+
+  <!-- Go Back Button -->
+  <div class="back-container">
+    <button class="go-back-button" (click)="goBack()">← Back</button>
+  </div>
+
   <div *ngIf="errorMessage; else profileContent" class="error-message">
     {{ errorMessage }}
   </div>
