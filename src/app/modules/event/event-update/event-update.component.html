@@ -93,7 +93,8 @@
           </label>
         </ng-template>
         <!-- Hidden file input -->
-        <input id="image" type="file" accept=".png,.jpg,.jpeg" (change)="onFileSelected($event)" #fileInput hidden/>
+        <input id="image" type="file" accept=".png,.jpg,.jpeg,.webp,.svg,.avif" (change)="onFileSelected($event)"
+               #fileInput hidden/>
       </div>
       <div class="error" *ngIf="imageError">
         {{ imageError }}

@@ -140,8 +140,8 @@ export class EventUpdateComponent implements OnInit {
 
     // Validate extension
     const extension = file.name.split('.').pop()?.toLowerCase();
-    if (!['png', 'jpg', 'jpeg'].includes(extension || '')) {
-      this.imageError = 'Invalid image format. Allowed: PNG, JPG, JPEG.';
+    if (!['png', 'jpg', 'jpeg', 'webp', 'svg', 'avif'].includes(extension || '')) {
+      this.imageError = 'Invalid image format. Allowed: PNG, JPG, JPEG, WEBP, SVG, AVIF.';
       this.selectedFileName = null;
       this.imagePreviewUrl = null;
       this.eventForm.patchValue({image: null});

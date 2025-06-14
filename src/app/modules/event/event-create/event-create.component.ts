@@ -59,8 +59,8 @@ export class EventCreateComponent {
     }
 
     const extension = file.name.split('.').pop()?.toLowerCase();
-    if (!['png', 'jpg', 'jpeg'].includes(extension || '')) {
-      this.imageError = 'Invalid image format. Allowed: PNG, JPG, JPEG.';
+    if (!['png', 'jpg', 'jpeg', 'webp', 'svg', 'avif'].includes(extension || '')) {
+      this.imageError = 'Invalid image format. Allowed: PNG, JPG, JPEG, WEBP, SVG, AVIF.';
       this.imagePreviewUrl = null;
       this.eventForm.patchValue({image: null});
       return;
