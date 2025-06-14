@@ -7,6 +7,7 @@ import {ReviewsService} from '../../../services/reviews.service';
 import {environment} from '../../../../environments/environment';
 import {NgForOf, NgIf} from '@angular/common';
 import {MatSnackBar} from '@angular/material/snack-bar';
+import {Duration} from 'luxon';
 
 
 @Component({
@@ -87,6 +88,11 @@ export class EventDetailsComponent implements OnInit {
       minute: '2-digit',
       hour12: false
     });
+  }
+
+  formatDuration(durationStr: string): string {
+    const duration = Duration.fromISO(durationStr);
+    return duration.toHuman();
   }
 
   onRegister(): void {

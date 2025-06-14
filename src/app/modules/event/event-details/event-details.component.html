@@ -10,7 +10,7 @@
 
       <div class="event-meta">
         <p><strong>Date & Time:</strong> {{ formatDateTime(event.dateTime) }}</p>
-        <p><strong>Duration:</strong> {{ event.duration }} hours</p>
+        <p><strong>Duration:</strong> {{ formatDuration(event.duration) }}</p>
         <p><strong>Location:</strong> {{ event.location }}</p>
         <p><strong>Capacity:</strong> {{ event.registrations }} / {{ event.capacity }}</p>
         <p><strong>Activity Types:</strong> {{ event.activityTypes.join(', ') }}</p>
