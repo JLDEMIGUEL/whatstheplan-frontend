@@ -5,6 +5,9 @@
     <div *ngIf="isFieldInvalid('email')" class="error-message">
       Email is required.
     </div>
+    <div *ngIf="loginForm.get('email')?.errors?.['email']" class="error-message">
+      Enter a valid email address.
+    </div>
   </div>
 
   <div>

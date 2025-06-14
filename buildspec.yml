@@ -1,0 +1,30 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      nodejs: 22
+    commands:
+      - echo Installing dependencies...
+      - npm ci
+  pre_build:
+    commands:
+      - echo Getting API parameter from SSM Parameter Store...
+      - export API_VALUE=$(aws ssm get-parameter --name "/whatstheplan/alb/dns" --with-decryption --query "Parameter.Value" --output text --region $AWS_REGION)
+      - echo "Substituting API placeholder in environment.prod.ts..."
+      - sed -i "s|<API_PLACEHOLDER>|$API_VALUE|g" src/environments/environment.prod.ts
+  build:
+    commands:
+      - echo Building Angular app...
+      - npm run build --prod
+  post_build:
+    commands:
+      - echo Deploying to S3 bucket $S3_BUCKET...
+      - aws s3 sync ./dist/whatstheplan/browser s3://$S3_BUCKET --delete --region $AWS_REGION
+      - echo Creating CloudFront invalidation...
+      - aws cloudfront create-invalidation --distribution-id $CLOUDFRONT_DISTRIBUTION_ID --paths "/*" --region $AWS_REGION
+
+artifacts:
+  files:
+    - '**/*'
+  base-directory: 'dist/whatstheplan/browser'
