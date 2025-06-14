@@ -29,6 +29,14 @@
     Sign in with Google
   </button>
 
+  <div class="register-prompt">
+    <span>Don't have an account?</span>
+    <button type="button" class="register-button" (click)="goToRegister()">
+      Register
+    </button>
+  </div>
+
+
   <div *ngIf="errorMessage" class="error-message">
     {{ errorMessage }}
   </div>

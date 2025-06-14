@@ -52,5 +52,12 @@
   <div *ngIf="errorMessage" class="error-message">
     {{ errorMessage }}
   </div>
+
+  <div class="login-prompt">
+    <span>Already have an account?</span>
+    <button type="button" class="login-button" (click)="goToLogin()">
+      Login
+    </button>
+  </div>
 </form>
 

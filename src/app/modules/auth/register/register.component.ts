@@ -98,4 +98,8 @@ export class RegisterComponent implements OnInit {
     return null;
   };
 
+
+  goToLogin(): void {
+    this.router.navigate(['/login']);
+  }
 }

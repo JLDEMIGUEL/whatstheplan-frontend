@@ -50,4 +50,8 @@ export class LoginComponent implements OnInit {
     const control: AbstractControl | null = this.loginForm.get(field);
     return !!(control && control.invalid && (control.dirty || control.touched));
   }
+
+  goToRegister(): void {
+    this.router.navigate(['/register']);
+  }
 }
